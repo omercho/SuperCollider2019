@@ -1,0 +1,123 @@
+<!doctype html><html lang='en'><head><title>OSCFileLog | SuperCollider 3.9.1 Help</title>
+<link rel='stylesheet' href='./../scdoc.css' type='text/css' />
+<link rel='stylesheet' href='./../frontend.css' type='text/css' />
+<link rel='stylesheet' href='./../custom.css' type='text/css' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<script>
+var helpRoot = './..';
+var scdoc_title = 'OSCFileLog';
+var scdoc_sc_version = '3.9.1';
+</script>
+<script src='./../scdoc.js' type='text/javascript'></script>
+<script src='./../docmap.js' type='text/javascript'></script>
+<script src='./../prettify.js' type='text/javascript'></script>
+<script src='./../lang-sc.js' type='text/javascript'></script>
+</head>
+<body onload='fixTOC();prettyPrint()'>
+<div id='toc'>
+<div id='toctitle'>OSCFileLog: table of contents</div>
+<span class='toc_search'>Filter: <input id='toc_search'></span><ul class='toc'><li class='toc1'><a href='#description'>Description</a></li>
+<ul class='toc'></ul><li class='toc1'><a href='#classmethods'>Class methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#*new'>new</a> </li>
+<li class='toc2'><a href='#Inherited%20class%20methods'>Inherited class methods</a></li>
+</ul><li class='toc1'><a href='#instancemethods'>Instance methods</a></li>
+<ul class='toc'><li class='toc3'><a href='#-recording'>recording</a> </li>
+<li class='toc3'><a href='#-close'>close</a> </li>
+<li class='toc3'><a href='#-open'>open</a> </li>
+<li class='toc3'><a href='#-resetTime'>resetTime</a> </li>
+<li class='toc3'><a href='#-offset'>offset</a> </li>
+<li class='toc3'><a href='#-timelogfile'>timelogfile</a> </li>
+<li class='toc3'><a href='#-oscRecFunc'>oscRecFunc</a> </li>
+<li class='toc3'><a href='#-writeLine'>writeLine</a> </li>
+<li class='toc2'><a href='#Inherited%20instance%20methods'>Inherited instance methods</a></li>
+</ul><li class='toc1'><a href='#examples'>Examples</a></li>
+<ul class='toc'></ul></ul></div><div class='contents'>
+<div id='menubar'></div>
+<div class='header'>
+<div id='label'>
+<span id='folder'>Classes (extension)</span>
+ | <span id='categories'><a href='./../Browse.html#OSC'>OSC</a> | <a href='./../Browse.html#Logging'>Logging</a></span>
+</div><h1>OSCFileLog<span id='superclasses'> : <a href="../Classes/Object.html">Object</a></span>
+<div class='extension-indicator-ctr' title='This help file originates from a third-party quark or plugin for SuperCollider.'><img class='extension-indicator-icon' alt='Extension' src='./../images/plugin.png'><span class='extension-indicator-text'>Extension</span></div></h1>
+<div id='summary'>a simple class to record osc messages</div>
+</div>
+<div class='subheader'>
+<div id='filename'>Source: <a href='file:///Users/OCiMac/Library/Application Support/SuperCollider/Extensions/others/SC-OSCFileLog-master/OSCFileLog.sc' title='/Users/OCiMac/Library/Application Support/SuperCollider/Extensions/others/SC-OSCFileLog-master/OSCFileLog.sc'>OSCFileLog.sc</a></div><div id='related'>See also: <a href="./../Classes/OSCFileLogPlayer.html">OSCFileLogPlayer</a>, <a href="./../Classes/MultiFileWriter">MultiFileWriter</a></div>
+</div>
+<h2><a class='anchor' name='description'>Description</a></h2>
+
+<p>OSCFileLog allows you to record OSC messages to later be played back with <a href="./../Classes/OSCFileLogPlayer.html">OSCFileLogPlayer</a>.<h2><a class='anchor' name='classmethods'>Class Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>OSCFileLog.</span><a class='method-name' name='*new' href='./../Overviews/Methods.html#new'>new</a>(<span class='argstr'>fn</span>)</h3>
+<div class='method'>
+<p>Create a new instance of OSCFileLog.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>fn<td class='argumentdesc'>
+<p>The filename to use.</table></div><h3><a class='anchor' name='Inherited%20class%20methods'>Inherited class methods</a></h3>
+<div id='inheritedclassmets'></div><h2><a class='anchor' name='instancemethods'>Instance Methods</a></h2>
+<h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-recording' href='./../Overviews/Methods.html#recording'>recording</a></h3>
+<div class='method'>
+<p>whether or not the OSCFileLog is currently recording.<h4>Returns:</h4>
+<div class='returnvalue'>
+<p>a Boolean</div></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-close' href='./../Overviews/Methods.html#close'>close</a></h3>
+<div class='method'>
+<p>Close the OSCFileLog and stop recording incoming data.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-open' href='./../Overviews/Methods.html#open'>open</a>(<span class='argstr'>fn</span>)</h3>
+<div class='method'>
+<p>Open a new writer for OSC messages. Called when instantiating a new instance.<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>fn<td class='argumentdesc'>
+<p>The filename to write to. A date stamp and extension will be added to this name.</table></div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-resetTime' href='./../Overviews/Methods.html#resetTime'>resetTime</a></h3>
+<div class='method'>
+<p>Resets the offset time to the current time.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-offset' href='./../Overviews/Methods.html#offset'>offset</a></h3>
+<div class='method'>
+<p>The time at which the recording started.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-timelogfile' href='./../Overviews/Methods.html#timelogfile'>timelogfile</a></h3>
+<div class='method'>
+<p>The MultiFileWriter with which the data is written.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-oscRecFunc' href='./../Overviews/Methods.html#oscRecFunc'>oscRecFunc</a></h3>
+<div class='method'>
+<p>The function that records the osc data. This function is added to the processes main OSC receiver.</div><h3 class='method-code'><span class='method-prefix'>.</span><a class='method-name' name='-writeLine' href='./../Overviews/Methods.html#writeLine'>writeLine</a>(<span class='argstr'>time</span>, <span class='argstr'>tag</span>, <span class='argstr'>data</span>)</h3>
+<div class='method'>
+<p>Writes one line of data to the logfile. Called from oscRecFunc;<h4>Arguments:</h4>
+<table class='arguments'>
+<tr><td class='argumentname'>time<td class='argumentdesc'>
+<p>the OSC timestamp<tr><td class='argumentname'>tag<td class='argumentdesc'>
+<p>The OSC tag<tr><td class='argumentname'>data<td class='argumentdesc'>
+<p>The OSC data (an Array)</table></div><h3><a class='anchor' name='Inherited%20instance%20methods'>Inherited instance methods</a></h3>
+<div id='inheritedinstmets'></div><h2><a class='anchor' name='examples'>Examples</a></h2>
+<pre class='code prettyprint lang-sc'>// to record, create a OSCFileLog
+~timelog = OSCFileLog.new( "test" ); // "test" is the base for the filename, a datetime stamp will be automatically added to the name
+
+// send some osc data to test:
+n = NetAddr.new( "localhost", NetAddr.langPort );
+(
+Task({ 10.do{
+    n.sendMsg( "/hello", 0, 20.rand, 19.rand, "hello", 3, 4, 2.003);
+    1.0.rand.max(0.01).wait;
+}}).play;
+);
+
+// close the file again:
+~timelog.close;
+
+
+//------- playback:
+
+// set up our target net address (here we just send to SC again
+n = NetAddr.new( "localhost", NetAddr.langPort );
+
+// we trace it to see if we get it, just to show that it works:
+OSCFunc.trace( true );
+
+// create a player
+~oscplayer = OSCFileLogPlayer.new( "/home/nescivi/SuperCollider/test_130812_121049", n ); // arguments are the file/folder we previously recorded, and the target netaddress
+
+// and play it
+~oscplayer.play;
+
+~oscplayer.pause; // pause playback
+
+~oscplayer.resume; // resume playback
+
+~oscplayer.stop; // stop playback
+
+~oscplayer.reset; // go back to start</pre>
+
+<p><div class='doclink'>helpfile source: <a href='file:///Users/OCiMac/Library/Application Support/SuperCollider/Extensions/others/SC-OSCFileLog-master/HelpSource/Classes/OSCFileLog.schelp'>/Users/OCiMac/Library/Application Support/SuperCollider/Extensions/others/SC-OSCFileLog-master/HelpSource/Classes/OSCFileLog.schelp</a><br>link::Classes/OSCFileLog::<br></div></div></body></html>

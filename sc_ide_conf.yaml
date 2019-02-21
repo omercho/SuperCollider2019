@@ -1,0 +1,130 @@
+IDE:
+  editor:
+    blinkDuration: 600
+    disableBlinkingCursor: false
+    font:
+      antialias: 2
+      family: Courier New
+      size: 13
+    highlightBracketContents: true
+    highlightCurrentLine: false
+    inactiveEditorFadeAlpha: 64
+    indentWidth: 4
+    insertMatchingTokens: false
+    lineWrap: true
+    spaceIndent: false
+    stepForwardEvaluation: false
+    theme: MacBook
+    themes:
+      MacBook:
+        built-in: !textFormat
+          color: "#3333bf"
+          italic: false
+        char: !textFormat
+          color: "#007300"
+          italic: false
+        class: !textFormat
+          color: "#0000d2"
+          italic: false
+        comment: !textFormat
+          color: "#bf0000"
+          italic: false
+        currentLine: !textFormat
+          color: "#000000"
+          background: "#f4f4f4"
+          italic: false
+        env-var: !textFormat
+          color: "#8c4614"
+          italic: false
+        evaluatedCode: !textFormat
+          color: "#000000"
+          background: "#f8a200"
+          italic: false
+        keyword: !textFormat
+          color: "#0000e6"
+          bold: true
+          italic: false
+        lineNumbers: !textFormat
+          color: "#000000"
+          background: "#a9a9a9"
+          italic: false
+        matchingBrackets: !textFormat
+          color: "#fc0006"
+          bold: true
+          italic: false
+        mismatchedBrackets: !textFormat
+          color: "#ffffff"
+          background: "#960000"
+          italic: false
+        number: !textFormat
+          color: "#980099"
+          italic: false
+        postwindowemphasis: !textFormat
+          color: "#000000"
+          bold: true
+          italic: false
+        postwindowerror: !textFormat
+          color: "#d11c24"
+          italic: false
+        postwindowsuccess: !textFormat
+          color: "#738a05"
+          italic: false
+        postwindowtext: !textFormat
+          color: "#000000"
+          italic: false
+        postwindowwarning: !textFormat
+          color: "#a57706"
+          italic: false
+        primitive: !textFormat
+          color: "#3333bf"
+          italic: false
+        searchResult: !textFormat
+          color: "#000000"
+          background: "#6c6c6e"
+          italic: false
+        selection: !textFormat
+          color: "#000000"
+          background: "#d8d8dc"
+          italic: false
+        string: !textFormat
+          color: "#5f5f5f"
+          italic: false
+        symbol: !textFormat
+          color: "#007300"
+          italic: false
+        text: !textFormat
+          color: "#000000"
+          background: "#ffffff"
+          italic: false
+        whitespace: !textFormat
+          color: "#7f7f7f"
+          italic: false
+    useComboBox: false
+    useComboBoxWhenSplitting: false
+  interpreter:
+    autoStart: true
+    configFile: ""
+    runtimeDir: ""
+    standalone: false
+  mainWindow:
+    detached: !QVariantMap
+      documents-dock: ""
+      help-dock: ""
+      post-dock: ""
+    geometry: AdnQywACAAAAAARfAAAAFgAACf8AAAWfAAAEXwAAACwAAAn/AAAFnwAAAAAAAAAACgA=
+    state: AAAA/wAAAAD9AAAAAgAAAAAAAACeAAAFWfwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAFWQAAAGcA////AAAAAQAAAp8AAAVZ/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAA7UAAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAA7YAAAGjAAAATAD///8AAAJiAAAFWQAAAAEAAAACAAAAAQAAAAL8AAAAAA==
+  postWindow:
+    lineWrap: false
+    scrollback: 1000
+  recentDocuments: !QVariantList
+    - /Users/OCiMac/Dropbox/SC/__SC2019/ReadAndWriteTXTFile.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startupOC/MakamScaleInfo.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startupOC/UsullerAmpDur.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startup.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startupOC/OCProtoEvents.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startupOC/OCScales.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startupOC/MakamPfuncForPbind.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/startupOC/MoreControlSpecs.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/Kafes/~KafesOF/scCode/unUsed/IZ_code/soundCheck/RecordInput.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_OG_Ifquence_SC/IFLoad.sc
+  startWithSession: last
