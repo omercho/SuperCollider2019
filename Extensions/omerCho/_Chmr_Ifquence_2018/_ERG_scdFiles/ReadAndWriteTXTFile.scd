@@ -4,24 +4,34 @@
 /Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks
 
 
-~ifPath_VKick="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtVKick.txt";
-~fileVKick=File.new(~ifPath_VKick.standardizePath,"w");
+~ifPathStbl="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtStbl.txt";
+
+~fileStbl=File.new(~ifPathStbl.standardizePath,"w");
+
 (1..100).do { |n|
-    ~fileVKick.write(n.asString ++ if (n % 16 != 0, ",", Char.nl));
+	    ~fileStbl.write(n.asString ++ if (n % 16 != 0, ",", Char.nl));
 };
-~fileVKick.close;
+~fileStbl.close;
 
-~readVKick = CSVFileReader.readInterpret(~ifPath_VKick.standardizePath, true, true).postln;
+~readStbl = CSVFileReader.readInterpret(~ifPathStbl.standardizePath, true, true).postln;
 
+~ifTxtVKick=~readStbl[0];
+~ifTxtVSnr=~readStbl[1];
+~ifTxtVHat=~readStbl[2];
+~ifTxtVClap=~readStbl[3];
 
-~fileVKick.open(~ifPath_VKick.standardizePath,"w");
+~ifTxtVKick[8];
+
+~fileStbl.open(~ifPathStbl.standardizePath,"w");
 
 (1..64).do { |n|
-    ~fileVKick.write([0,1].choose.asString ++ if (n % 16 != 0, ",", Char.nl));
+	~fileStbl.write(
+		[0,1].choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+	);
 };
-~fileVKick.close;
+~fileStbl.close;
 
-
+~readVKick = CSVFileReader.readInterpret(~fileStbl.standardizePath, true, true).postln;
 
 
 
@@ -227,4 +237,20 @@ g.close;
 f = File("~/test.dat".standardizePath,"r");
 f.inspect;
 f.close;
+)
+
+
+
+
+(
+var add_amt, max_add, total;
+max_add = 0.5;
+total = 0;
+{total < 1}.while({
+	add_amt = max_add.rand;
+	// . . .
+	total = total + add_amt;
+	"in while loop".postln;
+	total.postln;
+});
 )
