@@ -70,13 +70,14 @@ IFProjectGlobals.setTempo(20);
 		~local = NetAddr("localhost", 57120);
 
 		~mdOut = MIDIOut.newByName("IAC Driver", "SC-Abl");
-		~mdOutID= (-17145979325);
+		~mdOutID= (539419584);
 		~mdClock = MIDIClockOut("IAC Driver", "SC-Abl", TempoClock.default);
 
 		~vBass = MIDIOut.newByName("iConnectMIDI4+", "USB3 DIN1");
 		~vKeys = MIDIOut.newByName("iConnectMIDI4+", "USB3 DIN2");
 
 		~mdTouch = MIDIOut.newByName("TouchOSC Bridge", "TouchOSC Bridge");
+		~mdTouchOutID= (-1632639753);
 		~midiVel=127;
 
 		//IFProjectGlobals.setTempo(124);

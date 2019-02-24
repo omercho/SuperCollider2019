@@ -1,19 +1,19 @@
 IFTxst{
-	classvar path01, path02,path03, make, wrt;
+	classvar pathStKick, path02,path03, make, wrt;
 	*paths{
-		path01="~/IFTxst01.txt";
+		pathStKick="~/CHMR_SCTxt/IFTxt/IFTxtStKick.csv";
 		path02="~/IFTxst01.csv";
 		path03="~/IFTxst01.dat";
 
 	}
 	*makeFile{
 		this.paths;
-		make=File.new(path02.standardizePath,"w");
-		path01.postln;
+		make=File.new(pathStKick.standardizePath,"w");
+		//pathStKick.postln;
 	}
 	*writeFile{|vl01,vl02,vl03,vl04,vl05,vl06,vl07,vl08,vl09,vl10,vl11,vl12,vl13,vl14,vl15,vl16|
 		File.use(
-			path01.standardizePath, "w",
+			pathStKick.standardizePath, "w",
 			{ |txt1|
 				txt1.write(vl01,vl02,vl03,vl04,vl05,vl06,vl07,vl08,vl09,vl10,vl11,vl12,vl13,vl14,vl15,vl16);
 			}
@@ -21,7 +21,7 @@ IFTxst{
 	}
 	*writeArr{|minVal,maxVal|
 		File.use(
-			path01.standardizePath,"w",
+			pathStKick.standardizePath,"w",
 			{ |txt2|
 				(minVal..maxVal).do { |n| txt2.write(n.asString ++ ","); };
 		});
@@ -29,7 +29,7 @@ IFTxst{
 	}
 	*writeArrDo{|tms,val|
 		File.use(
-			path01.standardizePath,"w",
+			pathStKick.standardizePath,"w",
 			{ |txt2|
 				tms.do {
 					txt2.write(val.asString ++ ",");
@@ -39,7 +39,7 @@ IFTxst{
 	}
 	*writeSer{|vl01,vl02,vl03,vl04,vl05,vl06,vl07,vl08,vl09,vl10,vl11,vl12,vl13,vl14,vl15,vl16|
 		File.use(
-			path01.standardizePath,
+			pathStKick.standardizePath,
 			"w",
 			{ |txt3|
 				txt3.write(
@@ -50,7 +50,7 @@ IFTxst{
 	}
 	*writeDo{|min,max|
 		File.use(
-			path01.standardizePath,"w+",
+			pathStKick.standardizePath,"w+",
 			{ |txt4|
 				16.do{txt4.write([min,max].choose.asString ++ " ")};
 			}
@@ -58,7 +58,7 @@ IFTxst{
 	}
 	*write{|min,max|
 		File.use(
-			path01.standardizePath,"w+",
+			pathStKick.standardizePath,"w+",
 			{ |txt4|
 				15.do{txt4.write([min,max].choose.asString ++ ", ")};
 				//2.0.wait;
@@ -68,7 +68,7 @@ IFTxst{
 	}
 	*wrt{|min,max|
 		File.use(
-			path02.standardizePath,"wb+",
+			pathStKick.standardizePath,"wb+",
 			{ |txt4|
 				16.do{txt4.write([min,max].choose.asString)};
 			}
@@ -76,19 +76,31 @@ IFTxst{
 	}
 	*wrtC{|min,max|
 		File.use(
-			path02.standardizePath,"wb",
+			pathStKick.standardizePath,"wb",
 			{ |txt4|
 				16.do{txt4.write([min,max].choose.asString++ ",")};
 			}
 		);
 	}
+	*wrtLns{|min,max|
+		File.use(
+			pathStKick.standardizePath,"wb",
+			{ |txt4,cnt=0|
+				32.do{
+					txt4.write([min,max].choose.asString ++ if (cnt=16,{Char.nl},{","}););
+					cnt+1;
+
+				}
+			};
+		);
+	}
 	//READ
 	*readFile{
 		File.use(
-			path01,
+			pathStKick,
 			"r",
 			{ |read|
-				read.read(path01);
+				read.read(pathStKick);
 				//read.getString.postln;
 			}
 		);
@@ -104,12 +116,43 @@ IFTxst.writeDo(0,1);
 IFTxst.writeArrDo(16,2);
 IFTxst.readFile;
 
+//OKKKKK
 IFTxst.makeFile;
 IFTxst.wrtC(0,1);
-~flCsv=CSVFileReader.read("~/IFTxst01.csv".standardizePath,false,false);
+~flCsv=CSVFileReader.read("~/CHMR_SCTxt/IFTxt/IFTxtStKick.csv".standardizePath,false,false);
 ~flCsv.postcs;
 ~dfg=~flCsv.collect(_.collect(_.interpret));
 ~nm= ~dfg[0];
+(~dfg[3])+(~dfg[4])
+
+IFSeqVKick.st01([0,1].choose);
+IFSeqVKick.st02([0,1].choose);
+IFSeqVKick.st03([0,1].choose);
+IFSeqVKick.st04([0,1].choose);
+IFSeqVKick.st05([0,1].choose);
+IFSeqVKick.st06([0,1].choose);
+IFSeqVKick.st07([0,1].choose);
+IFSeqVKick.st08([0,1].choose);
+
+IFSeqVKick.st09([0,1].choose);
+IFSeqVKick.st10([0,1].choose);
+IFSeqVKick.st11([0,1].choose);
+IFSeqVKick.st12([0,1].choose);
+IFSeqVKick.st13([0,1].choose);
+IFSeqVKick.st14([0,1].choose);
+IFSeqVKick.st15([0,1].choose);
+IFSeqVKick.st16([0,1].choose);
+
+
+IFTxst.makeFile;
+IFTxst.wrtLns(0,1);
+~flCsv=CSVFileReader.read("~/CHMR_SCTxt/IFTxt/IFTxtStKick.csv".standardizePath,false,false);
+~flCsv.postcs;
+~dfg=~flCsv.collect(_.collect(_.interpret));
+~nm= ~dfg[0];
+
+
+
 
 
 ~fl=File.readAllString("~/IFTxst01.csv".standardizePath,"rb");

@@ -28,8 +28,8 @@ c = NoteOnResponder({ |src,chan,note,vel|
 ~apcMn.uid;
 ~djMix.uid;
 ~djMn.uid;
-
-
+~mdTouch.uid;
+~mdOut.uid;
 */
 
 IFiConnectMIDI4{
@@ -50,7 +50,7 @@ IFiConnectMIDI4{
 		~hstPort15=();~hstPort16=();
 
 		~iC_iPhone = MIDIOut.newByName("iConnectMIDI4+", "USB3 usb1");
-		~iC_iPhoneOutID=(-426163114);
+		~iC_iPhoneOutID=(-1012629108);
 		~iC_iPhoneInID=~hstPort1;
 		//~iC_iPhoneClockOut = MIDIClockOut("iConnectMIDI4+", "USB3 usb1", TempoClock.default);
 
