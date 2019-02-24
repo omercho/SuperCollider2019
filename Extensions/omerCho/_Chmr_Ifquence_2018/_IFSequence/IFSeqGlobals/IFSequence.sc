@@ -372,262 +372,262 @@ IFSequence {
 
 	}
 	*led01 {|delay=0.3|
-		"Seq 1 step 01-".postln;
+		//"Seq 1 step 01-".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed01', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed01', 0);};
 	}
 	*led02 {
-		"Seq 1 step 02--".postln;
+		//"Seq 1 step 02--".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed02', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed02', 0);};
 	}
 	*led03 {
-		"Seq 1 step 03---".postln;
+		//"Seq 1 step 03---".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed03', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed03', 0);};
 	}
 	*led04 {
-		"Seq 1 step 04----".postln;
+		//"Seq 1 step 04----".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed04', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed04', 0);};
 	}
 	*led05 {
-		"Seq 1 step 05-".postln;
+		//"Seq 1 step 05-".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed05', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed05', 0);};
 	}
 	*led06 {
-		"Seq 1 step 06--".postln;
+		//"Seq 1 step 06--".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed06', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed06', 0);};
 	}
 	*led07 {
-		"Seq 1 step 07---".postln;
+		//"Seq 1 step 07---".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed07', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed07', 0);};
 	}
 	*led08 {
-		"Seq 1 step 08----".postln;
+		//"Seq 1 step 08----".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed08', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed08', 0);};
 	}
 	*led09 {
-		"Seq 1 step 09-".postln;
+		//"Seq 1 step 09-".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed09', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed09', 0);};
 	}
 	*led10 {
-		"Seq 1 step 10--".postln;
+		//"Seq 1 step 10--".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed10', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed10', 0);};
 	}
 	*led11 {
-		"Seq 1 step 11---".postln;
+		//"Seq 1 step 11---".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed11', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed11', 0);};
 	}
 	*led12 {
-		"Seq 1 step 12----".postln;
+		//"Seq 1 step 12----".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed12', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed12', 0);};
 	}
 	*led13 {
-		"Seq 1 step 13-".postln;
+		//"Seq 1 step 13-".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed13', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed13', 0);};
 	}
 	*led14 {
-		"Seq 1 step 14--".postln;
+		//"Seq 1 step 14--".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed14', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed14', 0);};
 	}
 	*led15 {
-		"Seq 1 step 15---".postln;
+		//"Seq 1 step 15---".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed15', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed15', 0);};
 	}
 	*led16 {
-		"Seq 1 step 16----".postln;
+		//"Seq 1 step 16----".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed16', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed16', 0);};
 	}
 	//-----------2
 	*led17 {|delay=0.3|
-		"Seq 2 step 01-".postln;
+		//"Seq 2 step 01-".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led01', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led01', 0);};
 	}
 	*led18 {
-		"Seq 2 step 02--".postln;
+		//"Seq 2 step 02--".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led02', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led02', 0);};
 	}
 	*led19 {
-		"Seq 2 step 03---".postln;
+		//"Seq 2 step 03---".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led03', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led03', 0);};
 	}
 	*led20 {
-		"Seq 2 step 04----".postln;
+		//"Seq 2 step 04----".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led04', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led04', 0);};
 	}
 	*led21 {
-		"Seq 2 step 05-".postln;
+		//"Seq 2 step 05-".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led05', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led05', 0);};
 	}
 	*led22 {
-		"Seq 2 step 06--".postln;
+		//"Seq 2 step 06--".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led06', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led06', 0);};
 	}
 	*led23 {
-		"Seq 2 step 07---".postln;
+		//"Seq 2 step 07---".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led07', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led07', 0);};
 	}
 	*led24 {
-		"Seq 2 step 08----".postln;
+		//"Seq 2 step 08----".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led08', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led08', 0);};
 	}
 	*led25 {
-		"Seq 2 step 09-".postln;
+		//"Seq 2 step 09-".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led09', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led09', 0);};
 	}
 	*led26 {
-		"Seq 2 step 10--".postln;
+		//"Seq 2 step 10--".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led10', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led10', 0);};
 	}
 	*led27 {
-		"Seq 2 step 11---".postln;
+		//"Seq 2 step 11---".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led11', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led11', 0);};
 	}
 	*led28 {
-		"Seq 2 step 12----".postln;
+		//"Seq 2 step 12----".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led12', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led12', 0);};
 	}
 	*led29 {
-		"Seq 2 step 13-".postln;
+		//"Seq 2 step 13-".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led13', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led13', 0);};
 	}
 	*led30 {
-		"Seq 2 step 14--".postln;
+		//"Seq 2 step 14--".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led14', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led14', 0);};
 	}
 	*led31 {
-		"Seq 2 step 15---".postln;
+		//"Seq 2 step 15---".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led15', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led15', 0);};
 	}
 	*led32 {
-		"Seq 2 step 16----".postln;
+		//"Seq 2 step 16----".postln;
 		fork{~tOSCAdrr.sendMsg('seq2Led16', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq2Led16', 0);};
 	}
 	//-----------3
 	*led33 {|delay=0.3|
-		"Seq 3 step 01-".postln;
+		//"Seq 3 step 01-".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led01', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led01', 0);};
 	}
 	*led34 {
-		"Seq 3 step 02--".postln;
+		//"Seq 3 step 02--".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led02', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led02', 0);};
 	}
 	*led35 {
-		"Seq 3 step 03---".postln;
+		//"Seq 3 step 03---".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led03', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led03', 0);};
 	}
 	*led36 {
-		"Seq 3 step 04----".postln;
+		//"Seq 3 step 04----".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led04', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led04', 0);};
 	}
 	*led37 {
-		"Seq 3 step 05-".postln;
+		//"Seq 3 step 05-".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led05', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led05', 0);};
 	}
 	*led38 {
-		"Seq 3 step 06--".postln;
+		//"Seq 3 step 06--".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led06', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led06', 0);};
 	}
 	*led39 {
-		"Seq 3 step 07---".postln;
+		//"Seq 3 step 07---".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led07', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led07', 0);};
 	}
 	*led40 {
-		"Seq 3 step 08----".postln;
+		//"Seq 3 step 08----".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led08', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led08', 0);};
 	}
 	*led41 {
-		"Seq 3 step 09-".postln;
+		//"Seq 3 step 09-".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led09', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led09', 0);};
 	}
 	*led42 {
-		"Seq 3 step 10--".postln;
+		//"Seq 3 step 10--".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led10', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led10', 0);};
 	}
 	*led43 {
-		"Seq 3 step 11---".postln;
+		//"Seq 3 step 11---".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led11', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led11', 0);};
 	}
 	*led44 {
-		"Seq 3 step 12----".postln;
+		//"Seq 3 step 12----".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led12', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led12', 0);};
 	}
 	*led45 {
-		"Seq 3 step 13-".postln;
+		//"Seq 3 step 13-".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led13', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led13', 0);};
 	}
 	*led46 {
-		"Seq 3 step 14--".postln;
+		//"Seq 3 step 14--".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led14', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led14', 0);};
 	}
 	*led47 {
-		"Seq 3 step 15---".postln;
+		//"Seq 3 step 15---".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led15', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led15', 0);};
 	}
 	*led48 {
-		"Seq 3 step 16----".postln;
+		//"Seq 3 step 16----".postln;
 		fork{~tOSCAdrr.sendMsg('seq3Led16', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq3Led16', 0);};
 	}
 	//-----------4
 	*led49 {|delay=0.3|
-		"Seq 4 step 01-".postln;
+		//"Seq 4 step 01-".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led01', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led01', 0);};
 	}
 	*led50 {
-		"Seq 4 step 02--".postln;
+		//"Seq 4 step 02--".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led02', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led02', 0);};
 	}
 	*led51 {
-		"Seq 4 step 03---".postln;
+		//"Seq 4 step 03---".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led03', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led03', 0);};
 	}
 	*led52 {
-		"Seq 4 step 04----".postln;
+		//"Seq 4 step 04----".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led04', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led04', 0);};
 	}
 	*led53 {
-		"Seq 4 step 05-".postln;
+		//"Seq 4 step 05-".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led05', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led05', 0);};
 	}
 	*led54 {
-		"Seq 4 step 06--".postln;
+		//"Seq 4 step 06--".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led06', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led06', 0);};
 	}
 	*led55 {
-		"Seq 4 step 07---".postln;
+		//"Seq 4 step 07---".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led07', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led07', 0);};
 	}
 	*led56 {
-		"Seq 4 step 08----".postln;
+		//"Seq 4 step 08----".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led08', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led08', 0);};
 	}
 	*led57 {
-		"Seq 4 step 09-".postln;
+		//"Seq 4 step 09-".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led09', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led09', 0);};
 	}
 	*led58 {
-		"Seq 4 step 10--".postln;
+		//"Seq 4 step 10--".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led10', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led10', 0);};
 	}
 	*led59 {
-		"Seq 4 step 11---".postln;
+		//"Seq 4 step 11---".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led11', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led11', 0);};
 	}
 	*led60 {
-		"Seq 4 step 12----".postln;
+		//"Seq 4 step 12----".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led12', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led12', 0);};
 	}
 	*led61 {
-		"Seq 4 step 13-".postln;
+		//"Seq 4 step 13-".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led13', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led13', 0);};
 	}
 	*led62 {
-		"Seq 4 step 14--".postln;
+		//"Seq 4 step 14--".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led14', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led14', 0);};
 	}
 	*led63 {
-		"Seq 4 step 15---".postln;
+		//"Seq 4 step 15---".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led15', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led15', 0);};
 	}
 	*led64 {
-		"Seq 4 step 16----".postln;
+		//"Seq 4 step 16----".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led16', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led16', 0);};
 	}
 	*freeAll {

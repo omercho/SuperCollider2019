@@ -111,17 +111,12 @@ IFKick {
 		case
 		{ i == val }  {
 			{val.do{
-
 				~kickLate.wait;
-
 				this.p1(val);
-
-
 				//~durMulP*((~dur1KickP.next)/val).wait;
 				((~dur1KickP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
 		}
-
 	}
 	*p1 {|i=1|
 		var val;
@@ -136,7 +131,7 @@ IFKick {
 			\amp, Pseq([~volKickP.next*~amp1KickP.next], inf),
 			\sustain, Pseq([~sus1KickP.next],inf)*~susMulKick,
 			\mtranspose, Pseq([~transKickP.next], inf)+~trKick+~transShufKickP.next,
-			\octave, Pseq([~octKickP.next], inf)+~octMulKick,
+			\octave, Pseq([~octKickP], inf)+~octMulKick,
 			\harmonic, Pseq([~hrmKickP.next], inf)+~harmKick,
 		).play(quant:0);
 		//Kick2
@@ -145,6 +140,7 @@ IFKick {
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
 			\dur, Pseq([~durKick2P.next], ~actKick2P),
 			\degree, Pseq([~ntKick2P.next], inf),
+			\octave, Pseq([~octKickP.next], inf)+~octMulKick,
 			\amp, Pseq([~volKick2P.next*~ampKick2P.next], inf),
 			\sustain, Pseq([~susKick2P.next],inf)*~susMulKick
 		).play(quant:~quantKick2);

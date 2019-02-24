@@ -27,7 +27,7 @@ IFBass {
 		this.apc40;
 	}
 	*globals{
-		~chBass=0;
+		~chBass=3;
 		~bassLate=0.0;
 		~timesBass=1;
 		~octMulBass=0;
@@ -151,7 +151,7 @@ IFBass {
 			\lfo2Rate, Pseq([~lfo2BassP.next],inf)*~lfoMulBass,
 			\group, ~piges,
 			\out, Pseq([~busBass], inf )
-		).play(quant:0);
+		).play(TempoClock.default, quant: 0);
 
 	}//p1_SC
 
@@ -160,7 +160,7 @@ IFBass {
 		val=i;
 		Pbind(
 			\chan, ~chBass,
-			\type, \midi, \midiout,~vBass, \scale, Pfunc({~scl2}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1BassP.next],~actBassP),
 			\degree, Pseq([~nt1BassP.next], 1),
 			\amp, Pseq([~volBassP.next*~amp1BassP.next], 1),
@@ -168,7 +168,7 @@ IFBass {
 			\mtranspose, Pseq([~transBassP.next], 1)+~trBass+~transShufBassP.next,
 			\octave, Pseq([~octBassP.next], 1)+~octMulBass,
 			\harmonic, Pseq([~hrmBassP.next], 1)+~harmBass
-		).play;
+		).play(TempoClock.default, quant: 0);
 		/*Pbind(//LFO CUT BASS INT
 			\midicmd, \control, \type, \midi,
 			\midiout,~vBass, \chan, 0, \ctlNum, ~lfoInt,

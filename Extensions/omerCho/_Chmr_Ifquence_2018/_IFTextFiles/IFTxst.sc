@@ -1,41 +1,193 @@
 /*
-~txtPathLst[1]
+IFTxt.make(\00,\ifKick,11);
+IFTxt.make(\00,\ifSnr,11);
+IFTxt.make(\00,\ifHat,11);
+IFTxt.make(\00,\ifBass,6);
+IFTxt.make(\00,\ifKeys,6);
+IFTxt.make(\00,\ifSamp,6);
+IFTxt.make(\00,\ifMopho,6);
 
-IFTxst.makePath(\test2)
-IFTxst.makeFile(\test2)
+IFTxt.trckDflt;
 
-IFTxst.readFile
-IFTxst.readFile(1)
-IFTxst.get
+IFTxt.readFile(\00,\ifKick);
+~tKcAmp=IFTxt.line(1);
+~tKcNt=IFTxt.line(2);
+~tKcVel=IFTxt.line(3);
+~tKcSus=IFTxt.line(4);
+~tKcTm=IFTxt.line(5);
+~tKcDur=IFTxt.line(6);
+~tKc2Amp=IFTxt.line(7);
+~tKc2Nt=IFTxt.line(8);
+~tKc2Vel=IFTxt.line(9);
+~tKc2Sus=IFTxt.line(10);
+~tKcOct=IFTxt.line(11);
 
-~ln1=IFTxst()
-~ln1.value
+IFTxt.readFile(\00,\ifSnr);
+~tSrAmp=IFTxt.line(1);
+~tSrNt=IFTxt.line(2);
+~tSrVel=IFTxt.line(3);
+~tSrSus=IFTxt.line(4);
+~tSrTm=IFTxt.line(5);
+~tSrDur=IFTxt.line(6);
+~tSr2Amp=IFTxt.line(7);
+~tSr2Nt=IFTxt.line(8);
+~tSr2Vel=IFTxt.line(9);
+~tSr2Sus=IFTxt.line(10);
+~tSrOct=IFTxt.line(11);
 
-~ln1=IFTxst(\test2,1)
-~ln2=IFTxst(\test2,1)
-~ln3=IFTxst(\test2,1)
-~ln4=IFTxst(\test2,1)
-IFTxst(4)
+IFTxt.readFile(\00,\ifHat);
+~tHtAmp=IFTxt.line(1);
+~tHtNt=IFTxt.line(2);
+~tHtVel=IFTxt.line(3);
+~tHtSus=IFTxt.line(4);
+~tHtTm=IFTxt.line(5);
+~tHtDur=IFTxt.line(6);
+~tHt2Amp=IFTxt.line(7);
+~tHt2Nt=IFTxt.line(8);
+~tHt2Vel=IFTxt.line(9);
+~tHt2Sus=IFTxt.line(10);
+~tHtOct=IFTxt.line(11);
 
-IFTxst.set(\test2,1);
+IFTxt.readFile(\00,\ifBass);
+~tBsAmp=IFTxt.line(1);
+~tBsNt=IFTxt.line(2);
+~tBsVel=IFTxt.line(3);
+~tBsSus=IFTxt.line(4);
+~tBsTm=IFTxt.line(5);
+~tBsDur=IFTxt.line(6);
+
+IFTxt.readFile(\00,\ifKeys);
+~tKyAmp=IFTxt.line(1);
+~tKyNt=IFTxt.line(2);
+~tKyVel=IFTxt.line(3);
+~tKySus=IFTxt.line(4);
+~tKyTm=IFTxt.line(5);
+~tKyDur=IFTxt.line(6);
+
+IFTxt.readFile(\00,\ifSamp);
+~tSmAmp=IFTxt.line(1);
+~tSmNt=IFTxt.line(2);
+~tSmVel=IFTxt.line(3);
+~tSmSus=IFTxt.line(4);
+~tSmTm=IFTxt.line(5);
+~tSmDur=IFTxt.line(6);
+
+IFTxt.readFile(\00,\ifMopho);
+~tMpAmp=IFTxt.line(1);
+~tMpNt=IFTxt.line(2);
+~tMpVel=IFTxt.line(3);
+~tMpSus=IFTxt.line(4);
+~tMpTm=IFTxt.line(5);
+~tMpDur=IFTxt.line(6);
 
 */
 
-IFTxst{
-	classvar <>path, <>name, >lineOut,<>rdFile;
+IFTxt{
+	classvar <>file, <>path, <>name, >lineOut,<>rdFile;
 	*initClass {
 		StartUp add: {
 			//Server.default.doWhenBooted({this.paths; });
 		}
 	}
-	*makePath{|fileName|
-		^path="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/"++fileName++".txt"
+	*trckDflt{
+		fork{
+			IFTxt.make(\00,\ifKick,11);
+			0.2.wait;
+			IFTxt.make(\00,\ifSnr,11);
+			0.2.wait;
+			IFTxt.make(\00,\ifHat,11);
+			0.2.wait;
+			IFTxt.make(\00,\ifBass,6);
+			0.2.wait;
+			IFTxt.make(\00,\ifKeys,6);
+			0.2.wait;
+			IFTxt.make(\00,\ifSamp,6);
+			0.2.wait;
+			IFTxt.make(\00,\ifMopho,6);
+			0.2.wait;
+			IFTxt.storeInst;
+		}
+	}
+	*storeInst{
+		IFTxt.readFile(\00,\ifKick);
+		~tKcAmp=IFTxt.line(1);
+		~tKcNt=IFTxt.line(2);
+		~tKcVel=IFTxt.line(3);
+		~tKcSus=IFTxt.line(4);
+		~tKcTm=IFTxt.line(5);
+		~tKcDur=IFTxt.line(6);
+		~tKc2Amp=IFTxt.line(7);
+		~tKc2Nt=IFTxt.line(8);
+		~tKc2Vel=IFTxt.line(9);
+		~tKc2Sus=IFTxt.line(10);
+		~tKcOct=IFTxt.line(11);
+
+		IFTxt.readFile(\00,\ifSnr);
+		~tSrAmp=IFTxt.line(1);
+		~tSrNt=IFTxt.line(2);
+		~tSrVel=IFTxt.line(3);
+		~tSrSus=IFTxt.line(4);
+		~tSrTm=IFTxt.line(5);
+		~tSrDur=IFTxt.line(6);
+		~tSr2Amp=IFTxt.line(7);
+		~tSr2Nt=IFTxt.line(8);
+		~tSr2Vel=IFTxt.line(9);
+		~tSr2Sus=IFTxt.line(10);
+		~tSrOct=IFTxt.line(11);
+
+		IFTxt.readFile(\00,\ifHat);
+		~tHtAmp=IFTxt.line(1);
+		~tHtNt=IFTxt.line(2);
+		~tHtVel=IFTxt.line(3);
+		~tHtSus=IFTxt.line(4);
+		~tHtTm=IFTxt.line(5);
+		~tHtDur=IFTxt.line(6);
+		~tHt2Amp=IFTxt.line(7);
+		~tHt2Nt=IFTxt.line(8);
+		~tHt2Vel=IFTxt.line(9);
+		~tHt2Sus=IFTxt.line(10);
+		~tHtOct=IFTxt.line(11);
+
+		IFTxt.readFile(\00,\ifBass);
+		~tBsAmp=IFTxt.line(1);
+		~tBsNt=IFTxt.line(2);
+		~tBsVel=IFTxt.line(3);
+		~tBsSus=IFTxt.line(4);
+		~tBsTm=IFTxt.line(5);
+		~tBsDur=IFTxt.line(6);
+
+		IFTxt.readFile(\00,\ifKeys);
+		~tKyAmp=IFTxt.line(1);
+		~tKyNt=IFTxt.line(2);
+		~tKyVel=IFTxt.line(3);
+		~tKySus=IFTxt.line(4);
+		~tKyTm=IFTxt.line(5);
+		~tKyDur=IFTxt.line(6);
+
+		IFTxt.readFile(\00,\ifSamp);
+		~tSmAmp=IFTxt.line(1);
+		~tSmNt=IFTxt.line(2);
+		~tSmVel=IFTxt.line(3);
+		~tSmSus=IFTxt.line(4);
+		~tSmTm=IFTxt.line(5);
+		~tSmDur=IFTxt.line(6);
+
+		IFTxt.readFile(\00,\ifMopho);
+		~tMpAmp=IFTxt.line(1);
+		~tMpNt=IFTxt.line(2);
+		~tMpVel=IFTxt.line(3);
+		~tMpSus=IFTxt.line(4);
+		~tMpTm=IFTxt.line(5);
+		~tMpDur=IFTxt.line(6);
+	}
+	*makePath{|dirIndex=00,fileName|
+		^path="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/"++dirIndex++"/"++fileName++".txt"
 	}
 
-	*makeFile{|fileName,file|
+	*rnd4Line{|dir,fileName|
 		var cnt=1, min=0,max=1;
 		fork{
-			this.makePath(fileName);
+			this.makePath(dir,fileName);
 			file=File.new(path.standardizePath,"w");
 			0.02.wait;
 			(1..64).do{|n|
@@ -48,41 +200,108 @@ IFTxst{
 					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
 				);
 				cnt=cnt+1;
-				//0.01.wait;
+			};
+			0.02.wait;
+			file.close;
+		}
+	}
+	*rnd6Line{|dir,fileName|
+		var cnt=1, min=0,max=1;
+		fork{
+			this.makePath(dir,fileName);
+			file=File.new(path.standardizePath,"w");
+			0.02.wait;
+			(1..96).do{|n|
+				case
+				{cnt>0&&cnt<=16}{min=(0);max=(1);}
+				{cnt>16&&cnt<=32}{min=(-4);max=(7);}
+				{cnt>32&&cnt<=48}{min=(1);max=(3);}
+				{cnt>48&&cnt<=64}{min=(1);max=(5);}
+				{cnt>64&&cnt<=80}{min=(1);max=(1);}
+				{cnt>80&&cnt<=96}{min=(4);max=(4);};
+				file.write(
+					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+				);
+				cnt=cnt+1;
 			};
 			0.02.wait;
 			file.close;
 		}
 	}
 
-	//READ
-	*readFile{|line|
-		//var rdFile;
+	*rnd11Line{|dir,fileName|
+		var cnt=1, min=0,max=1;
 		fork{
-			rdFile = CSVFileReader.readInterpret(path.standardizePath, true, true);
+			this.makePath(dir,fileName);
+			file=File.new(path.standardizePath,"w");
 			0.02.wait;
-			line.switch(line,{lineOut=rdFile[line-1];})
-		};
+			(1..176).do{|n|
+				case
+				{cnt>0&&cnt<=16}{min=(0);max=(1);}
+				{cnt>16&&cnt<=32}{min=(0);max=(7);}
+				{cnt>32&&cnt<=48}{min=(1);max=(3);}
+				{cnt>48&&cnt<=64}{min=(1);max=(5);}
+				{cnt>64&&cnt<=80}{min=(1);max=(1);}
+				{cnt>80&&cnt<=96}{min=(4);max=(4);}
+				{cnt>96&&cnt<=112}{min=(0);max=(1);}
+				{cnt>112&&cnt<=128}{min=(-7);max=(14);}
+				{cnt>128&&cnt<=144}{min=(1);max=(3);}
+				{cnt>144&&cnt<=160}{min=(1);max=(5);}
+				{cnt>160&&cnt<=176}{min=(1);max=(4);};
+				file.write(
+					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+				);
+				cnt=cnt+1;
+			};
+			0.02.wait;
+			file.close;
+		}
+	}
+	*make{|dir,nm,lines|
+		lines.switch(
+			4,{
+				fork{
+					this.rnd4Line(dir,nm);
+					0.1.wait;
+					this.readFile(dir,nm);
+					0.1.wait;
+
+				};
+			},
+			6, {
+				fork{
+					this.rnd6Line(dir,nm);
+					0.1.wait;
+					this.readFile(dir,nm);
+					0.1.wait;
+
+				};
+			},
+			11, {
+				fork{
+					this.rnd11Line(dir,nm);
+					0.1.wait;
+					this.readFile(dir,nm);
+					0.1.wait;
+
+				};
+			};
+		)
+	}
+	*readFile{|dir,fileName|
+		this.makePath(dir,fileName);
+		rdFile = CSVFileReader.readInterpret(path.standardizePath, true, true);
 
 	}
-	*new{|i|
+	*line{|i|
 		i.switch(i,{lineOut=rdFile[i-1];});
 		^lineOut;
 	}
-	*set{|nm,ln|
-		fork{
-			this.makeFile(nm);
-			0.1.wait;
-			this.readFile(ln);
-			0.1.wait;
 
-		}
-		//^lineOut;
-	}
 }
 
 /*
-IFTxst.makeFile;
+IFTxst.rnd6Line;
 IFTxst.wrt(0,1);
 IFTxst.wrtC(0,1);
 IFTxst.write(0,1);
@@ -91,7 +310,7 @@ IFTxst.writeArrDo(16,2);
 IFTxst.readFile;
 
 //OKKKKK
-IFTxst.makeFile;
+IFTxst.rnd6Line;
 IFTxst.wrtC(0,1);
 ~flCsv=CSVFileReader.read("~/CHMR_SCTxt/IFTxt/IFTxtStKick.csv".standardizePath,false,false);
 ~flCsv.postcs;
@@ -328,16 +547,16 @@ cnt+1;
 };
 );
 
-	*paths{
-		~txtPathLst=[
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtStbl.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtKick.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtSnr.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtHat.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtBass.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtKeys.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtSamp.txt",
-			"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtMopho.txt"
-		];
-	}
+*paths{
+~txtPathLst=[
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtStbl.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtKick.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtSnr.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtHat.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtBass.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtKeys.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtSamp.txt",
+"~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/IFTxtMopho.txt"
+];
+}
 */

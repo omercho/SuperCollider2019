@@ -71,7 +71,7 @@ IFSamp {
 		~sin2Samp=0.9;
 		~rootFreqSamp=~c5; // 261=C4|523=C5
 
-		~defaultBufSamp.free;~defaultBufSamp = Buffer.read(Server.default, "/Applications/SuperCollider/sounds/_IFSC_Sounds/sop01.aif");
+		//~defaultBufSamp.free;~defaultBufSamp = Buffer.read(Server.default, "/Applications/SuperCollider/sounds/_IFSC_Sounds/sop01.aif");
 		~bufnumSamp = PatternProxy( Pseq([~defaultBufSamp], inf));
 		~bufnumSampP = Pseq([~bufnumSamp], inf).asStream;
 
@@ -154,21 +154,21 @@ IFSamp {
 			\mtranspose, Pseq([~transSampP.next], inf)+~trSamp+~transShufSampP.next,
 			\octave, Pseq([~octSampP.next], inf)+~octMulSamp,
 			\harmonic, Pseq([~hrmSampP.next], inf)+~harmSamp
-		).play;
+		).play(TempoClock.default, quant: 0);
 
 		Pbind(//LFO 1
 			\type, \midi, \midicmd, \control,
 			\midiout,~mdOut, \chan, 7, \ctlNum, 40,
 			\delta, Pseq([~delta1SampP.next], 1),
 			\control, Pseq([~lfo1SampP.next], 1)*~lfoMulSamp1,
-		).play(quant:0);
+		).play(TempoClock.default, quant: 0);
 
 		Pbind(//LFO 2
 			\type, \midi, \midicmd, \control,
 			\midiout,~mdOut,\chan, 7,  \ctlNum, 41,
 			\delta, Pseq([~delta2SampP.next], 1),
 			\control, Pseq([~lfo2SampP.next], 1)*~lfoMulSamp2,
-		).play(quant:0);
+		).play(TempoClock.default, quant: 0);
 
 	}//p1
 

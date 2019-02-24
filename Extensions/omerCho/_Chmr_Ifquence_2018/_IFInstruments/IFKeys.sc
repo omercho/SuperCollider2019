@@ -28,7 +28,7 @@ IFKeys {
 	}
 	*globals{
 
-		~chKeys=0;
+		~chKeys=4;
 		~lateKeys= 0.0;
 		~timesKeys=1;
 		~octMulKeys=0;
@@ -133,7 +133,7 @@ IFKeys {
 		val=i;
 		Pbind(
 			\chan, ~chKeys,
-			\type, \midi, \midiout,~vKeys, \scale, Pfunc({~scl2}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1KeysP.next],~actKeysP),
 			\degree, Pseq([~nt1KeysP.next], inf),
 			\amp, Pseq([~volKeysP.next*~amp1KeysP.next], inf),
@@ -141,22 +141,22 @@ IFKeys {
 			\mtranspose, Pseq([~transKeysP.next], inf)+~trKeys+~transShufKeysP.next,
 			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
 			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
-		).play;
+		).play(TempoClock.default, quant: 0);
 
 		//VKeys
 		Pbind(//LFO CUT KEYS INT
 			\midicmd, \control, \type, \midi,
-			\midiout,~vKeys, \chan, 0, \ctlNum, ~vcoDtn,
+			\midiout,~mdOut, \chan, 6, \ctlNum, 40,
 			\delta, Pseq([~delta1KeysP.value], ~actKeysP),
 			\control, ~lfoMulKeys1*Pexprand(0.1*~lfoCtKeysP.value,1*~lfoCtKeysP.value, inf).round,
-		).play;
+		).play(TempoClock.default, quant: 0);
 
 		Pbind(//LFO RATE KEYS
 		\midicmd, \control, \type, \midi,
-		\midiout,~vKeys, \chan, 0, \ctlNum, ~vcoPort,
+		\midiout,~mdOut, \chan, 6, \ctlNum, 41,
 		\delta, Pseq([~delta2KeysP.value], ~actKeysP),
 		\control, ~lfoMulKeys2*Pexprand(0.1*~lfoRtKeysP.value,0.5*~lfoRtKeysP.value, inf).round,
-		).play;
+		).play(TempoClock.default, quant: 0);
 
 	}//p1
 	*apc40{

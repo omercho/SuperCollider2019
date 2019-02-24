@@ -111,22 +111,22 @@ IDE:
       documents-dock: ""
       help-dock: ""
       post-dock: ""
-    geometry: AdnQywACAAAAAADNAAAAUQAACf8AAAT7AAAAzQAAAGcAAAn/AAAE+wAAAAAAAAAACgA=
-    state: AAAA/wAAAAD9AAAAAgAAAAAAAACeAAAEevwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAEegAAAGcA////AAAAAQAAAmAAAAR6/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAxkAAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAxoAAAFgAAAATAD///8AAAYzAAAEegAAAAEAAAACAAAAAQAAAAL8AAAAAA==
+    geometry: AdnQywACAAAAAALcAAAAUQAACf8AAAT7AAAC3AAAAGcAAAn/AAAE+wAAAAAAAAAACgA=
+    state: AAAA/wAAAAD9AAAAAgAAAAAAAACeAAAEevwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAEegAAAGcA////AAAAAQAAAYMAAAR6/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAxkAAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAxoAAAFgAAAATAD///8AAAUBAAAEegAAAAEAAAACAAAAAQAAAAL8AAAAAA==
   postWindow:
     lineWrap: false
     scrollback: 1000
   recentDocuments: !QVariantList
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFBass.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFKeys.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFSamp.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFStat.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFKick.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFSnr.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFHat.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFVolca/VKeys.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFVolca/VBass.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFMopho/IFMophoResp.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFInstruments/IFKeys.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFMopho/MophoSet.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFVolca/IFVKick.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFSequence/IFSeqKick/IFSeqDurKick.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFSequence/IFSeqKick/IFSeqTmKick.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_ERG_scdFiles/IFText_ERG.scd
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTracks/IFTrack01.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFProjectGlobals.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTextFiles/IFTxst.sc
   shortcuts:
     editor-indent-auto: Ctrl+;
   startWithSession: last
