@@ -5,11 +5,11 @@ VKeys.cc(\voiceVK,4);
 VKeys {
 	var <>ortTime = 1;
 	classvar <>counter3=0, counter18=0;
-	*initClass {
+	/**initClass {
 		StartUp add: {
 		/*Server.default.doWhenBooted({ this.globals; this.preSet01; });*/
 		}
-	}
+	}*/
 	*lbl{|key,val|
 		var chan;
 		~tOSCAdrr.sendMsg(key, val);

@@ -563,12 +563,9 @@ IFLpMnSteps{
 		~lpMn.noteOn(~lpMnCh, ~lpMnBut64, ~green1); //But 8
 	}
 }
-
 /*
-
 IFLpMnSteps.led2(9);
 IFLpMnSteps.ledOnOff(9);
 IFLpMnSteps.ledForkGreen(~lpMnBut9);
 ~lpMn.noteOn(0, ~lpMnBut9, 28);
-
 */

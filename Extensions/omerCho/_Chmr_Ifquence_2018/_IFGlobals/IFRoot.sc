@@ -20,6 +20,7 @@ IFRoot {
 	}
 
 	*play{
+		IFCounter.getClockNow;
 		~ifRootPlayer.play(TempoClock.default, quant: 0);
 		~ifPlayer_Mel2.play(TempoClock.default, quant: 0);
 		~ifPlayer_Mel3.play(TempoClock.default, quant: 0);
@@ -30,6 +31,7 @@ IFRoot {
 	*play{~ifRootPlayer.play(MIDISyncClock, quant: 0);}
 	*/
 	*stop{
+		IFCounter.reset;
 		~ifRootPlayer.stop;
 		~ifPlayer_Mel2.stop;
 		~ifPlayer_Mel3.stop;
@@ -46,8 +48,9 @@ IFRoot {
 				1.do {
 					IFSequence.step(~stepNumP.next);
 					IFStat.ln01;IFStat.ln02;IFStat.ln03;
-					IFStat.ln04;IFStat.ln05;IFStat.ln06;
-
+					IFStat.ln04;IFStat.ln05;
+					//IFStat.ln06;
+					IFCounter.count;
 					/*~cntApcUpdate = ~cntApcUpdate + 1;
 					~cntApcUpdate.switch(
 					0,{},

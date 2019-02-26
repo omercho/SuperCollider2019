@@ -83,7 +83,7 @@ IFTxt.readFile(\00,\ifMopho);
 */
 
 IFTxt{
-	classvar <>file, <>path, <>name, >lineOut,<>rdFile;
+	classvar <>file, <>path, <>lineOut,<>rdFile;
 	*initClass {
 		StartUp add: {
 			//Server.default.doWhenBooted({this.paths; });
@@ -92,24 +92,25 @@ IFTxt{
 	*trckDflt{
 		fork{
 			IFTxt.make(\00,\ifKick,11);
-			0.2.wait;
+			0.1.wait;
 			IFTxt.make(\00,\ifSnr,11);
-			0.2.wait;
+			0.1.wait;
 			IFTxt.make(\00,\ifHat,11);
-			0.2.wait;
+			0.1.wait;
 			IFTxt.make(\00,\ifBass,6);
-			0.2.wait;
+			0.1.wait;
 			IFTxt.make(\00,\ifKeys,6);
-			0.2.wait;
+			0.1.wait;
 			IFTxt.make(\00,\ifSamp,6);
-			0.2.wait;
+			0.1.wait;
 			IFTxt.make(\00,\ifMopho,6);
-			0.2.wait;
-			IFTxt.storeInst;
+			0.1.wait;
+			//IFTxt.storeInst(\00);
+
 		}
 	}
-	*storeInst{
-		IFTxt.readFile(\00,\ifKick);
+	*storeInst{|track|
+		IFTxt.readFile(track,\ifKick);
 		~tKcAmp=IFTxt.line(1);
 		~tKcNt=IFTxt.line(2);
 		~tKcVel=IFTxt.line(3);
@@ -122,7 +123,7 @@ IFTxt{
 		~tKc2Sus=IFTxt.line(10);
 		~tKcOct=IFTxt.line(11);
 
-		IFTxt.readFile(\00,\ifSnr);
+		IFTxt.readFile(track,\ifSnr);
 		~tSrAmp=IFTxt.line(1);
 		~tSrNt=IFTxt.line(2);
 		~tSrVel=IFTxt.line(3);
@@ -135,7 +136,7 @@ IFTxt{
 		~tSr2Sus=IFTxt.line(10);
 		~tSrOct=IFTxt.line(11);
 
-		IFTxt.readFile(\00,\ifHat);
+		IFTxt.readFile(track,\ifHat);
 		~tHtAmp=IFTxt.line(1);
 		~tHtNt=IFTxt.line(2);
 		~tHtVel=IFTxt.line(3);
@@ -148,7 +149,7 @@ IFTxt{
 		~tHt2Sus=IFTxt.line(10);
 		~tHtOct=IFTxt.line(11);
 
-		IFTxt.readFile(\00,\ifBass);
+		IFTxt.readFile(track,\ifBass);
 		~tBsAmp=IFTxt.line(1);
 		~tBsNt=IFTxt.line(2);
 		~tBsVel=IFTxt.line(3);
@@ -156,7 +157,7 @@ IFTxt{
 		~tBsTm=IFTxt.line(5);
 		~tBsDur=IFTxt.line(6);
 
-		IFTxt.readFile(\00,\ifKeys);
+		IFTxt.readFile(track,\ifKeys);
 		~tKyAmp=IFTxt.line(1);
 		~tKyNt=IFTxt.line(2);
 		~tKyVel=IFTxt.line(3);
@@ -164,7 +165,7 @@ IFTxt{
 		~tKyTm=IFTxt.line(5);
 		~tKyDur=IFTxt.line(6);
 
-		IFTxt.readFile(\00,\ifSamp);
+		IFTxt.readFile(track,\ifSamp);
 		~tSmAmp=IFTxt.line(1);
 		~tSmNt=IFTxt.line(2);
 		~tSmVel=IFTxt.line(3);
@@ -172,7 +173,7 @@ IFTxt{
 		~tSmTm=IFTxt.line(5);
 		~tSmDur=IFTxt.line(6);
 
-		IFTxt.readFile(\00,\ifMopho);
+		IFTxt.readFile(track,\ifMopho);
 		~tMpAmp=IFTxt.line(1);
 		~tMpNt=IFTxt.line(2);
 		~tMpVel=IFTxt.line(3);
@@ -181,7 +182,7 @@ IFTxt{
 		~tMpDur=IFTxt.line(6);
 	}
 	*makePath{|dirIndex=00,fileName|
-		^path="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/"++dirIndex++"/"++fileName++".txt"
+		^path="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/Track_00/"++dirIndex++"/"++fileName++".txt"
 	}
 
 	*rnd4Line{|dir,fileName|
@@ -301,6 +302,23 @@ IFTxt{
 }
 
 /*
+(
+AppClock.sched(0.0,{ arg time;
+    ["AppClock has been playing for ",time].postln;
+    rrand(0.1,0.9);
+});
+)
+
+(
+AppClock.sched(2.0,{
+    "2.0 seconds later".postln;
+    nil;
+});
+)
+5*60
+
+AppClock.clear;
+
 IFTxst.rnd6Line;
 IFTxst.wrt(0,1);
 IFTxst.wrtC(0,1);

@@ -15,11 +15,11 @@ IFKeys {
 	classvar <>counter3 = 0;
 
 
-	*initClass{
+	/**initClass{
 		StartUp add: {
 			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default;this.osc; });*/
 		}
-	}
+	}*/
 	*load{
 		this.globals;
 		this.proxy;
@@ -152,10 +152,10 @@ IFKeys {
 		).play(TempoClock.default, quant: 0);
 
 		Pbind(//LFO RATE KEYS
-		\midicmd, \control, \type, \midi,
-		\midiout,~mdOut, \chan, 6, \ctlNum, 41,
-		\delta, Pseq([~delta2KeysP.value], ~actKeysP),
-		\control, ~lfoMulKeys2*Pexprand(0.1*~lfoRtKeysP.value,0.5*~lfoRtKeysP.value, inf).round,
+			\midicmd, \control, \type, \midi,
+			\midiout,~mdOut, \chan, 6, \ctlNum, 41,
+			\delta, Pseq([~delta2KeysP.value], ~actKeysP),
+			\control, ~lfoMulKeys2*Pexprand(0.1*~lfoRtKeysP.value,0.5*~lfoRtKeysP.value, inf).round,
 		).play(TempoClock.default, quant: 0);
 
 	}//p1
@@ -278,61 +278,61 @@ IFKeys {
 			vel=msg[1]*127;
 			~tOSCAdrr.sendMsg('volKeys', msg[1]);
 			//~vKeys.control(5, 1, vel);
+			~mdOut.control(6, 1, vel);
 			~volKeys.source = val;
 		},
 		'/volKeys');
 
-		/*~attKeysFader.free;
+		~attKeysFader.free;
 		~attKeysFader= OSCFunc({
-		arg msg,vel,val;
-		vel=msg[1]*127;
-		val=msg[1];
-		if ( ~volcaBoolean==1, {
-		//~tOSCAdrr.sendMsg('attKeys', msg[1]);
-		VKeys.cc(\envAttVK,vel);
-		//~vKeys.control(0, ~envAtt, val);
-		//~attKeys=val+0.01;
-		},{
-		~tOSCAdrr.sendMsg('attKeys', msg[1]);
-		~attKeys=val+0.01;
-		});
+			arg msg,vel,val;
+			vel=msg[1]*127;
+			val=msg[1];
+			if ( ~volcaBoolean==1, {
+				//~tOSCAdrr.sendMsg('attKeys', msg[1]);
+				VKeys.cc(\envAttVK,vel);
+				//~vKeys.control(0, ~envAtt, val);
+				//~attKeys=val+0.01;
+			},{
+				~tOSCAdrr.sendMsg('attKeys', msg[1]);
+				~mdOut.control(6, 5, vel);
+			});
 		},
 		'/attKeys'
 		);
 		~susKeysFader.free;
 		~susKeysFader= OSCFunc({
-		arg msg,val,vel;
-		val=msg[1];
-		vel=msg[1]*127;
-		if ( ~volcaBoolean==1, {
-		~tOSCAdrr.sendMsg('susKeys', msg[1]);
-		~vKeys.control(0, ~envSus, vel+0.01);
-		~susLevKeys=val;
-		},{
-		~tOSCAdrr.sendMsg('susKeys', msg[1]);
-		~susLevKeys=val;
-		});
+			arg msg,val,vel;
+			val=msg[1];
+			vel=msg[1]*127;
+			if ( ~volcaBoolean==1, {
+				~tOSCAdrr.sendMsg('susKeys', msg[1]);
+				~vKeys.control(0, ~envSus, vel+0.01);
+				~susLevKeys=val;
+			},{
+				~tOSCAdrr.sendMsg('susKeys', msg[1]);
+				~mdOut.control(6, 6, vel);
+			});
 		},
 		'/susKeys'
 		);
 		~decKeysFader.free;
 		~decKeysFader= OSCFunc({
-		arg msg,val,vel;
-		val=msg[1];
-		vel=msg[1]*127;
-		if ( ~volcaBoolean==1, {
-		~tOSCAdrr.sendMsg('decKeys', val);
-		~vKeys.control(0, ~envDec, vel+0.01);
-		~decKeys=val;
-		~relKeys=val*0.7;
-		},{
-		~tOSCAdrr.sendMsg('decKeys', val);
-		~decKeys=val;
-		~relKeys=val*0.7;
-		});
+			arg msg,val,vel;
+			val=msg[1];
+			vel=msg[1]*127;
+			if ( ~volcaBoolean==1, {
+				~tOSCAdrr.sendMsg('decKeys', val);
+				~vKeys.control(0, ~envDec, vel+0.01);
+				~decKeys=val;
+				~relKeys=val*0.7;
+			},{
+				~tOSCAdrr.sendMsg('decKeys', val);
+				~mdOut.control(6, 127, vel);
+			});
 		},
 		'/decKeys'
-		);*/
+		);
 
 		~xy1Keys.free;
 		~xy1Keys= OSCFunc({
@@ -347,7 +347,8 @@ IFKeys {
 				VKeys.cc(\dlyFeedVK,msg[1]*127);
 				~tOSCAdrr.sendMsg('xy1Keys', msg[1], msg[2]);
 			},{
-
+				~mdOut.control(6, 12, vel);
+				~mdOut.control(6, 11, vel);
 				~tOSCAdrr.sendMsg('xy1Keys', msg[1], msg[2]);
 			});
 		},

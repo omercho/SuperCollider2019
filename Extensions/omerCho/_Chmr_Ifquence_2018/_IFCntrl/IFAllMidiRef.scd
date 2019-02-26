@@ -226,7 +226,8 @@ NoteOnResponder.removeAll
 ~mdOut.control(10, 27, ~midiVel); //Drum Audio / Mid
 ~mdOut.control(10, 28, ~midiVel); //Drum Audio / High
 ~mdOut.control(10, 30, ~midiVel); //Drum / Filt Morph - Feedback Hat Delay
-~mdOut.control(10, 31, ~midiVel); //Drum / Filt Freq
+~mdOut.control(10, 31, ~midiVel); //Drum / Delay Feedback
+~mdOut.control(10, 32, ~midiVel); //Drum / Delay DryWet
 //Melody Channel
 ~mdOut.control(10, 73, ~midiVel); //Mel / Send A
 ~mdOut.control(10, 74, ~midiVel); //Mel / Send B

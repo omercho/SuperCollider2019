@@ -11,11 +11,11 @@ IFHat {
 	var<>hTime=1;
 
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default; this.cntrl; });*/
 		}
-	}
+	}*/
 
 	*load {
 		this.globals;

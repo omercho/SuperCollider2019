@@ -4,7 +4,7 @@ IFPitch.loadAll;
 
 IFPitch {
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({
 			1.0.wait;
@@ -16,7 +16,7 @@ IFPitch {
 			this.trans;
 			});*/
 		}
-	}
+	}*/
 
 	*loadAll {
 		this.buttons;

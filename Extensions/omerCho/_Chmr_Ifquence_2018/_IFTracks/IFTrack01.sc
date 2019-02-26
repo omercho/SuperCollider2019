@@ -266,7 +266,7 @@ IFTrack01 {
 
 		//CH -4- [Bass]
 		IFSeqBass.stGrpSet    (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
-		IFSeqOctBass.stGrpSet (3,4,3,3, 3,4,3,3,  3,4,3,3, 3,4,3,3);
+		IFSeqOctBass.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
 		IFSeqNtBass.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 0,0,0,0);
 		IFSeqVelBass.stGrpSet (3,2,3,2, 3,2,3,2,  3,2,3,2, 3,2,3,2);
 		IFSeqSusBass.stGrpSet (3,1,2,1, 3,1,2,1,  3,1,2,1, 3,2,2,3);
@@ -1138,9 +1138,7 @@ IFTrack01 {
 		~octVHat=0;~ntVHat.source = Pseq([125], inf);
 		IFSeqVClap.stGrpSet  (0,0,0,0, 0,1,0,0,  0,0,0,0, 0,1,0,0);
 		~octVClap=0;~ntVClap.source = Pseq([36], inf);
-
 		//CH -1- [ Kick ]
-
 		IFSeqKick.stGrpSet    (
 			~tKcAmp[0],~tKcAmp[1],~tKcAmp[2],~tKcAmp[3],
 			~tKcAmp[4],~tKcAmp[5],~tKcAmp[6],~tKcAmp[7],
@@ -1207,8 +1205,6 @@ IFTrack01 {
 			~tKcOct[8],~tKcOct[9],~tKcOct[10],~tKcOct[11],
 			~tKcOct[12],~tKcOct[13],~tKcOct[14],~tKcOct[15],
 		);
-
-
 		//CH -1- [ Snare ]
 		IFSeqSnr.stGrpSet    (
 			~tSrAmp[0],~tSrAmp[1],~tSrAmp[2],~tSrAmp[3],
@@ -1515,17 +1511,21 @@ IFTrack01 {
 		IFShuf.loadMopho(0,2,0,-3,8,1,0,6,2);
 		~local.sendMsg('lfoMulMopho1',0.2);
 		~local.sendMsg('lfoMulMopho2',0.3);
-		~local.sendMsg('lfo1AmntMopho',0.0);
+		~local.sendMsg('lfo1AmntMopho',0.5);
 		//CH- -8- [Ext]
 		~local.sendMsg('volExt',0.8);
 		~local.sendMsg('susExt',0.2);
 		~local.sendMsg('rlsExt',0.2);
 		~local.sendMsg('extSends',0.2,0.3);
-
-
 	}//////                                      - 8 -
 
-	*sixteen {//Parts 1-8 //Presets 9-16
+
+}
+
+/*
+*apcParts {//Parts 1-8 //Presets 9-16
+
+*sixteen {//Parts 1-8 //Presets 9-16
 		"TEMPORARY TEST: IFTrack01.sixteen".postln;
 		~seqStepBut01.free;
 		~seqStepBut01 = OSCFunc({
@@ -1686,9 +1686,7 @@ IFTrack01 {
 
 	}//sixteen
 
-	*apcParts {//Parts 1-8 //Presets 9-16
-
-		~apc_TS01.free;
+~apc_TS01.free;
 		~apc_TS01=MIDIFunc.noteOn( {
 			arg vel;
 			if ( vel==127, {
@@ -1844,4 +1842,4 @@ IFTrack01 {
 
 	}//lpMnParts
 
-}
+*/

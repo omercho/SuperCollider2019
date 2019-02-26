@@ -17,11 +17,11 @@ var <>rs1Time = 1;
 classvar <>counter3 = 0;
 
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 		//Server.default.doWhenBooted({ this.globals; this.preSet; });
 		}
-	}
+	}*/
 	*load{
 		this.globals; this.loadProxy; this.preSet; this.apc40;
 	}

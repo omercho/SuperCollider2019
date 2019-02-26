@@ -1,0 +1,21 @@
+documents: !QVariantList
+  []
+editors: !QVariantMap
+  elements: !QVariantList
+    - !QVariantList
+      []
+    - !QVariantMap
+      elements: !QVariantList
+        - !QVariantList
+          []
+        - !QVariantList
+          []
+      state: AAAA/wAAAAEAAAACAAACFQAAAhUB/////wEAAAACAA==
+  state: AAAA/wAAAAEAAAACAAACkAAAAk8B/////wEAAAABAA==
+mainWindow:
+  detached: !QVariantMap
+    documents-dock: ""
+    help-dock: ""
+    post-dock: ""
+  geometry: AdnQywACAAAAAAHNAAAATwAACfIAAAT5AAABzQAAAGUAAAnyAAAE+QAAAAAAAAAACgA=
+  state: AAAA/wAAAAD9AAAAAgAAAAAAAAC1AAAEevwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAEegAAAGcA////AAAAAQAAAo8AAAR6/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAxkAAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAxoAAAFgAAAATAD///8AAATgAAAEegAAAAEAAAACAAAAAQAAAAL8AAAAAA==

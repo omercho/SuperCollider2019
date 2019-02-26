@@ -5,7 +5,6 @@ PostAllMIDI.off;
 IFLoad.load;
 IFLoad.loadVolca;
 
-
 IFSequence.step(16);
 IFSequence.led02;
 */
@@ -81,26 +80,7 @@ IFSequence {
 	*step4{|i|
 		this.st4(i);
 	}
-	/**step{|i|
-		case
-		{ i == 1 } { this.st(i);  }
-		{ i == 2 } { this.st02; }
-		{ i == 3 } { this.st03; }
-		{ i == 4 } { this.st04; }
-		{ i == 5 } { this.st05; }
-		{ i == 6 } { this.st06; }
-		{ i == 7 } { this.st07; }
-		{ i == 8 } { this.st08; }
 
-		{ i == 9 } { this.st09; }
-		{ i == 10 } { this.st10; }
-		{ i == 11 } { this.st11; }
-		{ i == 12 } { this.st12; }
-		{ i == 13 } { this.st13; }
-		{ i == 14 } { this.st14; }
-		{ i == 15 } { this.st15; }
-		{ i == 16 } { this.st16; };
-	}*/
 	*cntrl{
 
 		~seqFreeAllBut.free;
@@ -246,49 +226,42 @@ IFSequence {
 			},
 			'/seqShiftDur'
 		);
+	}
+	*st{|i|
+		//IFLaunchSteps.led(i);
+		this.led(i);
+		IFLpMnSteps.led(i);
 
-
+		//IFSeqPat.stepPack(i);
+		IFSeqVKick.stepPack(i);
+		IFSeqVSnr.stepPack(i);
+		IFSeqVHat.stepPack(i);
+		IFSeqVClap.stepPack(i);
 	}
-	*st{|index|
-		//IFLaunchSteps.led(index);
-		this.led(index);
-		IFLpMnSteps.led(index);
-
-		//IFSeqPat.stepPack(index);
-
-		IFSeqVKick.stepPack(index);
-		IFSeqVSnr.stepPack(index);
-		IFSeqVHat.stepPack(index);
-		IFSeqVClap.stepPack(index);
-		IFSeqVTomL.stepPack(index);
-		IFSeqVTomH.stepPack(index);
-		IFSeqVCrsh.stepPack(index);
-		IFSeqVPcm.stepPack(index);
+	*st2{|i|
+		this.led2(i);
+		IFLpMnSteps.led2(i);
+		IFSeqKick.stepPack(i);
+		IFSeqKick2.stepPack(i);
+		IFSeqSnr.stepPack(i);
+		IFSeqSnr2.stepPack(i);
+		IFSeqHat.stepPack(i);
+		IFSeqHat2.stepPack(i);
 	}
-	*st2{|index|
-		this.led2(index);
-		IFLpMnSteps.led2(index);
-		IFSeqKick.stepPack(index);
-		IFSeqKick2.stepPack(index);
-		IFSeqSnr.stepPack(index);
-		IFSeqSnr2.stepPack(index);
-		IFSeqHat.stepPack(index);
-		IFSeqHat2.stepPack(index);
+	*st3{|i|
+		this.led3(i);
+		IFLpMnSteps.led3(i);
+		IFSeqBass.stepPack(i);
+		IFSeqKeys.stepPack(i);
 	}
-	*st3{|index|
-		this.led3(index);
-		IFLpMnSteps.led3(index);
-		IFSeqBass.stepPack(index);
-		IFSeqKeys.stepPack(index);
+	*st4{|i|
+		this.led4(i);
+		IFLpMnSteps.led4(i);
+		IFSeqSamp.stepPack(i);
+		IFSeqMopho.stepPack(i);
 	}
-	*st4{|index|
-		this.led4(index);
-		IFLpMnSteps.led4(index);
-		IFSeqSamp.stepPack(index);
-		IFSeqMopho.stepPack(index);
-	}
-	*led{|index|
-		index.switch(
+	*led{|i|
+		i.switch(
 			1,{this.led01;},
 			2,{this.led02;},
 			3,{this.led03;},
@@ -308,8 +281,8 @@ IFSequence {
 		);
 
 	}
-	*led2{|index|
-		index.switch(
+	*led2{|i|
+		i.switch(
 			1,{this.led17;},
 			2,{this.led18;},
 			3,{this.led19;},
@@ -329,8 +302,8 @@ IFSequence {
 		);
 
 	}
-	*led3{|index|
-		index.switch(
+	*led3{|i|
+		i.switch(
 			1,{this.led33;},
 			2,{this.led34;},
 			3,{this.led35;},
@@ -350,8 +323,8 @@ IFSequence {
 		);
 
 	}
-	*led4{|index|
-		index.switch(
+	*led4{|i|
+		i.switch(
 			1,{this.led49;},
 			2,{this.led50;},
 			3,{this.led51;},
@@ -369,7 +342,6 @@ IFSequence {
 			15,{this.led63;},
 			16,{this.led64;}
 		);
-
 	}
 	*led01 {|delay=0.3|
 		//"Seq 1 step 01-".postln;
@@ -642,7 +614,6 @@ IFSequence {
 	}
 
 }
-
 /*
 
 */

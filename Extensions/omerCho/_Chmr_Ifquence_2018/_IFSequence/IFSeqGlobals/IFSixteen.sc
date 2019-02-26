@@ -502,8 +502,6 @@ IFSixteen {
 		);
 
 	}//tracks
-
-
 	*durations {
 		~seqStepBut01.free;
 		~seqStepBut01 = OSCFunc({
@@ -857,9 +855,5 @@ IFSixteen {
 		);
 
 	}//scales
-
-
-
-
 
 }

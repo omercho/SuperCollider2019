@@ -70,9 +70,6 @@ IFLpMn{
 		~yellow1=33;//114
 		~yellow2=118;//118
 		~yellow3=113;//113
-
-
-
 	}//globals
 	*shiftButton{
 		//~lpMn.noteOn(0, 98, 127); //SHIFT
@@ -121,9 +118,9 @@ IFLpMn{
 				);
 				~trackCase.switch(
 					0,{IFLpMn.tsLeds(0,0,0,0,0,0,0,0);},
-					1,{IFTrack01.lpMnParts;},
-					2,{IFTrack02.lpMnParts;},
-					3,{IFTrack03.lpMnParts;}
+					1,{IFLpMn.parts;},
+					2,{IFLpMn.parts;},
+					3,{IFLpMn.parts;}
 				);
 			});
 		},srcID:~lpMnInID, chan:~lpMnCh, noteNum:~lpMnButV1);
@@ -183,15 +180,12 @@ IFLpMn{
 		~lpMn_TS08=MIDIFunc.cc( {
 			arg vel;
 			if ( vel==127, {
-
+				IFTxt.trckDflt;
 			});
 		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);
-
 	}//tracks
 
 	*parts {//Parts 1-8 //Presets 9-16
-
-
 		~lpMn_TS01.free;
 		~lpMn_TS01=MIDIFunc.cc( {
 			arg vel;
@@ -260,6 +254,8 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=8;
+				IFTxt.storeInst(\00);
+			},{
 				IFTrack01.part08;
 				IFLpMn.tsLeds(0,0,0,0,0,0,0,1);
 			});
@@ -341,7 +337,8 @@ IFLpMn{
 					~cntSeqMul4.switch(
 						0,{},
 						1,{~lpMn.noteOn(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/8], inf);},
-						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/4], inf);~cntSeqMul4=0},
+						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/4], inf);},
+						3,{~lpMn.noteOff(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/3], inf);~cntSeqMul4=0},
 					);
 				},
 			);

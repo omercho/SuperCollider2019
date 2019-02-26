@@ -14,6 +14,7 @@ IFSamp.pat_1;
 ~octSamp=4;
 ~octSamp.source = 5;
 
+~secs=Clock.seconds;
 */
 
 
@@ -21,13 +22,11 @@ IFSamp {
 	var <>keyTime = 1;
 	classvar <>counter3 = 0;
 
-
-
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default; this.osc; });*/
 		}
-	}
+	}*/
 	*load{
 		this.globals;
 		this.proxy;

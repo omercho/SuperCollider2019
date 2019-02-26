@@ -1,9 +1,15 @@
 /*
 IFCounter.count;
+IFCounter.get;
 IFCounter.step(5);
+IFCounter.reset;
+
+
+~ifTime= Clock.seconds-Clock.seconds;
+
 */
 IFCounter{
-	classvar <>counter=0;
+	classvar <>cnt=0, <>counter=0, <>mainCount=0, <>clock, <>clockNow;
 
 
 
@@ -12,27 +18,40 @@ IFCounter{
 		~stepNumCntP= Pseq([~stepNumCnt], inf).asStream;
 	}
 
-	*step {|i|
-		case
-		{ i == 1 } { this.st01; }
-		{ i == 2 } { this.st02; }
-		{ i == 3 } { this.st03; }
-		{ i == 4 } { this.st04; }
-		{ i == 5 } { this.st05; }
-		{ i == 6 } { this.st06; }
-		{ i == 7 } { this.st07; }
-		{ i == 8 } { this.st08; }
-
-		{ i == 9 } { this.st09; }
-		{ i == 10 } { this.st10; }
-		{ i == 11 } { this.st11; }
-		{ i == 12 } { this.st12; }
-		{ i == 13 } { this.st13; }
-		{ i == 14 } { this.st14; }
-		{ i == 15 } { this.st15; }
-		{ i == 16 } { this.st16; };
-
+	*get{
+		^mainCount.postln;
 	}
+	*getClockNow{
+		clockNow=Clock.seconds;
+		^clockNow;
+	}
+	*reset{
+		mainCount=0;
+		~tOSCAdrr.sendMsg('mainCountLabel', mainCount);
+	}
+
+	*count {
+		mainCount = mainCount + 1;
+
+		clock = (clockNow-Clock.seconds)*(-1);
+		[["IF Time:",clock.asInt]++["IF Steps:",mainCount]].postln;
+		//if (mainCount % 16 != 0, mainCount.postln, clockNow-Clock.seconds.postln);
+		~tOSCAdrr.sendMsg('mainCountLabel', mainCount);
+		~tOSCAdrr.sendMsg('ifTimeBar1H', clock);
+		mainCount.switch(
+			1, {
+
+			},
+			2, {
+
+			},
+		)
+	}
+
+	*step{|i|
+		this.st(i);
+	}
+
 	*st01 {
 		"-1".postln;
 		fork{~tOSCAdrr.sendMsg('seqLed01', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed01', 0);};
@@ -98,8 +117,7 @@ IFCounter{
 		fork{~tOSCAdrr.sendMsg('seqLed16', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqLed16', 0);};
 	}
 
-	*count {
-
+	*countOld {
 		counter = counter + 1;
 		//~tOSCAdrr.sendMsg('mainCountLabel', counter);
 		counter.switch(
@@ -182,13 +200,7 @@ IFCounter{
 
 
 	}
-	*reset{
 
-		counter = 0;
-		//~tOSCAdrr.sendMsg('mainCountLabel', counter);
-
-
-	}
 
 	*ctrl_8 {
 

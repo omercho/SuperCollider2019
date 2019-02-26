@@ -10,11 +10,11 @@ IFKick.synthDef(1);
 
 IFKick {
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default; this.osc; });*/
 		}
-	}
+	}*/
 	*load {
 		this.globals;
 		this.proxy;
@@ -300,7 +300,6 @@ IFKick {
 			val=msg[1];
 			vel=msg[1]*127;
 			~tOSCAdrr.sendMsg('decKick', val);
-			~decKick= val;
 			~mdOut.control(2, 127, vel);
 			//~nobD1_m1Val= vel;
 		},

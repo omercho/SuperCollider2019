@@ -8,11 +8,11 @@ PostAllMIDI.on;
 
 IFRes {
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 		//Server.default.doWhenBooted({ this.globals; this.preSet; });
 		}
-	}
+	}*/
 	*load{
 		this.globals;
 		this.loadProxy;

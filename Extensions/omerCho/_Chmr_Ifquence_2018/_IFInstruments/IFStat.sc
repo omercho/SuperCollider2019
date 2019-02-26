@@ -9,11 +9,11 @@ IFStat {
 	var <>kTime=1;
 
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default; this.osc; });*/
 		}
-	}
+	}*/
 	*load {
 		this.globals;
 		this.proxy;

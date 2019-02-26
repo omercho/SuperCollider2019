@@ -18,13 +18,13 @@ IFMopho {
 	classvar <>counter3 = 0;
 
 
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({
 			this.load;
 			});*/
 		}
-	}
+	}*/
 	*load {
 		this.globals;
 		this.proxy;

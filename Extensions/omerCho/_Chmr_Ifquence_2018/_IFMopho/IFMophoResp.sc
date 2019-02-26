@@ -12,14 +12,14 @@ Mopho.midiOut(1);
 
 
 IFMophoResp{
-	*initClass {
+	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({
 			this.routines; this.oscMIDI;
 			});*/
 		}
 
-	}
+	}*/
 
 	*load{
 		this.osc;

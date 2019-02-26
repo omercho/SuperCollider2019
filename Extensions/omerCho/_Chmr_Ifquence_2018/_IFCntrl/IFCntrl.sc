@@ -30,6 +30,7 @@ IFCntrl {
 				//~mdClock.start;//TempoClock to IAC MIDI
 				fork{1.do{
 					IFRoot.play;
+					Ableton.tap4;
 					~tOSCAdrr.sendMsg('/1/toggleMain', 1);
 					0.000.wait;
 				}};
@@ -39,6 +40,7 @@ IFCntrl {
 				//~mdClock.stop;//TempoClock to IAC MIDI
 				fork{1.do{
 					IFRoot.stop;
+					Ableton.stop;
 					~tOSCAdrr.sendMsg('/1/toggleMain', 0);
 				}};
 			});
@@ -124,9 +126,11 @@ IFCntrl {
 		~melFad= OSCFunc({
 			arg msg;
 			~tOSCAdrr.sendMsg('melFader',msg[1]);
+			~mdOut.control(5, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(6, 8, msg[1]*127); //Samp Chain
 			~mdOut.control(7, 8, msg[1]*127); //Samp Chain
-			VKeys.cc(\vcfEgVK,msg[1]*127);
-			VBass.cc(\gateTmVB,msg[1]*127);
+			//VKeys.cc(\vcfEgVK,msg[1]*127);
+			//VBass.cc(\gateTmVB,msg[1]*127);
 			Mopho.cc(\oscMix, msg[1]*127);
 
 		},'melFader');
@@ -138,10 +142,12 @@ IFCntrl {
 			vel2=msg[2]*127;
 			val1=msg[1];
 			val2=msg[2];
-
 			~tOSCAdrr.sendMsg('/cutDrum',msg[1], msg[2]);
-			~mdOut.control(10, 30, vel1);
+			~mdOut.control(2, 14, vel1);
+			~mdOut.control(2, 15, vel2);
+			//~mdOut.control(10, 30, vel1);
 			~mdOut.control(10, 31, vel2);
+			~mdOut.control(10, 32, vel1);
 
 		},
 		'cutDrum'
@@ -300,10 +306,10 @@ IFCntrl {
 				~tOSCAdrr.sendMsg('/cutAll',msg[1], msg[2]);
 			},
 			{
-				~cutBass = val1; // IFVBass CutX
-				~cutKeys = val2; // IFVKeys CutX
+
+				~mdOut.control(5, 13, vel2); // IFVBass CutY
 				~mdOut.control(7, 13, vel1); // IFSamp CutX
-				~mdOut.control(5, 14, vel2); // IFVBass CutY
+				~mdOut.control(5, 14, vel1); // IFVBass CutY
 				~mdOut.control(6, 14, vel2); // IFVKeys CutY
 				~mdOut.control(7, 14, vel2); // IFSamps CutY
 				~tOSCAdrr.sendMsg('/cutAll',msg[1], msg[2]);
