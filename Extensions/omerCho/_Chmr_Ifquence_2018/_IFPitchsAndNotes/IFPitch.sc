@@ -1,10 +1,12 @@
 /*
 IFPitch.loadAll;
+IFPitch(-2)
+
 */
 
 IFPitch {
 
-	/**initClass {
+	*initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({
 			1.0.wait;
@@ -16,7 +18,7 @@ IFPitch {
 			this.trans;
 			});*/
 		}
-	}*/
+	}
 
 	*loadAll {
 		this.buttons;
@@ -28,8 +30,35 @@ IFPitch {
 		this.noteMopho;
 		this.trans;
 	}
+	*setScl{|scl=16,root=4|
+		~scl2=~ifSclList[scl];
 
+		~rootBass.source =(root);
+		~rootKeys.source =(root);
+		~rootSamp.source =(root);
+		~rootMopho.source =(root);
+		~rootExt.source =(root);
 
+		~rootLngBass.source=(root);
+		~rootLngKeys.source=(root);
+		~rootLngSamp.source =(root);
+		~rootLngMopho.source =(root);
+		~rootLngKeys.source =(root);
+	}
+	*new{|trns=0|
+		~transBass.source=(trns);
+		~transKeys.source=(trns);
+		~transSamp.source=(trns);
+		~transMopho.source=(trns);
+		~transExt.source=(trns);
+	}
+	*trnsCnt{|trns=0|
+		~transCntBass.source=(trns);
+		~transCntKeys.source=(trns);
+		~transCntSamp.source=(trns);
+		~transCntMopho.source=(trns);
+		~transCntExt.source=(trns);
+	}
 	*buttons{
 		~pitchAllBut.free;
 		~countPAll=0;

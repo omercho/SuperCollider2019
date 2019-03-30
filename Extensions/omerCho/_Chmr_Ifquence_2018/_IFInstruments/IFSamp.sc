@@ -32,7 +32,6 @@ IFSamp {
 		this.proxy;
 		this.osc;
 		this.apc40;
-		//this.beh;
 	}
 	*globals{
 
@@ -78,9 +77,8 @@ IFSamp {
 	}
 
 	*proxy{
-
-		//~samplerEvent = Event.default.put(\freq, { ~midinote.midicps / ~sampleBaseFreq });
-
+		~rootSamp = PatternProxy( Pseq([0], inf));
+		~rootSampP = Pseq([~rootSamp], inf).asStream;
 		~nt1Samp = PatternProxy( Pseq([0], inf));
 		~nt1SampP = Pseq([~nt1Samp], inf).asStream;
 		~dur1Samp = PatternProxy( Pseq([1], inf));
@@ -97,9 +95,10 @@ IFSamp {
 
 		~transSamp = PatternProxy( Pseq([0], inf));
 		~transSampP = Pseq([~transSamp], inf).asStream;
-
 		~transShufSamp = PatternProxy( Pseq([0], inf));
 		~transShufSampP = Pseq([~transShufSamp], inf).asStream;
+		~transCntSamp = PatternProxy( Pseq([0], inf));
+		~transCntSampP = Pseq([~transCntSamp], inf).asStream;
 
 		~octSamp = PatternProxy( Pseq([4], inf));
 		~octSampP = Pseq([~octSamp], inf).asStream;
@@ -124,6 +123,23 @@ IFSamp {
 
 		~volSamp = PatternProxy( Pseq([0.9], inf));
 		~volSampP = Pseq([~volSamp], inf).asStream;
+
+		//lng
+		~rootLngSamp = PatternProxy( Pseq([0], inf));
+		~rootLngSampP = Pseq([~rootLngSamp], inf).asStream;
+		~nt1LngSamp = PatternProxy( Pseq([0], inf));
+		~nt1LngSampP = Pseq([~nt1LngSamp], inf).asStream;
+		~dur1LngSamp = PatternProxy( Pseq([1], inf));
+		~dur1LngSampP = Pseq([~dur1LngSamp], inf).asStream;
+		~amp1LngSamp = PatternProxy( Pseq([0.9], inf));
+		~amp1LngSampP = Pseq([~amp1LngSamp], inf).asStream;
+		~sus1LngSamp = PatternProxy( Pseq([1], inf));
+		~sus1LngSampP = Pseq([~sus1LngSamp], inf).asStream;
+
+		~transLngSamp = PatternProxy( Pseq([0], inf));
+		~transLngSampP = Pseq([~transLngSamp], inf).asStream;
+		~transShufLngSamp = PatternProxy( Pseq([0], inf));
+		~transShufLngSampP = Pseq([~transShufLngSamp], inf).asStream;
 
 	}
 
@@ -150,7 +166,8 @@ IFSamp {
 			\degree, Pseq([~nt1SampP.next], inf),
 			\amp, Pseq([~volSampP.next*~amp1SampP.next], inf),
 			\sustain, Pseq([~sus1SampP.next],inf)*~susMulSamp,
-			\mtranspose, Pseq([~transSampP.next], inf)+~trSamp+~transShufSampP.next,
+			\mtranspose, Pseq([~transSampP.next], inf)+~transCntSampP.next+~trSamp+~transShufSampP.next,
+			\ctranspose, Pseq([~rootSampP.next],inf),
 			\octave, Pseq([~octSampP.next], inf)+~octMulSamp,
 			\harmonic, Pseq([~hrmSampP.next], inf)+~harmSamp
 		).play(TempoClock.default, quant: 0);
@@ -170,6 +187,21 @@ IFSamp {
 		).play(TempoClock.default, quant: 0);
 
 	}//p1
+
+	*lng{|deg=0,amp=1,sus=4|
+		Pbind(
+			\chan, ~chSamp,
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
+			\dur, Pseq([~dur1LngSampP.next],1),
+			\degree, Pseq([~nt1LngSampP.next], inf)+deg,
+			\amp, Pseq([~volSampP.next*~amp1LngSampP.next], inf)*amp,
+			\sustain, Pseq([~sus1LngSampP.next],inf)*sus,
+			\mtranspose, Pseq([~transLngSampP.next], inf)+~transCntSampP.next+~transShufLngSampP.next,
+			\ctranspose, Pseq([~rootLngSampP.next],inf),
+			\octave, Pseq([~octSampP.next], inf)+~octMulSamp,
+			\harmonic, Pseq([~hrmSampP.next], inf)+~harmSamp
+		).play(TempoClock.default, quant: 0);
+	}
 
 	*apc40{
 
@@ -545,9 +577,9 @@ Pbind(
 	], inf),
 	\amp, Pseq([1], inf),
 	\sustain, Pseq([12],inf),
-	//\mtranspose, Pseq([~transKeysP.next], inf)+~trKeys+~transShufKeysP.next,
-	//\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
-	//\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
+	//\mtranspose, Pseq([~transSampP.next], inf)+~trSamp+~transShufSampP.next,
+	//\octave, Pseq([~octSampP.next], inf)+~octMulSamp,
+	//\harmonic, Pseq([~hrmSampP.next], inf)+~harmSamp
 ).play;
 
 */

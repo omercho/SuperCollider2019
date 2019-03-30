@@ -45,26 +45,8 @@ IFSequence {
 		~stepNum3P= Pseq([~stepNum3], inf).asStream;
 		~stepNum4 = PatternProxy( Pseq([0], inf));
 		~stepNum4P= Pseq([~stepNum4], inf).asStream;
-
-		~dur = PatternProxy( Pseq([2],inf) );
-		~durP= Pseq([~dur], inf).asStream;
-		~durMul = PatternProxy( Pseq([2], inf));
-		~durMulP= Pseq([~durMul], inf).asStream;
-
-		~dur2 = PatternProxy( Pseq([2],inf) );
-		~dur2P= Pseq([~dur2], inf).asStream;
-		~durMul2 = PatternProxy( Pseq([1/4], inf));
-		~durMul2P= Pseq([~durMul2], inf).asStream;
-
-		~dur3 = PatternProxy( Pseq([2],inf) );
-		~dur3P= Pseq([~dur3], inf).asStream;
-		~durMul3 = PatternProxy( Pseq([1/2], inf));
-		~durMul3P= Pseq([~durMul3], inf).asStream;
-
-		~dur4 = PatternProxy( Pseq([2],inf) );
-		~dur4P= Pseq([~dur4], inf).asStream;
-		~durMul4 = PatternProxy( Pseq([1/4], inf));
-		~durMul4P= Pseq([~durMul4], inf).asStream;
+		~stepCntNum4 = PatternProxy( Pseq([0], inf));
+		~stepCntNum4P= Pseq([~stepCntNum4], inf).asStream;
 
 	}
 
@@ -80,153 +62,10 @@ IFSequence {
 	*step4{|i|
 		this.st4(i);
 	}
-
-	*cntrl{
-
-		~seqFreeAllBut.free;
-		~seqFreeAllBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSequence.freeAll;
-				});
-			},
-			'/seqFreeAll'
-		);
-
-		~shiftOctBut.free;
-		~shiftOctBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSeqOctKick.on;
-				IFSeqOctSnr.on;
-				IFSeqOctHat.on;
-				IFSeqOctBass.on;
-				IFSeqOctKeys.on;
-				IFSeqOctSamp.on;
-				},{
-					IFSeqKick.on;
-					IFSeqSnr.on;
-					IFSeqHat.on;
-					IFSeqBass.on;
-					IFSeqKeys.on;
-					IFSeqSamp.on;
-			});
-			},
-			'/seqShiftOct'
-		);
-
-		~shiftVelBut.free;
-		~shiftVelBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSeqVelKick.on;
-				IFSeqVelSnr.on;
-				IFSeqVelHat.on;
-				IFSeqVelBass.on;
-				IFSeqVelKeys.on;
-				IFSeqVelSamp.on;
-				},{
-					IFSeqKick.on;
-					IFSeqSnr.on;
-					IFSeqHat.on;
-					IFSeqBass.on;
-					IFSeqKeys.on;
-					IFSeqSamp.on;
-			});
-			},
-			'/seqShiftVel'
-		);
-
-		~shiftSusBut.free;
-		~shiftSusBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSeqSusKick.on;
-				IFSeqSusSnr.on;
-				IFSeqSusHat.on;
-				IFSeqSusBass.on;
-				IFSeqSusKeys.on;
-				IFSeqSusSamp.on;
-				},{
-					IFSeqKick.on;
-					IFSeqSnr.on;
-					IFSeqHat.on;
-					IFSeqBass.on;
-					IFSeqKeys.on;
-					IFSeqSamp.on;
-			});
-			},
-			'/seqShiftSus'
-		);
-
-		~shiftNtBut.free;
-		~shiftNtBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSeqNtKick.on;
-				IFSeqNtSnr.on;
-				IFSeqNtHat.on;
-				IFSeqNtBass.on;
-				IFSeqNtKeys.on;
-				IFSeqNtSamp.on;
-				IFSeqNtPat.on;
-				},{
-					IFSeqKick.on;
-					IFSeqSnr.on;
-					IFSeqHat.on;
-					IFSeqBass.on;
-					IFSeqKeys.on;
-					IFSeqSamp.on;
-					IFSeqPat.on;
-			});
-			},
-			'/seqShiftNote'
-		);
-		~shiftTimesBut.free;
-		~shiftTimesBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSeqTmKick.on;
-				IFSeqTmSnr.on;
-				IFSeqTmHat.on;
-				IFSeqTmBass.on;
-				IFSeqTmKeys.on;
-				IFSeqTmSamp.on;
-				},{
-					IFSeqKick.on;
-					IFSeqSnr.on;
-					IFSeqHat.on;
-					IFSeqBass.on;
-					IFSeqKeys.on;
-					IFSeqSamp.on;
-			});
-			},
-			'/seqShiftTimes'
-		);
-		~shiftDurBut.free;
-		~shiftDurBut = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFSeqDurKick.on;
-				IFSeqDurSnr.on;
-				IFSeqDurHat.on;
-				IFSeqDurBass.on;
-				IFSeqDurKeys.on;
-				IFSeqDurSamp.on;
-				IFSeqDurPat.on;
-				},{
-					IFSeqKick.on;
-					IFSeqSnr.on;
-					IFSeqHat.on;
-					IFSeqBass.on;
-					IFSeqKeys.on;
-					IFSeqSamp.on;
-					IFSeqPat.on;
-			});
-			},
-			'/seqShiftDur'
-		);
+	*stepCnt1{|i|
+		this.stCnt4(i);
 	}
+
 	*st{|i|
 		//IFLaunchSteps.led(i);
 		this.led(i);
@@ -237,6 +76,10 @@ IFSequence {
 		IFSeqVSnr.stepPack(i);
 		IFSeqVHat.stepPack(i);
 		IFSeqVClap.stepPack(i);
+		IFSeqVTomL.stepPack(i);
+		IFSeqVTomH.stepPack(i);
+		IFSeqVCrsh.stepPack(i);
+		IFSeqVPcm.stepPack(i);
 	}
 	*st2{|i|
 		this.led2(i);
@@ -256,6 +99,12 @@ IFSequence {
 	}
 	*st4{|i|
 		this.led4(i);
+		IFLpMnSteps.led4(i);
+		IFSeqSamp.stepPack(i);
+		IFSeqMopho.stepPack(i);
+	}
+	*stCnt1{|i|
+		this.ledCnt1(i);
 		IFLpMnSteps.led4(i);
 		IFSeqSamp.stepPack(i);
 		IFSeqMopho.stepPack(i);
@@ -341,6 +190,26 @@ IFSequence {
 			14,{this.led62;},
 			15,{this.led63;},
 			16,{this.led64;}
+		);
+	}
+	*ledCnt{|i|
+		i.switch(
+			1,{this.ledCnt1;},
+			2,{this.ledCnt1;},
+			3,{this.ledCnt1;},
+			4,{this.ledCnt1;},
+			5,{this.ledCnt1;},
+			6,{this.ledCnt1;},
+			7,{this.ledCnt1;},
+			8,{this.ledCnt1;},
+			9,{this.ledCnt1;},
+			10,{this.ledCnt1;},
+			11,{this.ledCnt1;},
+			12,{this.ledCnt1;},
+			13,{this.ledCnt1;},
+			14,{this.ledCnt1;},
+			15,{this.ledCnt1;},
+			16,{this.ledCnt1;}
 		);
 	}
 	*led01 {|delay=0.3|
@@ -601,6 +470,156 @@ IFSequence {
 	*led64 {
 		//"Seq 4 step 16----".postln;
 		fork{~tOSCAdrr.sendMsg('seq4Led16', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seq4Led16', 0);};
+	}
+
+
+	*ledCnt1 {
+		fork{~tOSCAdrr.sendMsg('seqCnt1Led', 1); 0.3.wait; ~tOSCAdrr.sendMsg('seqCnt1Led', 0);};
+	}
+	*cntrl{
+		~seqFreeAllBut.free;
+		~seqFreeAllBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSequence.freeAll;
+				});
+			},
+			'/seqFreeAll'
+		);
+
+		~shiftOctBut.free;
+		~shiftOctBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSeqOctKick.on;
+				IFSeqOctSnr.on;
+				IFSeqOctHat.on;
+				IFSeqOctBass.on;
+				IFSeqOctKeys.on;
+				IFSeqOctSamp.on;
+				},{
+					IFSeqKick.on;
+					IFSeqSnr.on;
+					IFSeqHat.on;
+					IFSeqBass.on;
+					IFSeqKeys.on;
+					IFSeqSamp.on;
+			});
+			},
+			'/seqShiftOct'
+		);
+
+		~shiftVelBut.free;
+		~shiftVelBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSeqVelKick.on;
+				IFSeqVelSnr.on;
+				IFSeqVelHat.on;
+				IFSeqVelBass.on;
+				IFSeqVelKeys.on;
+				IFSeqVelSamp.on;
+				},{
+					IFSeqKick.on;
+					IFSeqSnr.on;
+					IFSeqHat.on;
+					IFSeqBass.on;
+					IFSeqKeys.on;
+					IFSeqSamp.on;
+			});
+			},
+			'/seqShiftVel'
+		);
+
+		~shiftSusBut.free;
+		~shiftSusBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSeqSusKick.on;
+				IFSeqSusSnr.on;
+				IFSeqSusHat.on;
+				IFSeqSusBass.on;
+				IFSeqSusKeys.on;
+				IFSeqSusSamp.on;
+				},{
+					IFSeqKick.on;
+					IFSeqSnr.on;
+					IFSeqHat.on;
+					IFSeqBass.on;
+					IFSeqKeys.on;
+					IFSeqSamp.on;
+			});
+			},
+			'/seqShiftSus'
+		);
+
+		~shiftNtBut.free;
+		~shiftNtBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSeqNtKick.on;
+				IFSeqNtSnr.on;
+				IFSeqNtHat.on;
+				IFSeqNtBass.on;
+				IFSeqNtKeys.on;
+				IFSeqNtSamp.on;
+				IFSeqNtPat.on;
+				},{
+					IFSeqKick.on;
+					IFSeqSnr.on;
+					IFSeqHat.on;
+					IFSeqBass.on;
+					IFSeqKeys.on;
+					IFSeqSamp.on;
+					IFSeqPat.on;
+			});
+			},
+			'/seqShiftNote'
+		);
+		~shiftTimesBut.free;
+		~shiftTimesBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSeqTmKick.on;
+				IFSeqTmSnr.on;
+				IFSeqTmHat.on;
+				IFSeqTmBass.on;
+				IFSeqTmKeys.on;
+				IFSeqTmSamp.on;
+				},{
+					IFSeqKick.on;
+					IFSeqSnr.on;
+					IFSeqHat.on;
+					IFSeqBass.on;
+					IFSeqKeys.on;
+					IFSeqSamp.on;
+			});
+			},
+			'/seqShiftTimes'
+		);
+		~shiftDurBut.free;
+		~shiftDurBut = OSCFunc({
+			arg msg;
+			if ( msg[1]==1, {
+				IFSeqDurKick.on;
+				IFSeqDurSnr.on;
+				IFSeqDurHat.on;
+				IFSeqDurBass.on;
+				IFSeqDurKeys.on;
+				IFSeqDurSamp.on;
+				IFSeqDurPat.on;
+				},{
+					IFSeqKick.on;
+					IFSeqSnr.on;
+					IFSeqHat.on;
+					IFSeqBass.on;
+					IFSeqKeys.on;
+					IFSeqSamp.on;
+					IFSeqPat.on;
+			});
+			},
+			'/seqShiftDur'
+		);
 	}
 	*freeAll {
 		IFSeqKick.free;

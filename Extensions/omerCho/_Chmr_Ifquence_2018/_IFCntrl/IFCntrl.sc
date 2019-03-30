@@ -145,7 +145,7 @@ IFCntrl {
 			~tOSCAdrr.sendMsg('/cutDrum',msg[1], msg[2]);
 			~mdOut.control(2, 14, vel1);
 			~mdOut.control(2, 15, vel2);
-			//~mdOut.control(10, 30, vel1);
+			~mdOut.control(10, 30, vel1);
 			~mdOut.control(10, 31, vel2);
 			~mdOut.control(10, 32, vel1);
 
@@ -306,16 +306,30 @@ IFCntrl {
 				~tOSCAdrr.sendMsg('/cutAll',msg[1], msg[2]);
 			},
 			{
-
-				~mdOut.control(5, 13, vel2); // IFVBass CutY
-				~mdOut.control(7, 13, vel1); // IFSamp CutX
+				VKeys.cc(\vcfCutVK,5+vel1/1.8);
+				VBass.cc(\vcfCutVB,vel2);
 				~mdOut.control(5, 14, vel1); // IFVBass CutY
+				~mdOut.control(5, 13, vel2); // IFVBass CutX
 				~mdOut.control(6, 14, vel2); // IFVKeys CutY
+				~mdOut.control(7, 13, vel1); // IFSamp CutX
 				~mdOut.control(7, 14, vel2); // IFSamps CutY
+				Mopho.cc(\lpfAudMod, vel2);
 				~tOSCAdrr.sendMsg('/cutAll',msg[1], msg[2]);
 			}
 			);
 		},'/cutAll');
+
+		~cutMel2XY.free;
+		~cutMel2XY= OSCFunc({
+			arg msg,vel1, vel2,val1,val2;
+			vel1=msg[1]*127;
+			vel2=msg[2]*127;
+			val1=msg[1];
+			val2=msg[2];
+			Mopho.cc(\lpfKeyAmnt, vel1);
+			Mopho.cc(\env3Amnt, vel2);
+			~tOSCAdrr.sendMsg('/cutMel2',msg[1], msg[2]);
+		},'/cutMel2');
 
 		~cutMel3XY.free;
 		~cutMel3XY= OSCFunc({
@@ -333,7 +347,10 @@ IFCntrl {
 				~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
 			},
 			{
+				~mdOut.control(7, 14, vel2); // IFSamps CutY
+				~mdOut.control(7, 13, vel1); // IFSamp CutX
 				~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
+				//~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
 			}
 			);
 		},'/cutMel3');
@@ -344,9 +361,21 @@ IFCntrl {
 			arg msg,val,vel;
 			val=msg[1];
 			vel=msg[1]*127;
+			~susMelLedVal=msg[1];
 			~tOSCAdrr.sendMsg('/susMel', ~susMelLedVal=msg[1]);
-			~susMulBass=msg[1];~susMulKeys=msg[1];~susMulSamp=msg[1];~susMulMopho=msg[1];
+			//~susMulBass=msg[1];
+			~susMulKeys=msg[1];~susMulSamp=msg[1];~susMulMopho=msg[1];
 		},'/susMel');
+		~susMelMulBut.free;
+		~susMelMulBut= OSCFunc({
+			arg msg,val;
+			val=msg[1];
+			if ( msg[1]==1,{
+				~susMelLedVal=~susMelLedVal+(1/64);
+				~local.sendMsg('susMel',~susMelLedVal);
+				("IF Count Down"+~susMelLedVal).postln;
+			});
+		},'/susMelSet');
 
 		~susDrumLedVal;
 		~susDrumMulFader.free;

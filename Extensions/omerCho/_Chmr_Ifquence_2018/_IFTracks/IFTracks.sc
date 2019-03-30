@@ -9,8 +9,8 @@ IFTracks{
 				"TRACK 1".postln;
 				~tOSCAdrr.sendMsg('trackLabel','TRACK 1');
 			});
-			},
-			'/track1'
+		},
+		'/track1'
 		);
 
 		~trackOSC_2.free;
@@ -21,8 +21,8 @@ IFTracks{
 				"TRACK 2".postln;
 				~tOSCAdrr.sendMsg('trackLabel','TRACK 2');
 			});
-			},
-			'/track2'
+		},
+		'/track2'
 		);
 
 		~trackOSC_3.free;
@@ -32,8 +32,8 @@ IFTracks{
 			~track3.fork;
 			~tOSCAdrr.sendMsg('trackLabel','TRACK 3');
 
-			},
-			'/track3'
+		},
+		'/track3'
 		);
 
 		~trackOSC_4.free;
@@ -43,8 +43,8 @@ IFTracks{
 			~track4.fork;
 			~tOSCAdrr.sendMsg('trackLabel','TRACK 4');
 
-			},
-			'/track4'
+		},
+		'/track4'
 		);
 
 
@@ -74,8 +74,8 @@ IFTracks{
 
 
 			});
-			},
-			'/rootSet00'
+		},
+		'/rootSet00'
 		);
 
 		//loading the Root00But
@@ -89,16 +89,16 @@ IFTracks{
 				IFRoot.set01;
 
 			},{
-					~tOSCAdrr.sendMsg('rootSet00', '0');
-					~tOSCAdrr.sendMsg('rootSet01', '1');
-					~tOSCAdrr.sendMsg('rootSet02', '0');
-					~tOSCAdrr.sendMsg('rootSet03', '0');
-					~tOSCAdrr.sendMsg('rootSet04', '0');
-					~tOSCAdrr.sendMsg('rootSet05', '0');
+				~tOSCAdrr.sendMsg('rootSet00', '0');
+				~tOSCAdrr.sendMsg('rootSet01', '1');
+				~tOSCAdrr.sendMsg('rootSet02', '0');
+				~tOSCAdrr.sendMsg('rootSet03', '0');
+				~tOSCAdrr.sendMsg('rootSet04', '0');
+				~tOSCAdrr.sendMsg('rootSet05', '0');
 
 			});
-			},
-			'/rootSet01'
+		},
+		'/rootSet01'
 		);
 		~root02But.free;
 		~root02But = OSCFunc({
@@ -108,16 +108,16 @@ IFTracks{
 				IFRoot.set02;
 
 			},{
-					~tOSCAdrr.sendMsg('rootSet00', '0');
-					~tOSCAdrr.sendMsg('rootSet01', '0');
-					~tOSCAdrr.sendMsg('rootSet02', '1');
-					~tOSCAdrr.sendMsg('rootSet03', '0');
-					~tOSCAdrr.sendMsg('rootSet04', '0');
-					~tOSCAdrr.sendMsg('rootSet05', '0');
+				~tOSCAdrr.sendMsg('rootSet00', '0');
+				~tOSCAdrr.sendMsg('rootSet01', '0');
+				~tOSCAdrr.sendMsg('rootSet02', '1');
+				~tOSCAdrr.sendMsg('rootSet03', '0');
+				~tOSCAdrr.sendMsg('rootSet04', '0');
+				~tOSCAdrr.sendMsg('rootSet05', '0');
 
 			});
-			},
-			'/rootSet02'
+		},
+		'/rootSet02'
 		);
 		~root03But.free;
 		~root03But = OSCFunc({
@@ -128,16 +128,16 @@ IFTracks{
 				IFRoot.set03;
 
 			},{
-					~tOSCAdrr.sendMsg('rootSet00', '0');
-					~tOSCAdrr.sendMsg('rootSet01', '0');
-					~tOSCAdrr.sendMsg('rootSet02', '0');
-					~tOSCAdrr.sendMsg('rootSet03', '1');
-					~tOSCAdrr.sendMsg('rootSet04', '0');
-					~tOSCAdrr.sendMsg('rootSet05', '0');
+				~tOSCAdrr.sendMsg('rootSet00', '0');
+				~tOSCAdrr.sendMsg('rootSet01', '0');
+				~tOSCAdrr.sendMsg('rootSet02', '0');
+				~tOSCAdrr.sendMsg('rootSet03', '1');
+				~tOSCAdrr.sendMsg('rootSet04', '0');
+				~tOSCAdrr.sendMsg('rootSet05', '0');
 
 			});
-			},
-			'/rootSet03'
+		},
+		'/rootSet03'
 		);
 		~root04But.free;
 		~root04But = OSCFunc({
@@ -148,16 +148,16 @@ IFTracks{
 				IFRoot.set04;
 
 			},{
-					~tOSCAdrr.sendMsg('rootSet00', '0');
-					~tOSCAdrr.sendMsg('rootSet01', '0');
-					~tOSCAdrr.sendMsg('rootSet02', '0');
-					~tOSCAdrr.sendMsg('rootSet03', '0');
-					~tOSCAdrr.sendMsg('rootSet04', '1');
-					~tOSCAdrr.sendMsg('rootSet05', '0');
+				~tOSCAdrr.sendMsg('rootSet00', '0');
+				~tOSCAdrr.sendMsg('rootSet01', '0');
+				~tOSCAdrr.sendMsg('rootSet02', '0');
+				~tOSCAdrr.sendMsg('rootSet03', '0');
+				~tOSCAdrr.sendMsg('rootSet04', '1');
+				~tOSCAdrr.sendMsg('rootSet05', '0');
 
 			});
-			},
-			'/rootSet04'
+		},
+		'/rootSet04'
 		);
 		~root05But.free;
 		~root05But = OSCFunc({
@@ -168,16 +168,16 @@ IFTracks{
 				IFRoot.set05;
 
 			},{
-					~tOSCAdrr.sendMsg('rootSet00', '0');
-					~tOSCAdrr.sendMsg('rootSet01', '0');
-					~tOSCAdrr.sendMsg('rootSet02', '0');
-					~tOSCAdrr.sendMsg('rootSet03', '0');
-					~tOSCAdrr.sendMsg('rootSet04', '0');
-					~tOSCAdrr.sendMsg('rootSet05', '1');
+				~tOSCAdrr.sendMsg('rootSet00', '0');
+				~tOSCAdrr.sendMsg('rootSet01', '0');
+				~tOSCAdrr.sendMsg('rootSet02', '0');
+				~tOSCAdrr.sendMsg('rootSet03', '0');
+				~tOSCAdrr.sendMsg('rootSet04', '0');
+				~tOSCAdrr.sendMsg('rootSet05', '1');
 
 			});
-			},
-			'/rootSet05'
+		},
+		'/rootSet05'
 		);
 
 		//---------------- DUR Buttons
@@ -191,17 +191,17 @@ IFTracks{
 				~dur.source = Pseq([1], inf)*~durMulP;
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '1');
-					~tOSCAdrr.sendMsg('dur2', '0');
-					~tOSCAdrr.sendMsg('dur3', '0');
-					~tOSCAdrr.sendMsg('dur4', '0');
-					~tOSCAdrr.sendMsg('durAks1', '0');
-					~tOSCAdrr.sendMsg('durShuf1', '0');
-					~tOSCAdrr.sendMsg('durRand1', '0');
+				~tOSCAdrr.sendMsg('dur1', '1');
+				~tOSCAdrr.sendMsg('dur2', '0');
+				~tOSCAdrr.sendMsg('dur3', '0');
+				~tOSCAdrr.sendMsg('dur4', '0');
+				~tOSCAdrr.sendMsg('durAks1', '0');
+				~tOSCAdrr.sendMsg('durShuf1', '0');
+				~tOSCAdrr.sendMsg('durRand1', '0');
 
 			});
-			},
-			'/dur1'
+		},
+		'/dur1'
 		);
 		~dur2But.free;
 		~dur2But = OSCFunc({
@@ -217,17 +217,17 @@ IFTracks{
 				], inf)*~durMulP;
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '0');
-					~tOSCAdrr.sendMsg('dur2', '1');
-					~tOSCAdrr.sendMsg('dur3', '0');
-					~tOSCAdrr.sendMsg('dur4', '0');
-					~tOSCAdrr.sendMsg('durAks1', '0');
-					~tOSCAdrr.sendMsg('durShuf1', '0');
-					~tOSCAdrr.sendMsg('durRand1', '0');
+				~tOSCAdrr.sendMsg('dur1', '0');
+				~tOSCAdrr.sendMsg('dur2', '1');
+				~tOSCAdrr.sendMsg('dur3', '0');
+				~tOSCAdrr.sendMsg('dur4', '0');
+				~tOSCAdrr.sendMsg('durAks1', '0');
+				~tOSCAdrr.sendMsg('durShuf1', '0');
+				~tOSCAdrr.sendMsg('durRand1', '0');
 
 			});
-			},
-			'/dur2'
+		},
+		'/dur2'
 		);
 		~dur3But.free;
 		~dur3But = OSCFunc({
@@ -244,17 +244,17 @@ IFTracks{
 				], inf)*~durMulP;
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '0');
-					~tOSCAdrr.sendMsg('dur2', '0');
-					~tOSCAdrr.sendMsg('dur3', '1');
-					~tOSCAdrr.sendMsg('dur4', '0');
-					~tOSCAdrr.sendMsg('durAks1', '0');
-					~tOSCAdrr.sendMsg('durShuf1', '0');
-					~tOSCAdrr.sendMsg('durRand1', '0');
+				~tOSCAdrr.sendMsg('dur1', '0');
+				~tOSCAdrr.sendMsg('dur2', '0');
+				~tOSCAdrr.sendMsg('dur3', '1');
+				~tOSCAdrr.sendMsg('dur4', '0');
+				~tOSCAdrr.sendMsg('durAks1', '0');
+				~tOSCAdrr.sendMsg('durShuf1', '0');
+				~tOSCAdrr.sendMsg('durRand1', '0');
 
 			});
-			},
-			'/dur3'
+		},
+		'/dur3'
 		);
 
 		~dur4But.free;
@@ -273,17 +273,17 @@ IFTracks{
 
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '0');
-					~tOSCAdrr.sendMsg('dur2', '0');
-					~tOSCAdrr.sendMsg('dur3', '0');
-					~tOSCAdrr.sendMsg('dur4', '1');
-					~tOSCAdrr.sendMsg('durAks1', '0');
-					~tOSCAdrr.sendMsg('durShuf1', '0');
-					~tOSCAdrr.sendMsg('durRand1', '0');
+				~tOSCAdrr.sendMsg('dur1', '0');
+				~tOSCAdrr.sendMsg('dur2', '0');
+				~tOSCAdrr.sendMsg('dur3', '0');
+				~tOSCAdrr.sendMsg('dur4', '1');
+				~tOSCAdrr.sendMsg('durAks1', '0');
+				~tOSCAdrr.sendMsg('durShuf1', '0');
+				~tOSCAdrr.sendMsg('durRand1', '0');
 
 			});
-			},
-			'/dur4'
+		},
+		'/dur4'
 		);
 
 		~durAks1But.free;
@@ -300,17 +300,17 @@ IFTracks{
 				], inf)*~durMulP*2;
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '0');
-					~tOSCAdrr.sendMsg('dur2', '0');
-					~tOSCAdrr.sendMsg('dur3', '0');
-					~tOSCAdrr.sendMsg('dur4', '0');
-					~tOSCAdrr.sendMsg('durAks1', '1');
-					~tOSCAdrr.sendMsg('durShuf1', '0');
-					~tOSCAdrr.sendMsg('durRand1', '0');
+				~tOSCAdrr.sendMsg('dur1', '0');
+				~tOSCAdrr.sendMsg('dur2', '0');
+				~tOSCAdrr.sendMsg('dur3', '0');
+				~tOSCAdrr.sendMsg('dur4', '0');
+				~tOSCAdrr.sendMsg('durAks1', '1');
+				~tOSCAdrr.sendMsg('durShuf1', '0');
+				~tOSCAdrr.sendMsg('durRand1', '0');
 
 			});
-			},
-			'/durAks1'
+		},
+		'/durAks1'
 		);
 
 		~durShuf1But.free;
@@ -327,17 +327,17 @@ IFTracks{
 				], inf)*~durMulP*2;
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '0');
-					~tOSCAdrr.sendMsg('dur2', '0');
-					~tOSCAdrr.sendMsg('dur3', '0');
-					~tOSCAdrr.sendMsg('dur4', '0');
-					~tOSCAdrr.sendMsg('durAks1', '0');
-					~tOSCAdrr.sendMsg('durShuf1', '1');
-					~tOSCAdrr.sendMsg('durRand1', '0');
+				~tOSCAdrr.sendMsg('dur1', '0');
+				~tOSCAdrr.sendMsg('dur2', '0');
+				~tOSCAdrr.sendMsg('dur3', '0');
+				~tOSCAdrr.sendMsg('dur4', '0');
+				~tOSCAdrr.sendMsg('durAks1', '0');
+				~tOSCAdrr.sendMsg('durShuf1', '1');
+				~tOSCAdrr.sendMsg('durRand1', '0');
 
 			});
-			},
-			'/durShuf1'
+		},
+		'/durShuf1'
 		);
 
 
@@ -356,17 +356,17 @@ IFTracks{
 				], inf)*~durMulP*2;
 
 			},{
-					~tOSCAdrr.sendMsg('dur1', '0');
-					~tOSCAdrr.sendMsg('dur2', '0');
-					~tOSCAdrr.sendMsg('dur3', '0');
-					~tOSCAdrr.sendMsg('dur4', '0');
-					~tOSCAdrr.sendMsg('durAks1', '0');
-					~tOSCAdrr.sendMsg('durShuf1', '0');
-					~tOSCAdrr.sendMsg('durRand1', '1');
+				~tOSCAdrr.sendMsg('dur1', '0');
+				~tOSCAdrr.sendMsg('dur2', '0');
+				~tOSCAdrr.sendMsg('dur3', '0');
+				~tOSCAdrr.sendMsg('dur4', '0');
+				~tOSCAdrr.sendMsg('durAks1', '0');
+				~tOSCAdrr.sendMsg('durShuf1', '0');
+				~tOSCAdrr.sendMsg('durRand1', '1');
 
 			});
-			},
-			'/durRand1'
+		},
+		'/durRand1'
 		);
 
 		//durMul
@@ -381,13 +381,13 @@ IFTracks{
 				~durMul.source = Pseq([1/4], inf);
 
 			},{
-					~tOSCAdrr.sendMsg('durMul1_4', '1');
-					~tOSCAdrr.sendMsg('durMul1_2', '0');
-					~tOSCAdrr.sendMsg('durMul1', '0');
+				~tOSCAdrr.sendMsg('durMul1_4', '1');
+				~tOSCAdrr.sendMsg('durMul1_2', '0');
+				~tOSCAdrr.sendMsg('durMul1', '0');
 
 			});
-			},
-			'/durMul1_4'
+		},
+		'/durMul1_4'
 		);
 
 		~durMul1_2But.free;
@@ -400,13 +400,13 @@ IFTracks{
 				~durMul.source = Pseq([1/2], inf);
 
 			},{
-					~tOSCAdrr.sendMsg('durMul1_4', '0');
-					~tOSCAdrr.sendMsg('durMul1_2', '1');
-					~tOSCAdrr.sendMsg('durMul1', '0');
+				~tOSCAdrr.sendMsg('durMul1_4', '0');
+				~tOSCAdrr.sendMsg('durMul1_2', '1');
+				~tOSCAdrr.sendMsg('durMul1', '0');
 
 			});
-			},
-			'/durMul1_2'
+		},
+		'/durMul1_2'
 		);
 
 		~durMul1But.free;
@@ -419,13 +419,13 @@ IFTracks{
 				~durMul.source = Pseq([1], inf);
 
 			},{
-					~tOSCAdrr.sendMsg('durMul1_4', '0');
-					~tOSCAdrr.sendMsg('durMul1_2', '0');
-					~tOSCAdrr.sendMsg('durMul1', '1');
+				~tOSCAdrr.sendMsg('durMul1_4', '0');
+				~tOSCAdrr.sendMsg('durMul1_2', '0');
+				~tOSCAdrr.sendMsg('durMul1', '1');
 
 			});
-			},
-			'/durMul1'
+		},
+		'/durMul1'
 		);
 
 		//SCALES
@@ -436,8 +436,8 @@ IFTracks{
 				~scl1= Scale.phrygian;~scl2= Scale.phrygian;
 				~tOSCAdrr.sendMsg('scaleLabel', 'Phrygian');
 			});
-			},
-			'/scale1'
+		},
+		'/scale1'
 		);
 		~scale_2.free;
 		~scale_2= OSCFunc({
@@ -446,8 +446,8 @@ IFTracks{
 				~scl1= Scale.major;~scl2= Scale.major;
 				~tOSCAdrr.sendMsg('scaleLabel', 'major');
 			});
-			},
-			'/scale2'
+		},
+		'/scale2'
 		);
 		~scale_3.free;
 		~scale_3= OSCFunc({
@@ -456,8 +456,8 @@ IFTracks{
 				~scl1= Scale.zhi;~scl2= Scale.zhi;
 				~tOSCAdrr.sendMsg('scaleLabel', 'zhi');
 			});
-			},
-			'/scale3'
+		},
+		'/scale3'
 		);
 		~scale_4.free;
 		~scale_4= OSCFunc({
@@ -466,8 +466,8 @@ IFTracks{
 				~scl1= Scale.chinese;~scl2= Scale.chinese;
 				~tOSCAdrr.sendMsg('scaleLabel', 'chinese');
 			});
-			},
-			'/scale4'
+		},
+		'/scale4'
 		);
 		~scale_5.free;
 		~scale_5= OSCFunc({
@@ -476,8 +476,8 @@ IFTracks{
 				~scl1= Scale.minor;~scl2= Scale.minor;
 				~tOSCAdrr.sendMsg('scaleLabel', 'minor');
 			});
-			},
-			'/scale5'
+		},
+		'/scale5'
 		);
 		~scale_6.free;
 		~scale_6= OSCFunc({
@@ -486,8 +486,8 @@ IFTracks{
 				~scl1= Scale.majorPentatonic;~scl2= Scale.majorPentatonic;
 				~tOSCAdrr.sendMsg('scaleLabel', 'majorPentatonic');
 			});
-			},
-			'/scale6'
+		},
+		'/scale6'
 		);
 
 		//PRESETS
@@ -500,8 +500,8 @@ IFTracks{
 				IFProjectGlobals.preSetAll;
 
 			});
-			},
-			'/setAll'
+		},
+		'/setAll'
 		);
 
 		~set1But.free;
@@ -512,8 +512,8 @@ IFTracks{
 				IFProjectGlobals.preSet_1;
 
 			});
-			},
-			'/set1'
+		},
+		'/set1'
 		);
 		~set2But.free;
 		~set2But = OSCFunc({
@@ -523,8 +523,8 @@ IFTracks{
 				IFProjectGlobals.preSet_2;
 
 			});
-			},
-			'/set2'
+		},
+		'/set2'
 		);
 		~set3But.free;
 		~set3But = OSCFunc({
@@ -534,8 +534,8 @@ IFTracks{
 				IFProjectGlobals.preSet_3;
 
 			});
-			},
-			'/set3'
+		},
+		'/set3'
 		);
 		~set4But.free;
 		~set4But = OSCFunc({
@@ -545,8 +545,8 @@ IFTracks{
 				IFProjectGlobals.preSet_4;
 
 			});
-			},
-			'/set4'
+		},
+		'/set4'
 		);
 
 	}
@@ -599,8 +599,8 @@ IFTracks{
 				//~mdOutClock.stop;
 
 			});
-			},
-			'/1/toggleMain'
+		},
+		'/1/toggleMain'
 		);
 
 		//---------------- DUR Buttons ---------------//
@@ -615,8 +615,8 @@ IFTracks{
 				~dur.source = Pseq([1], inf)*~durMulP;
 
 			});
-			},
-			'/dur1'
+		},
+		'/dur1'
 		);
 
 		~dur2But.free;
@@ -634,8 +634,8 @@ IFTracks{
 				], inf)*2*~durMulP;
 
 			});
-			},
-			'/dur2'
+		},
+		'/dur2'
 		);
 
 		~dur3But.free;
@@ -652,8 +652,8 @@ IFTracks{
 				], inf)*~durMulP;
 
 			});
-			},
-			'/dur3'
+		},
+		'/dur3'
 		);
 
 		~dur4But.free;
@@ -671,8 +671,8 @@ IFTracks{
 
 
 			});
-			},
-			'/dur4'
+		},
+		'/dur4'
 		);
 
 		~durAks1But.free;
@@ -689,8 +689,8 @@ IFTracks{
 				], inf)*2*~durMulP;
 
 			});
-			},
-			'/durAks1'
+		},
+		'/durAks1'
 		);
 
 		~durShuf1But.free;
@@ -707,8 +707,8 @@ IFTracks{
 				], inf)*~durMulP;
 
 			});
-			},
-			'/durShuf1'
+		},
+		'/durShuf1'
 		);
 
 
@@ -727,8 +727,8 @@ IFTracks{
 				], inf)*~durMulP;
 
 			});
-			},
-			'/durRand1'
+		},
+		'/durRand1'
 		);
 
 		//durMul
@@ -743,8 +743,8 @@ IFTracks{
 				~durMul.source = Pseq([1/4], inf);
 
 			});
-			},
-			'/durMul1_4'
+		},
+		'/durMul1_4'
 		);
 
 		~durMul1_2But.free;
@@ -757,8 +757,8 @@ IFTracks{
 				~durMul.source = Pseq([1/2], inf);
 
 			});
-			},
-			'/durMul1_2'
+		},
+		'/durMul1_2'
 		);
 
 		~durMul1But.free;
@@ -771,8 +771,8 @@ IFTracks{
 				~durMul.source = Pseq([1], inf);
 
 			});
-			},
-			'/durMul1'
+		},
+		'/durMul1'
 		);
 
 		//SCALES
@@ -783,8 +783,8 @@ IFTracks{
 				~scl1= Scale.phrygian;~scl2= Scale.phrygian;
 				~tOSCAdrr.sendMsg('scaleLabel', 'Phrygian');
 			});
-			},
-			'/scale1'
+		},
+		'/scale1'
 		);
 		~scale_2.free;
 		~scale_2= OSCFunc({
@@ -793,8 +793,8 @@ IFTracks{
 				~scl1= Scale.major;~scl2= Scale.major;
 				~tOSCAdrr.sendMsg('scaleLabel', 'major');
 			});
-			},
-			'/scale2'
+		},
+		'/scale2'
 		);
 		~scale_3.free;
 		~scale_3= OSCFunc({
@@ -803,8 +803,8 @@ IFTracks{
 				~scl1= Scale.zhi;~scl2= Scale.zhi;
 				~tOSCAdrr.sendMsg('scaleLabel', 'zhi');
 			});
-			},
-			'/scale3'
+		},
+		'/scale3'
 		);
 		~scale_4.free;
 		~scale_4= OSCFunc({
@@ -813,8 +813,8 @@ IFTracks{
 				~scl1= Scale.chinese;~scl2= Scale.chinese;
 				~tOSCAdrr.sendMsg('scaleLabel', 'chinese');
 			});
-			},
-			'/scale4'
+		},
+		'/scale4'
 		);
 		~scale_5.free;
 		~scale_5= OSCFunc({
@@ -823,8 +823,8 @@ IFTracks{
 				~scl1= Scale.minor;~scl2= Scale.minor;
 				~tOSCAdrr.sendMsg('scaleLabel', 'minor');
 			});
-			},
-			'/scale5'
+		},
+		'/scale5'
 		);
 		~scale_6.free;
 		~scale_6= OSCFunc({
@@ -833,8 +833,8 @@ IFTracks{
 				~scl1= Scale.majorPentatonic;~scl2= Scale.majorPentatonic;
 				~tOSCAdrr.sendMsg('scaleLabel', 'majorPentatonic');
 			});
-			},
-			'/scale6'
+		},
+		'/scale6'
 		);
 
 		//PRESETS
@@ -847,8 +847,8 @@ IFTracks{
 				IFProjectGlobals.preSetAll;
 
 			});
-			},
-			'/setAll'
+		},
+		'/setAll'
 		);
 
 		~set1But.free;
@@ -859,8 +859,8 @@ IFTracks{
 				IFProjectGlobals.preSet_1;
 
 			});
-			},
-			'/set1'
+		},
+		'/set1'
 		);
 		~set2But.free;
 		~set2But = OSCFunc({
@@ -870,8 +870,8 @@ IFTracks{
 				IFProjectGlobals.preSet_2;
 
 			});
-			},
-			'/set2'
+		},
+		'/set2'
 		);
 
 	}//TRACK 2 END

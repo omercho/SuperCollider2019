@@ -19,15 +19,17 @@ IFSeqSteps {
 
 		~stepNum.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pseq([
-			1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+			1,2,3,4,5,6,7,8,
+			1,2,3,4,5,6,7,8,
+			1,2,3,4,5,6,7,8,
+			9,10,11,12,13,14,15,16,
 		], inf);
 		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum4.source  =  Pseq([
-			1,2,3,4,1,6,3,8,
-			1,2,3,4,5,10,7,12,
-			1,2,3,4,1,6,3,8,
-			1,2,3,4,5,14,7,15,
-			9,10,11,12,13,14,15,16
+			1,2,3,4,5,6,7,8,
+			1,2,3,4,5,6,7,8,
+			1,2,3,4,5,6,7,8,
+			9,10,11,12,13,14,15,16,
 
 		], inf);
 	}
@@ -95,15 +97,15 @@ IFSeqSteps {
 	}
 	*forward2 {
 		~tOSCAdrr.sendMsg('stepsLabel', 'Forward2');
-		~stepNum.source  =  Pseq([
+		~stepNum.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+		~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].mirror, inf);
+		~stepNum4.source  =  Pseq([
 			1,2,3,4,5,6,7,8,
 			1,2,3,4,5,6,7,8,
 			1,2,3,4,5,6,7,8,
 			9,10,11,12,13,14,15,16
 		], inf);
-		~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
-		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);
-		~stepNum4.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 	}
 
 	*first8 {
@@ -180,7 +182,7 @@ IFSeqSteps {
 		~stepNum4.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);
 	}
 	*preset01 {|seq|
-		~tOSCAdrr.sendMsg('stepsLabel', 'SeqPrst02');
+		~tOSCAdrr.sendMsg('stepsLabel', 'SeqPrst01');
 		seq.switch(
 			'seqA', {~stepNum.source  =  Pseq([1,2,3,4,5,6,7,8], inf);},
 			'seqB', {~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8], inf);},

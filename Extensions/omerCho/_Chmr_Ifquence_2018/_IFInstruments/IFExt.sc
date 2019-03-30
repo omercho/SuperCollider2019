@@ -19,11 +19,9 @@ IFExt{
 		this.globals;
 		this.loadPProxy;
 		this.oscMIDI;
-
 	}
 
 	*globals{
-
 		~chExt=6;
 		~extLate=0.0;
 		~timesExt=1;
@@ -34,15 +32,13 @@ IFExt{
 		~trExt=0;
 		~lfoMulExt1=0;
 		~lfoMulExt2=0;
-
-
-
 	}
 
 	*preSet{}
 
 	*loadPProxy {
-
+		~rootExt = PatternProxy( Pseq([0], inf));
+		~rootExtP = Pseq([~rootExt], inf).asStream;
 		~nt1Ext = PatternProxy( Pseq([0], inf));
 		~nt1ExtP = Pseq([~nt1Ext], inf).asStream;
 		~dur1Ext = PatternProxy( Pseq([1], inf));
@@ -60,6 +56,9 @@ IFExt{
 
 		~transExt = PatternProxy( Pseq([0], inf));
 		~transExtP = Pseq([~transExt], inf).asStream;
+		~transCntExt = PatternProxy( Pseq([0], inf));
+		~transCntExtP = Pseq([~transCntExt], inf).asStream;
+
 		~octExt = PatternProxy( Pseq([4], inf));
 		~octExtP = Pseq([~octExt], inf).asStream;
 		~rootExt = PatternProxy( Pseq([0.0], inf));
@@ -77,13 +76,47 @@ IFExt{
 		~lfo2Ext = PatternProxy( Pseq([40], inf));
 		~lfo2ExtP = Pseq([~lfo2Ext], inf).asStream;
 
+		~actExt = PatternProxy( Pseq([1], inf));
+		~actExtP= Pseq([~actExt], inf).asStream;
+
+		~volExt = PatternProxy( Pseq([0.9], inf));
+		~volExtP = Pseq([~volExt], inf).asStream;
+
+		//lng
+		~rootLngExt = PatternProxy( Pseq([0], inf));
+		~rootLngExtP = Pseq([~rootLngExt], inf).asStream;
+		~nt1LngExt = PatternProxy( Pseq([0], inf));
+		~nt1LngExtP = Pseq([~nt1LngExt], inf).asStream;
+		~dur1LngExt = PatternProxy( Pseq([1], inf));
+		~dur1LngExtP = Pseq([~dur1LngExt], inf).asStream;
+		~amp1LngExt = PatternProxy( Pseq([0.9], inf));
+		~amp1LngExtP = Pseq([~amp1LngExt], inf).asStream;
+		~sus1LngExt = PatternProxy( Pseq([1], inf));
+		~sus1LngExtP = Pseq([~sus1LngExt], inf).asStream;
+
+		~transLngExt = PatternProxy( Pseq([0], inf));
+		~transLngExtP = Pseq([~transLngExt], inf).asStream;
+		~transShufLngExt = PatternProxy( Pseq([0], inf));
+		~transShufLngExtP = Pseq([~transShufLngExt], inf).asStream;
 
 	}
 
+	*lng{|deg=0,amp=1,sus=4|
+		Pbind(
+			\chan, ~chExt,
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
+			\dur, Pseq([~dur1LngExtP.next],1),
+			\degree, Pseq([~nt1LngExtP.next], inf)+deg,
+			\amp, Pseq([~volExtP.next*~amp1LngExtP.next], inf)*amp,
+			\sustain, Pseq([~sus1LngExtP.next],inf)*sus,
+			\mtranspose, Pseq([~transLngExtP.next], inf)+~transCntExtP.next+~transShufLngExtP.next,
+			\ctranspose, Pseq([~rootLngExtP.next],inf),
+			\octave, Pseq([~octExtP.next], inf)+~octMulExt,
+			\harmonic, Pseq([~hrmExtP.next], inf)+~harmExt
+		).play(TempoClock.default, quant: 0);
+	}
 
 	*oscMIDI{
-
-
 		~volExtFader.free;
 		~volExtFader= OSCFunc({
 			arg msg,vel;
@@ -132,7 +165,6 @@ IFExt{
 		);
 
 		//-------Phrases
-
 		~phrsExt01osc.free;
 		~phrsExt01osc= OSCFunc({
 			arg msg,vel;
@@ -154,6 +186,7 @@ IFExt{
 					\amp, Pslide([0.9, 0.5, 0.6, 0.7, 0.4, 0.9], inf, 4,1,0),
 					\sustain, Pslide([0.2, 0.3, 0.8, 0.7, 0.2, 0.1 ]*0.9,inf, 4,1,0)*~susMulExt,
 					\mtranspose, Pseq([~transExtP.next], inf)+~trExt,
+					\ctranspose, Pseq([~rootExtP.next],inf),
 					\octave, Pseq([~octExtP.next], inf)+~octMulExt
 				).play;
 
@@ -184,6 +217,7 @@ IFExt{
 					\amp, Pslide([0.9, 0.5, 0.6, 0.7, 0.4, 0.9], inf, 3,1,0),
 					\sustain, Pslide([0.2, 0.3, 0.8, 0.7, 0.2, 0.1 ]*0.9,inf, 3,1,0)*~susMulExt,
 					\mtranspose, Pseq([~transExtP.next], inf)+~trExt,
+					\ctranspose, Pseq([~rootExtP.next],inf),
 					\octave, Pseq([~octExtP.next], inf)+~octMulExt
 				).play;
 
@@ -215,6 +249,7 @@ IFExt{
 					\amp, Pslide([0.9, 0.5, 0.6, 0.7, 0.4, 0.9], inf, 3,1,0),
 					\sustain, Pslide([0.2, 0.3, 0.8, 0.7, 0.2, 0.1 ]*0.9,inf, 3,1,0)*~susMulExt,
 					\mtranspose, Pseq([~transExtP.next], inf)+~trExt,
+					\ctranspose, Pseq([~rootExtP.next],inf),
 					\octave, Pseq([~octExtP.next], inf)+~octMulExt
 				).play;
 
@@ -248,6 +283,7 @@ IFExt{
 					\amp, Pslide([0.9, 0.5, 0.6, 0.7, 0.4, 0.9], inf, 4,1,0),
 					\sustain, Pslide([0.2, 0.3, 0.8, 0.7, 0.2, 0.1 ]*0.9,inf, 4,1,0)*~susMulExt,
 					\mtranspose, Pseq([~transExtP.next], inf)+~trExt,
+					\ctranspose, Pseq([~rootExtP.next],inf),
 					\octave, Pseq([~octExtP.next], inf)+~octMulExt
 				).play;
 
@@ -278,6 +314,7 @@ IFExt{
 					\amp, Pslide([0.9, 0.5, 0.6, 0.7, 0.4, 0.9], inf, 3,1,0),
 					\sustain, Pslide([0.2, 0.3, 0.8, 0.7, 0.2, 0.1 ]*0.9,inf, 3,1,0)*~susMulExt,
 					\mtranspose, Pseq([~transExtP.next], inf)+~trExt,
+					\ctranspose, Pseq([~rootExtP.next],inf),
 					\octave, Pseq([~octExtP.next], inf)+~octMulExt
 				).play;
 
@@ -310,6 +347,7 @@ IFExt{
 					\amp, Pslide([0.9, 0.5, 0.6, 0.7, 0.4, 0.9], inf, 3,1,0),
 					\sustain, Pslide([0.2, 0.3, 0.8, 0.7, 0.2, 0.1 ]*0.9,inf, 3,1,0)*~susMulExt,
 					\mtranspose, Pseq([~transExtP.next], inf)+~trExt,
+					\ctranspose, Pseq([~rootExtP.next],inf),
 					\octave, Pseq([~octExtP.next], inf)+~octMulExt
 				).play;
 
@@ -359,11 +397,11 @@ IFExt{
 		~mdOut.allNotesOff(14);
 		~mdOut.allNotesOff(15);
 		~mdOut.allNotesOff(16);
-		~vKeys.allNotesOff(11);
-		~vKeys.allNotesOff(12);
-		~vKeys.allNotesOff(13);
-		~vKeys.allNotesOff(14);
-		~vKeys.allNotesOff(15);
-		~vKeys.allNotesOff(16);
+		~vExt.allNotesOff(11);
+		~vExt.allNotesOff(12);
+		~vExt.allNotesOff(13);
+		~vExt.allNotesOff(14);
+		~vExt.allNotesOff(15);
+		~vExt.allNotesOff(16);
 
 */

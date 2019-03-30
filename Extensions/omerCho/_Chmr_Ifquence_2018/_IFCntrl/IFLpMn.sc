@@ -254,7 +254,8 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=8;
-				IFTxt.storeInst(\00);
+				//IFTxt.storeInst(\00);
+				IFTxt.readInst(\01,\01);
 			},{
 				IFTrack01.part08;
 				IFLpMn.tsLeds(0,0,0,0,0,0,0,1);
@@ -303,7 +304,11 @@ IFLpMn{
 		~cntSeqMul=0;
 		~cntSeqMul2=0;
 		~cntSeqMul3=0;
+
 		~cntSeqMul4=0;
+		~cntSeqDur2=0;
+		~cntSeqDur3=0;
+		~cntSeqDur4=0;
 		MIDIdef.noteOn(respName,{
 			arg chan,noteNum,vel;
 
@@ -316,6 +321,26 @@ IFLpMn{
 						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV2,1);~durMul.source=Pseq([1/2], inf);~cntSeqMul=0},
 					);
 				},
+				~lpMnButV3,{
+					~cntSeqDur3 = ~cntSeqDur3 + 1;
+					~cntSeqDur3.switch(
+						0,{},
+						1,{
+							~lpMn.noteOn(~lpMnCh,~lpMnButV3,1);
+							~stepNum2.source  =  Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+						},
+						2,{
+							~lpMn.noteOff(~lpMnCh,~lpMnButV3,1);
+							~stepNum2.source  =  Pseq([
+								1,2,3,4,5,6,7,8,
+								1,2,3,4,5,6,7,8,
+								1,2,3,4,5,6,7,8,
+								9,10,11,12,13,14,15,16
+
+							], inf);
+							~cntSeqDur3=0},
+					);
+				},
 				~lpMnButV4,{
 					~cntSeqMul2 = ~cntSeqMul2 + 1;
 					~cntSeqMul2.switch(
@@ -324,12 +349,52 @@ IFLpMn{
 						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV4,1);~durMul2.source=Pseq([1/4], inf);~cntSeqMul2=0},
 					);
 				},
+				~lpMnButV5,{
+					~cntSeqDur3 = ~cntSeqDur3 + 1;
+					~cntSeqDur3.switch(
+						0,{},
+						1,{
+							~lpMn.noteOn(~lpMnCh,~lpMnButV5,1);
+							~stepNum3.source  =  Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+						},
+						2,{
+							~lpMn.noteOff(~lpMnCh,~lpMnButV5,1);
+							~stepNum3.source  =  Pseq([
+								1,2,3,4,5,6,7,8,
+								1,2,3,4,5,6,7,8,
+								1,2,3,4,5,6,7,8,
+								9,10,11,12,13,14,15,16
+
+							], inf);
+							~cntSeqDur3=0},
+					);
+				},
 				~lpMnButV6,{
 					~cntSeqMul3 = ~cntSeqMul3 + 1;
 					~cntSeqMul3.switch(
 						0,{},
 						1,{~lpMn.noteOn(~lpMnCh,~lpMnButV6,1);~durMul3.source=Pseq([1/8], inf);},
 						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV6,1);~durMul3.source=Pseq([1/4], inf);~cntSeqMul3=0},
+					);
+				},
+				~lpMnButV7,{
+					~cntSeqDur4 = ~cntSeqDur4 + 1;
+					~cntSeqDur4.switch(
+						0,{},
+						1,{
+							~lpMn.noteOn(~lpMnCh,~lpMnButV7,1);
+							~stepNum4.source  =  Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+						},
+						2,{
+							~lpMn.noteOff(~lpMnCh,~lpMnButV7,1);
+							~stepNum4.source  =  Pseq([
+								1,2,3,4,5,6,7,8,
+								1,2,3,4,5,6,7,8,
+								1,2,3,4,5,6,7,8,
+								9,10,11,12,13,14,15,16
+
+							], inf);
+							~cntSeqDur4=0},
 					);
 				},
 				~lpMnButV8,{
@@ -347,8 +412,11 @@ IFLpMn{
 
 	*makeMIDIResp{
 		this.midiResp(~lpMnButV2, 'seqMulResp');
+		this.midiResp(~lpMnButV3, 'seqDur2Resp');
 		this.midiResp(~lpMnButV4, 'seqMul2Resp');
+		this.midiResp(~lpMnButV5, 'seqDur3Resp');
 		this.midiResp(~lpMnButV6, 'seqMul3Resp');
+		this.midiResp(~lpMnButV7, 'seqDur4Resp');
 		this.midiResp(~lpMnButV8, 'seqMul4Resp');
 	}
 }

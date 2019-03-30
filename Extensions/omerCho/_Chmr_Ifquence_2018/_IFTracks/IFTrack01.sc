@@ -51,19 +51,19 @@ IFTrack01 {
 		IFShuf.loadHat(0,1,0,2,0,3,0,4,0);
 		IFShuf.loadBass(0,6,0,4,0,2,0,0,2);
 		IFShuf.loadKeys(0,4,2,0,4,6,6,0,2);
-		IFShuf.loadSamp(0,2,0,4,2,0,6,0,4);
+		IFShuf.loadSamp(0,1,3,2,4,3,5,4,6);
 		IFShuf.loadMopho(0,2,0,0,2,4,2,0,6);
 		IFShuf.harmDrum(0,-1,2,-3,2,-5,6,8,7);
 		IFShuf.harmMel(0,-1,2,-3,0,-2,6,1,3);
 	}
 
 	*setActs{
-		IFAPCMn.actLine1(0,0,0,0);
-		IFAPCMn.actLine2(0,0,0,0);
+		IFAPCMn.actLine1(0,1,0,0);
+		IFAPCMn.actLine2(0,1,0,0);
 		IFAPCMn.actLine3(0,0,0,0);
 		IFAPCMn.actLine4(0,0,0,0);
-		IFAPCMn.actLine5(0,0,0,0);
-		IFAPCMn.actLine6(1,0,0,0);
+		IFAPCMn.actLine5(1,0,0,0);
+		IFAPCMn.actLine6(0,0,0,0);
 		IFAPCMn.actLine7(1,0,0,0);
 
 		IFMIDIMix.act5(0,0,0);
@@ -75,8 +75,12 @@ IFTrack01 {
 		"TRACK 1".postln;
 		~tOSCAdrr.sendMsg('trackLabel','TRACK 1');
 		~scl1= Scale.chromatic;
-		~scl2= Scale.humayun;
+		//~scl2= Scale.humayun;
+		//~scl2= Scale.minor;
+		IFPitch.setScl(scl:16, root:4);
 		~tOSCAdrr.sendMsg('scaleLabel', 'humayun');
+
+		~mainTrans.source=Pseq([0,-1,1,-3], inf);
 
 		IFProjectGlobals.setTempo(122);
 		~tOSCAdrr.sendMsg('tempoLabel', ~tmp1);
@@ -91,9 +95,6 @@ IFTrack01 {
 		"Duration Mul: 1/2".postln;
 		~tOSCAdrr.sendMsg('durMulLabel', '1/2');
 		~durMul.source = Pseq([1/2], inf);
-		~tOSCAdrr.sendMsg('durMul1_4', '0');
-		~tOSCAdrr.sendMsg('durMul1_2', '1');
-		~tOSCAdrr.sendMsg('durMul1', '0');
 
 		"STORED GLOBAL SETTINGS:".postln;
 		~local.sendMsg('harm0',1);
@@ -148,7 +149,7 @@ IFTrack01 {
 		~local.sendMsg('lfoMulBass1',0.00);
 		~local.sendMsg('lfoMulBass2',0.00);
 		VBass.preSet01;
-		IFBass.octMul(0);
+		IFBass.octMul(1);
 
 		"Keys Set".postln;
 		~local.sendMsg('volKeys', 0.95);
@@ -195,35 +196,29 @@ IFTrack01 {
 		//IFTrack01.setActs;
 		"part01".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
-
-		~local.sendMsg('susMel',0.15);
-		IFSeqSteps.long02;
+		//CH -1- [ Static Drums ]
+		IFSeqSteps.long01;
 		IFSeqVKick.stGrpSet  (1,0,1,0, 1,0,1,0,  1,0,1,0, 1,0,1,0);
 		~octVKick=0;~ntVKick.source = Pseq([7], inf);
 		IFSeqVSnr.stGrpSet  (0,0,1,0, 0,0,1,0,  0,0,1,0, 0,0,1,0);
 		~octVSnr=0;~ntVSnr.source = Pseq([20], inf);
 		IFSeqVHat.stGrpSet  (0,1,0,1, 0,1,0,1,  0,1,0,1, 0,1,0,1);
 		~octVHat=0;~ntVHat.source = Pseq([124], inf);
-		IFSeqVClap.stGrpSet  (0,0,1,0, 0,1,0,0,  0,0,1,0, 0,1,0,0);
+		IFSeqVClap.stGrpSet  (0,0,0,0, 0,1,0,0,  0,0,0,0, 0,1,0,0);
 		~octVClap=0;~ntVClap.source = Pseq([39], inf);
-		//~durVClap.source  =  Pseq([1/2], inf);
+		IFSeqVTomL.stGrpSet  (0,0,0,1, 1,0,0,0,  1,0,0,0, 0,0,0,0);
+		~octVTomL=0;~ntVTomL.source =  Pseq([29], inf);
+		IFSeqVTomH.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,1,1, 0,0,0,0);
+		~octVTomH=0;~ntVTomH.source = Pseq([37], inf);
 
-		IFSeqVTomL.stGrpSet  (1,0,0,1, 1,0,0,0,  1,0,0,0, 0,0,0,0);
-		//~ntVTomL.source = Pseq([43,43,43,50], inf);
-		IFSeqVTomH.stGrpSet  (1,0,0,1, 1,0,0,0,  1,0,0,0, 0,0,0,0);
-		//~ntVTomH.source = Pseq([43,43,43,50], inf);
-		IFSeqVCrsh.stGrpSet  (0,0,0,0, 0,0,0,1,  0,0,0,0, 0,1,0,1);
-		//~ntVCrsh.source = Pseq([67,75,75,75], inf);
-		IFSeqVPcm.stGrpSet  (1,0,1,0, 1,0,1,1,  0,0,1,1, 0,1,0,1);
-		~ntVPcm.source = Pseq([~vCalv,~vCalv,~vCalv,~vCalv,~vAgog], inf);
+		~local.sendMsg('susMel',0.15);
 
 		//CH -1- [ Kick ]
-
 		~local.sendMsg('sendKick', 0.0, 0.0);
 		~local.sendMsg('attKick', 0.0);
 		~local.sendMsg('susKick', 0.9);
-		~local.sendMsg('decKick', 0.9);
-		~local.sendMsg('chainKick', 0.0);
+		~local.sendMsg('decKick', 0.2);
+		~local.sendMsg('chainKick', 0.2);
 		IFSeqOctKick.stGrp (1);
 		IFSeqKick.stGrpSet    (0,0,0,1, 0,1,0,1,  0,0,1,0, 0,1,0,1);
 		IFSeqNtKick.stGrpSet  (0,1,0,5, 0,5,0,6,  0,1,5,0, 0,5,2,5);
@@ -231,7 +226,6 @@ IFTrack01 {
 		IFSeqSusKick.stGrpSet (1,2,1,2, 0,2,0,2,  0,2,0,2, 0,2,0,2);
 		IFSeqTmKick.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurKick.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-
 		IFSeqKick2.stGrpSet    (0,1,0,0, 0,0,1,0,  1,1,0,0, 1,0,0,0);
 		IFSeqNtKick2.stGrpSet  (0,0,2,3, 0,1,4,3,  0,1,2,3, 0,6,7,3);
 		IFSeqVelKick2.stGrpSet (1,2,1,3, 1,2,1,2,  1,2,1,3, 1,2,1,2);
@@ -268,21 +262,22 @@ IFTrack01 {
 		IFSeqBass.stGrpSet    (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqOctBass.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
 		IFSeqNtBass.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 0,0,0,0);
-		IFSeqVelBass.stGrpSet (3,2,3,2, 3,2,3,2,  3,2,3,2, 3,2,3,2);
+		IFSeqVelBass.stGrpSet (3,2,3,1, 3,2,3,1,  3,2,3,1, 3,2,3,1);
 		IFSeqSusBass.stGrpSet (3,1,2,1, 3,1,2,1,  3,1,2,1, 3,2,2,3);
 		IFSeqTmBass.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurBass.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-		IFShuf.loadBass(0,2,0,-3,8,1,0,6,2);
+		IFShuf.loadBass(0,2,0,3,0,2,0,1,4);
 		~lfo1Bass.source  =  Pseq([10,90,70,18, 10,40,60,20], inf);
 		~lfo2Bass.source  =  Pseq([110,20,30,50, 80,20,90,70], inf);
 		~local.sendMsg('lfoMulBass1',0.30);
 		~local.sendMsg('lfoMulBass2',0.10);
+
 		//CH -5- [Keys]
-		IFSeqKeys.stGrpSet    (1,0,1,1, 1,0,1,1,  1,0,1,1, 1,0,1,1);
-		IFSeqOctKeys.stGrpSet (4,3,4,3, 3,4,3,4,  4,3,4,3, 3,4,3,3);
-		IFSeqNtKeys.stGrpSet  (5,0,-5,0, 3,0,5,0,  0,0,0,0, 0,0,0,0);
-		IFSeqVelKeys.stGrpSet (3,2,3,2, 3,2,5,3,  3,1,3,2, 3,2,3,0);
-		IFSeqSusKeys.stGrpSet (2,3,2,3, 2,3,4,5,  2,3,2,3, 2,2,3,3);
+		IFSeqKeys.stGrpSet    (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
+		IFSeqOctKeys.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
+		IFSeqNtKeys.stGrpSet  (0,2,0,4, 0,2,0,4,  0,2,0,4, 0,2,0,4);
+		IFSeqVelKeys.stGrpSet (3,2,3,2, 3,2,3,3,  3,1,3,2, 3,2,3,0);
+		IFSeqSusKeys.stGrpSet (3,2,3,2, 3,2,3,2,  3,2,3,2, 3,2,3,2);
 		IFSeqTmKeys.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurKeys.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
 		IFShuf.loadKeys(0,12,0,-3,8,1,0,6,2);
@@ -290,6 +285,7 @@ IFTrack01 {
 		~local.sendMsg('lfoMulKeys2',0.3);
 		~lfoRtKeys.source =  Pseq([120,40,120,110,80,110,90,10], inf);
 		~lfoCtKeys.source =  Pseq([110,120,90,90,120,40,90,120], inf);
+
 		//CH -6- [SAMP]
 		IFSeqSamp.stGrpSet    (1,1,0,1, 0,1,1,0,  1,1,0,1, 1,0,1,0);
 		IFSeqOctSamp.stGrpSet (3,3,3,4, 3,3,4,3,  3,3,3,4, 3,3,4,3);
@@ -303,6 +299,7 @@ IFTrack01 {
 		~local.sendMsg('lfoMulSamp2',0.4);
 		~lfo1Samp.source  =  Pseq([90,1,70,9, 80,10,7,1], inf);
 		~lfo2Samp.source  =  Pseq([120,10,80,99,6,10,80,99], inf);
+
 		//CH -7- [Mopho]
 		IFSeqMopho.stGrpSet    (1,0,1,1, 1,0,1,1,  1,1,0,1, 1,1,1,0);
 		IFSeqOctMopho.stGrpSet (4,3,4,3, 3,4,3,4,  4,3,4,3, 4,4,3,3);
@@ -314,6 +311,7 @@ IFTrack01 {
 		IFShuf.loadMopho(0,2,0,-3,8,1,0,6,2);
 		~local.sendMsg('lfoMulMopho1',0.2);
 		~local.sendMsg('lfoMulMopho2',0.3);
+
 		//CH- -8- [Ext]
 		~local.sendMsg('volExt',0.8);
 		~local.sendMsg('susExt',0.2);
@@ -400,7 +398,7 @@ IFTrack01 {
 		IFSeqOctBass.stGrpSet (2,3,3,3, 2,3,3,3,  2,3,3,3, 2,4,3,3);
 		IFSeqNtBass.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 2,0,3,2);
 		IFSeqVelBass.stGrpSet (3,2,1,2, 3,2,1,3,  3,1,3,2, 3,2,3,0);
-		IFSeqSusBass.stGrpSet (3,0,1,0, 0,0,1,3,  2,0,1,0, 3,3,0,0);
+		IFSeqSusBass.stGrpSet (3,2,1,2, 2,1,1,3,  2,2,1,2, 3,3,2,2);
 		IFSeqTmBass.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurBass.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
 		IFShuf.loadBass(0,2,0,4,1,3,0,5,2);
@@ -409,12 +407,12 @@ IFTrack01 {
 		~local.sendMsg('lfoMulBass1',0.30);
 		~local.sendMsg('lfoMulBass2',0.10);
 		//CH -5- [Keys]
-		IFSeqKeys.stGrpSet    (0,0,1,1, 0,1,0,1,  1,0,1,1, 1,1,1,1);
-		IFSeqOctKeys.stGrpSet (3,3,3,3, 3,3,3,3,  2,3,3,3, 2,4,3,3);
-		IFSeqNtKeys.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 2,0,3,2);
+		IFSeqKeys.stGrpSet    (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
+		IFSeqOctKeys.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
+		IFSeqNtKeys.stGrpSet  (0,2,0,4, 0,2,0,4,  0,2,0,4, 0,2,0,4);
 		IFSeqVelKeys.stGrpSet (1,2,1,2, 1,2,1,3,  3,1,3,2, 3,2,3,0);
-		IFSeqSusKeys.stGrpSet (2,3,2,0, 2,3,4,5,  2,3,2,0, 2,2,3,0);
-		IFSeqTmKeys.stGrpSet  (1,1,1,1, 1,1,1,1,  1,2,1,1, 1,1,1,1);
+		IFSeqSusKeys.stGrpSet (3,2,1,2, 2,1,1,3,  2,2,1,2, 3,3,2,2);
+		IFSeqTmKeys.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurKeys.stGrpSet (4,4,4,4, 4,4,4,4,  4,2,4,4, 4,2,4,4);
 		IFShuf.loadKeys(0,2,0,4,1,3,0,5,2);
 		~local.sendMsg('lfoMulKeys1',0.0);
@@ -1379,7 +1377,7 @@ IFTrack01 {
 			~tBsDur[12],~tBsDur[13],~tBsDur[14],~tBsDur[15],
 		);
 		IFSeqOctBass.stGrpSet (2,3,3,3, 2,3,3,3,  2,3,3,3, 2,4,3,3);
-		IFShuf.loadBass(0,2,0,4,1,3,0,5,2);
+		IFShuf.loadBass(0,1,2,-2,4,5,6,0,7);
 		~lfo1Bass.source  =  Pseq([10,90,70,18, 10,40,60,20], inf);
 		~lfo2Bass.source  =  Pseq([10,20,30,50, 80,20,90,70], inf);
 		~local.sendMsg('lfoMulBass1',0.30);
@@ -1422,7 +1420,7 @@ IFTrack01 {
 			~tKyDur[12],~tKyDur[13],~tKyDur[14],~tKyDur[15],
 		);
 		IFSeqOctKeys.stGrpSet (3,3,3,3, 3,3,3,3,  2,3,3,3, 2,4,3,3);
-		IFShuf.loadKeys(0,2,0,4,1,3,0,5,2);
+		IFShuf.loadKeys(0,1,2,-2,4,5,6,0,7);
 		~local.sendMsg('lfoMulKeys1',0.0);
 		~local.sendMsg('lfoMulKeys2',0.01);
 		~lfoRtKeys.source =  Pseq([20,40,40,10,20,10,90,10], inf);
@@ -1465,7 +1463,7 @@ IFTrack01 {
 			~tSmDur[12],~tSmDur[13],~tSmDur[14],~tSmDur[15],
 		);
 		IFSeqOctSamp.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
-		IFShuf.loadSamp(0,2,0,4,1,3,0,5,2);
+		IFShuf.loadSamp(0,1,2,-2,4,5,6,0,7);
 		~local.sendMsg('lfoMulSamp1',0.5);
 		~local.sendMsg('lfoMulSamp2',0.4);
 		~lfo1Samp.source  =  Pseq([90,1,70,9, 80,10,7,1], inf);
@@ -1508,7 +1506,7 @@ IFTrack01 {
 			~tMpDur[12],~tMpDur[13],~tMpDur[14],~tMpDur[15],
 		);
 		IFSeqOctMopho.stGrpSet (3,3,4,3, 3,4,3,4,  4,3,4,3, 3,4,3,3);
-		IFShuf.loadMopho(0,2,0,-3,8,1,0,6,2);
+		IFShuf.loadMopho(0,1,2,-2,4,5,6,0,7);
 		~local.sendMsg('lfoMulMopho1',0.2);
 		~local.sendMsg('lfoMulMopho2',0.3);
 		~local.sendMsg('lfo1AmntMopho',0.5);
@@ -1526,320 +1524,320 @@ IFTrack01 {
 *apcParts {//Parts 1-8 //Presets 9-16
 
 *sixteen {//Parts 1-8 //Presets 9-16
-		"TEMPORARY TEST: IFTrack01.sixteen".postln;
-		~seqStepBut01.free;
-		~seqStepBut01 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part01;
-			});
-		},
-		'/seqStep01'
-		);
-		~seqStepBut02.free;
-		~seqStepBut02 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part02;
-			});
-		},
-		'/seqStep02'
-		);
+"TEMPORARY TEST: IFTrack01.sixteen".postln;
+~seqStepBut01.free;
+~seqStepBut01 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part01;
+});
+},
+'/seqStep01'
+);
+~seqStepBut02.free;
+~seqStepBut02 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part02;
+});
+},
+'/seqStep02'
+);
 
-		~seqStepBut03.free;
-		~seqStepBut03 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part03;
-			});
-		},
-		'/seqStep03'
-		);
+~seqStepBut03.free;
+~seqStepBut03 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part03;
+});
+},
+'/seqStep03'
+);
 
-		~seqStepBut04.free;
-		~seqStepBut04 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part04;
-			});
-		},
-		'/seqStep04'
-		);
-		~seqStepBut05.free;
-		~seqStepBut05 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part05;
-			});
-		},
-		'/seqStep05'
-		);
-		~seqStepBut06.free;
-		~seqStepBut06 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part06;
-			});
-		},
-		'/seqStep06'
-		);
-		~seqStepBut07.free;
-		~seqStepBut07 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part07;
-			});
-		},
-		'/seqStep07'
-		);
-		~seqStepBut08.free;
-		~seqStepBut08 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				IFTrack01.part08;
-			});
-		},
-		'/seqStep08'
-		);
-		//----------------------------------------------Presets
-		~seqStepBut09.free;
-		~seqStepBut09 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst00".postln;
-				IFPresets.prst00;
-			});
-		},
-		'/seqStep09'
-		);
-		~seqStepBut10.free;
-		~seqStepBut10 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst02".postln;
-				IFPresets.prst01;
-			});
-		},
-		'/seqStep10'
-		);
-		~seqStepBut11.free;
-		~seqStepBut11 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst03".postln;
-				IFPresets.prst02;
-			});
-		},
-		'/seqStep11'
-		);
-		~seqStepBut12.free;
-		~seqStepBut12 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst04".postln;
-				IFPresets.prst03;
-			});
-		},
-		'/seqStep12'
-		);
-		~seqStepBut13.free;
-		~seqStepBut13 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst01".postln;
-				IFPresets.prst04;
-			});
-		},
-		'/seqStep13'
-		);
-		~seqStepBut14.free;
-		~seqStepBut14 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst05".postln;
-				IFPresets.prst05;
-			});
-		},
-		'/seqStep14'
-		);
-		~seqStepBut15.free;
-		~seqStepBut15 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst06".postln;
-				IFPresets.prst06;
-			});
-		},
-		'/seqStep15'
-		);
+~seqStepBut04.free;
+~seqStepBut04 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part04;
+});
+},
+'/seqStep04'
+);
+~seqStepBut05.free;
+~seqStepBut05 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part05;
+});
+},
+'/seqStep05'
+);
+~seqStepBut06.free;
+~seqStepBut06 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part06;
+});
+},
+'/seqStep06'
+);
+~seqStepBut07.free;
+~seqStepBut07 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part07;
+});
+},
+'/seqStep07'
+);
+~seqStepBut08.free;
+~seqStepBut08 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+IFTrack01.part08;
+});
+},
+'/seqStep08'
+);
+//----------------------------------------------Presets
+~seqStepBut09.free;
+~seqStepBut09 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst00".postln;
+IFPresets.prst00;
+});
+},
+'/seqStep09'
+);
+~seqStepBut10.free;
+~seqStepBut10 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst02".postln;
+IFPresets.prst01;
+});
+},
+'/seqStep10'
+);
+~seqStepBut11.free;
+~seqStepBut11 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst03".postln;
+IFPresets.prst02;
+});
+},
+'/seqStep11'
+);
+~seqStepBut12.free;
+~seqStepBut12 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst04".postln;
+IFPresets.prst03;
+});
+},
+'/seqStep12'
+);
+~seqStepBut13.free;
+~seqStepBut13 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst01".postln;
+IFPresets.prst04;
+});
+},
+'/seqStep13'
+);
+~seqStepBut14.free;
+~seqStepBut14 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst05".postln;
+IFPresets.prst05;
+});
+},
+'/seqStep14'
+);
+~seqStepBut15.free;
+~seqStepBut15 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst06".postln;
+IFPresets.prst06;
+});
+},
+'/seqStep15'
+);
 
-		~seqStepBut16.free;
-		~seqStepBut16 = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				"prst07".postln;
-				IFPresets.prst07;
-			});
-		},
-		'/seqStep16'
-		);
+~seqStepBut16.free;
+~seqStepBut16 = OSCFunc({
+arg msg;
+if ( msg[1]==1, {
+"prst07".postln;
+IFPresets.prst07;
+});
+},
+'/seqStep16'
+);
 
-	}//sixteen
+}//sixteen
 
 ~apc_TS01.free;
-		~apc_TS01=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=1;
-				IFTrack01.part01;
-				IFAPCMn.tsLeds(1,0,0,0,0,0,0,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut1);
-		~apc_TS02.free;
-		~apc_TS02=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=2;
-				IFTrack01.part02;
-				IFAPCMn.tsLeds(0,1,0,0,0,0,0,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut2);
-		~apc_TS03.free;
-		~apc_TS03=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=3;
-				IFTrack01.part03;
-				IFAPCMn.tsLeds(0,0,1,0,0,0,0,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut3);
-		~apc_TS04.free;
-		~apc_TS04=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=4;
-				IFTrack01.part04;
-				IFAPCMn.tsLeds(0,0,0,1,0,0,0,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut4);
-		~apc_TS05.free;
-		~apc_TS05=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=5;
-				IFTrack01.part05;
-				IFAPCMn.tsLeds(0,0,0,0,1,0,0,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut5);
-		~apc_TS06.free;
-		~apc_TS06=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=6;
-				IFTrack01.part06;
-				IFAPCMn.tsLeds(0,0,0,0,0,1,0,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut6);
-		~apc_TS07.free;
-		~apc_TS07=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=7;
-				IFTrack01.part07;
-				IFAPCMn.tsLeds(0,0,0,0,0,0,1,0);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut7);
-		~apc_TS08.free;
-		~apc_TS08=MIDIFunc.noteOn( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=8;
-				IFTrack01.part08;
-				IFAPCMn.tsLeds(0,0,0,0,0,0,0,1);
-			});
-		},srcID:~apcMnInID, chan:0, noteNum:~tsBut8);
+~apc_TS01=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=1;
+IFTrack01.part01;
+IFAPCMn.tsLeds(1,0,0,0,0,0,0,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut1);
+~apc_TS02.free;
+~apc_TS02=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=2;
+IFTrack01.part02;
+IFAPCMn.tsLeds(0,1,0,0,0,0,0,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut2);
+~apc_TS03.free;
+~apc_TS03=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=3;
+IFTrack01.part03;
+IFAPCMn.tsLeds(0,0,1,0,0,0,0,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut3);
+~apc_TS04.free;
+~apc_TS04=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=4;
+IFTrack01.part04;
+IFAPCMn.tsLeds(0,0,0,1,0,0,0,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut4);
+~apc_TS05.free;
+~apc_TS05=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=5;
+IFTrack01.part05;
+IFAPCMn.tsLeds(0,0,0,0,1,0,0,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut5);
+~apc_TS06.free;
+~apc_TS06=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=6;
+IFTrack01.part06;
+IFAPCMn.tsLeds(0,0,0,0,0,1,0,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut6);
+~apc_TS07.free;
+~apc_TS07=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=7;
+IFTrack01.part07;
+IFAPCMn.tsLeds(0,0,0,0,0,0,1,0);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut7);
+~apc_TS08.free;
+~apc_TS08=MIDIFunc.noteOn( {
+arg vel;
+if ( vel==127, {
+~partCase=8;
+IFTrack01.part08;
+IFAPCMn.tsLeds(0,0,0,0,0,0,0,1);
+});
+},srcID:~apcMnInID, chan:0, noteNum:~tsBut8);
 
-	}//apcParts
+}//apcParts
 
-	*apcActs{
+*apcActs{
 
-	}//apcActs
-	*lpMnParts {//Parts 1-8 //Presets 9-16
+}//apcActs
+*lpMnParts {//Parts 1-8 //Presets 9-16
 
 
-		~lpMn_TS01.free;
-		~lpMn_TS01=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=1;
-				IFTrack01.part01;
-				IFLpMn.tsLeds(1,0,0,0,0,0,0,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH1);
-		~lpMn_TS02.free;
-		~lpMn_TS02=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=2;
-				IFTrack01.part02;
-				IFLpMn.tsLeds(0,1,0,0,0,0,0,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH2);
-		~lpMn_TS03.free;
-		~lpMn_TS03=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=3;
-				IFTrack01.part03;
-				IFLpMn.tsLeds(0,0,1,0,0,0,0,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH3);
-		~lpMn_TS04.free;
-		~lpMn_TS04=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=4;
-				IFTrack01.part04;
-				IFLpMn.tsLeds(0,0,0,1,0,0,0,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH4);
-		~lpMn_TS05.free;
-		~lpMn_TS05=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=5;
-				IFTrack01.part05;
-				IFLpMn.tsLeds(0,0,0,0,1,0,0,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH5);
-		~lpMn_TS06.free;
-		~lpMn_TS06=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=6;
-				IFTrack01.part06;
-				IFLpMn.tsLeds(0,0,0,0,0,1,0,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH6);
-		~lpMn_TS07.free;
-		~lpMn_TS07=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=7;
-				IFTrack01.part07;
-				IFLpMn.tsLeds(0,0,0,0,0,0,1,0);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH7);
-		~lpMn_TS08.free;
-		~lpMn_TS08=MIDIFunc.cc( {
-			arg vel;
-			if ( vel==127, {
-				~partCase=8;
-				IFTrack01.part08;
-				IFLpMn.tsLeds(0,0,0,0,0,0,0,1);
-			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);
+~lpMn_TS01.free;
+~lpMn_TS01=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=1;
+IFTrack01.part01;
+IFLpMn.tsLeds(1,0,0,0,0,0,0,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH1);
+~lpMn_TS02.free;
+~lpMn_TS02=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=2;
+IFTrack01.part02;
+IFLpMn.tsLeds(0,1,0,0,0,0,0,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH2);
+~lpMn_TS03.free;
+~lpMn_TS03=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=3;
+IFTrack01.part03;
+IFLpMn.tsLeds(0,0,1,0,0,0,0,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH3);
+~lpMn_TS04.free;
+~lpMn_TS04=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=4;
+IFTrack01.part04;
+IFLpMn.tsLeds(0,0,0,1,0,0,0,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH4);
+~lpMn_TS05.free;
+~lpMn_TS05=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=5;
+IFTrack01.part05;
+IFLpMn.tsLeds(0,0,0,0,1,0,0,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH5);
+~lpMn_TS06.free;
+~lpMn_TS06=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=6;
+IFTrack01.part06;
+IFLpMn.tsLeds(0,0,0,0,0,1,0,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH6);
+~lpMn_TS07.free;
+~lpMn_TS07=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=7;
+IFTrack01.part07;
+IFLpMn.tsLeds(0,0,0,0,0,0,1,0);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH7);
+~lpMn_TS08.free;
+~lpMn_TS08=MIDIFunc.cc( {
+arg vel;
+if ( vel==127, {
+~partCase=8;
+IFTrack01.part08;
+IFLpMn.tsLeds(0,0,0,0,0,0,0,1);
+});
+},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);
 
-	}//lpMnParts
+}//lpMnParts
 
 */

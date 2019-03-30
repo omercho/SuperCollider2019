@@ -67,7 +67,7 @@ IFShuf{
 		~transShufMopho.source  = Pseq([0], inf);
 	}
 
-	*loadKick{|stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8|
+	/**loadKick{|stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8|
 		~shufKickBut.free;
 		~countShufKick=0;
 		~shufKickBut = OSCFunc({
@@ -92,37 +92,52 @@ IFShuf{
 			}
 			);
 		},
-		'/shufKick'
-		);
-	}
+		'/shufKick');
+	}*/
 	/**loadSnr{|stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8|
-		~shufSnrBut.free;
-		~countShufSnr=0;
-		~shufSnrBut = OSCFunc({
+	~shufSnrBut.free;
+	~countShufSnr=0;
+	~shufSnrBut = OSCFunc({
+	arg msg;
+	if ( msg[1]==1, {
+
+	//"Transpose Shuffle".postln;
+	~countShufSnr = ~countShufSnr + 1;
+
+	~countShufSnr.switch(
+	0,{},
+	1, {
+	this.transSnrOn(stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8);
+	//~apcMn.noteOn(~apcMnCh, ~actButC2, 6); //But 1
+	},
+	2,{
+	this.transSnrOff;
+	//~apcMn.noteOn(~apcMnCh, ~actButC2, 5); //But 1
+	//~countShufSnr=0;
+	}
+	)
+	}
+	);
+	},
+	'/shufSnr'
+	);
+	}*/
+	*loadKick{|stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8|
+		~shufKickBut.free;
+		~countShufKick=0;
+		~shufKickBut = OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
-
 				//"Transpose Shuffle".postln;
-				~countShufSnr = ~countShufSnr + 1;
-
-				~countShufSnr.switch(
-					0,{},
-					1, {
-						this.transSnrOn(stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8);
-						//~apcMn.noteOn(~apcMnCh, ~actButC2, 6); //But 1
-					},
-					2,{
-						this.transSnrOff;
-						//~apcMn.noteOn(~apcMnCh, ~actButC2, 5); //But 1
-						//~countShufSnr=0;
-					}
-				)
+				//~countShufKick = ~countShufKick + 1;
+				IFShuf.transKickOn(stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8);
+			},{
+				IFShuf.transKickOff;
 			}
 			);
 		},
-		'/shufSnr'
-		);
-	}*/
+		'/shufKick');
+	}
 	*loadSnr{|stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8|
 		~shufSnrBut.free;
 		~countShufSnr=0;
@@ -279,7 +294,7 @@ IFShuf{
 				"Harmonic 0".postln;
 				~harmKick=0;
 				~harmSnr=0;~harmHat=0;
-				//~harmBass=0;~harmKeys=0;~harmSamp=0; ~hrmMulExt=0;
+				~harmBass=0;~harmKeys=0;~harmSamp=0;~harmMopho=0; ~hrmMulExt=0;
 
 				~tOSCAdrr.sendMsg('harm0', 0);
 				~tOSCAdrr.sendMsg('shufDrumHarm', 0);
@@ -313,11 +328,11 @@ IFShuf{
 					0,{},
 					1, {
 						this.harmMelOn(stp1,stp2,stp3,stp4,stp5,stp6,stp7,stp8);
-						~apcMn.noteOn(~apcMnCh, ~lnchBut36, 1); //But 1
+						~apcMn.noteOn(~apcMnCh, ~lnchBut36, 2); //But 1
 					},
 					2,{
 						this.harmMelOff;
-						~apcMn.noteOn(~apcMnCh, ~lnchBut36, 0); //But 1
+						~apcMn.noteOn(~apcMnCh, ~lnchBut36, 1); //But 1
 						~local.sendMsg('harmMel0', 1);
 						~countShufHarmMel=0;
 					}

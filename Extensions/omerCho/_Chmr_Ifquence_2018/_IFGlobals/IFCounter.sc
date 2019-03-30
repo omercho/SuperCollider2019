@@ -9,13 +9,33 @@ IFCounter.reset;
 
 */
 IFCounter{
-	classvar <>cnt=0, <>counter=0, <>mainCount=0, <>clock, <>clockNow;
+	classvar <>cnt=0, <>counter=0,<>secCount=0, <>mainCount=0, <>clockSecs=0,<>clockMins=0,<>clockStart, <>clockNow, <>oneSec=0,<>seconds=0;
 
 
 
 	*loadProxy {
+		~cntNt16=0;
+
 		~stepNumCnt = PatternProxy( Pseq([0], inf));
 		~stepNumCntP= Pseq([~stepNumCnt], inf).asStream;
+
+		~ifPitchPat = PatternProxy( Pseq([0,-1,-2,-1], inf));
+		~ifPitchPatP= Pseq([~ifPitchPat], inf).asStream;
+	}
+
+	*cnt8{
+		~cntNt16=~cntNt16+1;
+		~cntNt16.postln;
+		~cntNt16.switch(
+			0,{},
+			1,{
+				"TRASPOSE CHANGE".postln;
+				IFPitch.trnsCnt(~ifPitchPatP.next;);
+			},
+			8,{
+				~cntNt16=0;
+			}
+		);
 	}
 
 	*get{
@@ -25,27 +45,36 @@ IFCounter{
 		clockNow=Clock.seconds;
 		^clockNow;
 	}
+	*getClockStart{
+		clockStart=Clock.seconds;
+		^clockStart;
+	}
 	*reset{
+		~cntNt16=0;
 		mainCount=0;
+		secCount=0;
+		clockMins=0;
 		~tOSCAdrr.sendMsg('mainCountLabel', mainCount);
 	}
 
 	*count {
 		mainCount = mainCount + 1;
 
-		clock = (clockNow-Clock.seconds)*(-1);
-		[["IF Time:",clock.asInt]++["IF Steps:",mainCount]].postln;
-		//if (mainCount % 16 != 0, mainCount.postln, clockNow-Clock.seconds.postln);
+		clockMins = (clockStart-Clock.seconds)*(-1);
+		clockMins = (clockMins/60).asInt;
+
+		if ( clockSecs<=59,
+			{clockSecs = ((clockNow-Clock.seconds)*(-1)).asInt;},
+			{clockSecs=0;this.getClockNow;}
+		);
+
+		("min:"+clockMins+"sec:"+clockSecs+"Step:"+mainCount).postln;
+
 		~tOSCAdrr.sendMsg('mainCountLabel', mainCount);
-		~tOSCAdrr.sendMsg('ifTimeBar1H', clock);
-		mainCount.switch(
-			1, {
+		~tOSCAdrr.sendMsg('ifTimeBar1H', clockSecs);
+	}
+	*countSecs{
 
-			},
-			2, {
-
-			},
-		)
 	}
 
 	*step{|i|

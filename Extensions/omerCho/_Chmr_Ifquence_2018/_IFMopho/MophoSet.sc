@@ -187,9 +187,9 @@ MophoSet{
 		Mopho.cc(\osc1Shape, (0..3).choose);
 		Mopho.cc(\osc2Freq, 6*8);
 		Mopho.cc(\osc2Shape, (0..3).choose);
-		MophoSet.rand(\oscs);
-		MophoSet.rand(\filt);
-		MophoSet.rand(\vca);
+		MophoSet.randSmooth(\oscs);
+		MophoSet.randSmooth(\filt);
+		MophoSet.randSmooth(\vca);
 		MophoSet.rand(\lfo);
 		MophoSet.rand(\mod);
 		~local.sendMsg('MPHosc1Freq', 1.0.rrand(0.0));
@@ -215,7 +215,7 @@ MophoSet{
 				Mopho.cc(\oscMix, (0..127).choose);
 				Mopho.cc(\extIn, (0..127).choose);
 				Mopho.cc(\noise, (0..127).choose);
-				Mopho.cc(\oscSync, (0..127).choose);
+				Mopho.cc(\oscSync, [0,1].choose);
 				Mopho.cc(\oscSlop, (0..5).choose);
 				Mopho.cc(\keyMode, (0..5).choose);
 				Mopho.cc(\glideMode, (0..3).choose);
@@ -289,7 +289,101 @@ MophoSet{
 				Mopho.cc(\mod4Amnt, (0..254).choose);
 			}
 		);
-	}
+	}//rand
+	*randSmooth{|key,min=0,max=1|
+		key.switch(
+			'oscs',{
+				Mopho.cc(\osc1Freq, (40..80).choose);
+				Mopho.cc(\osc1Tune, (0..103).choose);
+				Mopho.cc(\osc1Shape, (0..100).choose);
+				Mopho.cc(\osc1Glide, (0..100).choose);
+				Mopho.cc(\osc1Sub, (0..90).choose);
+				Mopho.cc(\osc1Kybrd, [0,1].choose);
+				Mopho.cc(\osc2Freq, (50..70).choose);
+				Mopho.cc(\osc2Tune, (0..103).choose);
+				Mopho.cc(\osc2Shape, (0..107).choose);
+				Mopho.cc(\osc2Glide, (0..127).choose);
+				Mopho.cc(\osc2Sub, (0..70).choose);
+				Mopho.cc(\osc2Kybrd, [0,1].choose);
+
+				Mopho.cc(\oscMix, (40..100).choose);
+				Mopho.cc(\extIn, (0..107).choose);
+				//Mopho.cc(\noise, (0..127).choose);
+				Mopho.cc(\oscSync, [0,1].choose);
+				Mopho.cc(\oscSlop, (0..5).choose);
+				Mopho.cc(\keyMode, (0..5).choose);
+				Mopho.cc(\glideMode, (0..3).choose);
+			},
+			'filt',{
+				Mopho.cc(\lpfFreq, (30..97).choose);
+				Mopho.cc(\lpfRes, (0..77).choose);
+				Mopho.cc(\lpfAmnt, (0..107).choose);
+				Mopho.cc(\lpfVel, (0..127).choose);
+				Mopho.cc(\lpfKeyAmnt, (0..127).choose);
+				Mopho.cc(\lpfAudMod, (0..127).choose);
+				Mopho.cc(\lpfPole, [0,1].choose);
+				Mopho.cc(\lpfEnvAtt, (0..67).choose);
+				Mopho.cc(\lpfEnvDec, (10..107).choose);
+				Mopho.cc(\lpfEnvSus, (0..117).choose);
+				Mopho.cc(\lpfEnvRls, (10..127).choose);
+
+			},
+			'vca',{
+				Mopho.cc(\vcaLvl, (0..127).choose);
+				Mopho.cc(\vcaAmnt, (0..127).choose);
+				Mopho.cc(\vcaVel, (40..127).choose);
+				Mopho.cc(\vcaEnvAtt, (0..27).choose);
+				Mopho.cc(\vcaEnvDec, (10..127).choose);
+				Mopho.cc(\vcaEnvSus, (20..97).choose);
+				Mopho.cc(\vcaEnvRls, (0..77).choose);
+
+			},
+			'lfo', {
+
+				Mopho.cc('lfo1Dest', (0..46).choose);
+				Mopho.cc('lfo2Dest', (0..46).choose);
+				Mopho.cc('lfo3Dest', (0..46).choose);
+				Mopho.cc('lfo4Dest', (0..46).choose);
+				Mopho.cc('lfo1Amnt', (0..127).choose);
+				Mopho.cc('lfo2Amnt', (0..127).choose);
+				Mopho.cc('lfo3Amnt', (0..127).choose);
+				Mopho.cc('lfo4Amnt', (0..127).choose);
+				Mopho.cc('lfo1Freq', (0..127).choose);
+				Mopho.cc('lfo2Freq', (0..127).choose);
+				Mopho.cc('lfo3Freq', (0..127).choose);
+				Mopho.cc('lfo4Freq', (0..127).choose);
+				Mopho.cc('lfo1Shape', (0..4).choose);
+				Mopho.cc('lfo2Shape', (0..4).choose);
+				Mopho.cc('lfo3Shape', (0..4).choose);
+				Mopho.cc('lfo4Shape', (0..4).choose);
+				Mopho.cc('lfo1KeySync', [0,1].choose);
+				Mopho.cc('lfo2KeySync', [0,1].choose);
+				Mopho.cc('lfo3KeySync', [0,1].choose);
+				Mopho.cc('lfo4KeySync', [0,1].choose);
+			},
+			'mod', {
+				Mopho.cc('env3Dest', (0..46).choose);
+				Mopho.cc(\env3Amnt, (0..254).choose);
+				Mopho.cc(\env3Vel, (0..127).choose);
+				Mopho.cc(\env3Att, (0..127).choose);
+				Mopho.cc(\env3Dec, (0..127).choose);
+				Mopho.cc(\env3Sus, (0..127).choose);
+				Mopho.cc(\env3Rls, (0..127).choose);
+				Mopho.cc('mod1Dest', (0..46).choose);
+				Mopho.cc('mod2Dest', (0..46).choose);
+				Mopho.cc('mod3Dest', (0..46).choose);
+				Mopho.cc('mod4Dest', (0..46).choose);
+				Mopho.cc('mod1Src', (0..22).choose);
+				Mopho.cc('mod2Src', (0..22).choose);
+				Mopho.cc('mod3Src', (0..22).choose);
+				Mopho.cc('mod4Src', (0..22).choose);
+				Mopho.cc(\mod1Amnt, (0..254).choose);
+				Mopho.cc(\mod2Amnt, (0..254).choose);
+				Mopho.cc(\mod3Amnt, (0..254).choose);
+				Mopho.cc(\mod4Amnt, (0..254).choose);
+			}
+		);
+	}//randSmooth
 	*oscResp{|respName,oscName,playDir|
 		var currentBpm=1;
 		OSCdef(respName, {|msg|

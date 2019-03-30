@@ -42,7 +42,7 @@ IFPitchBass {
 						"PITCHBass SWITCH ON".postln;
 						~tOSCAdrr.sendMsg('pitchBass', 1);
 						IFPitchBass.noteBassOn;
-						~apcMn.noteOn(~apcMnCh, 85, 1); //But 5
+						~apcMn.noteOn(~apcMnCh, ~actButD4, 4); //But 5
 
 
 					},
@@ -52,7 +52,7 @@ IFPitchBass {
 						~tOSCAdrr.sendMsg('pitchBass', 0);
 						~countPBass=0;
 						IFPitchBass.noteBassOff;
-						~apcMn.noteOn(~apcMnCh, 85, 0); //But 5
+						~apcMn.noteOn(~apcMnCh, ~actButD4, 3); //But 5
 					}
 				)
 				},{
@@ -80,7 +80,7 @@ IFPitchBass {
 					}
 				)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:85);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButD4);
 	}
 
 	*noteBassOn {

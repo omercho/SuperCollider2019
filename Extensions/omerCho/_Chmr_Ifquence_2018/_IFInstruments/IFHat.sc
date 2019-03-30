@@ -151,7 +151,7 @@ IFHat {
 
 		Pbind(
 			\chan, ~chHat,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1HatP.next],~actHatP),
 			\degree, Pseq([~nt1HatP.next], inf),
 			\amp, Pseq([~volHatP.next*~amp1HatP.next], inf),
@@ -169,11 +169,12 @@ IFHat {
 
 		Pbind(
 			\chan, ~chHat,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur2HatP.next], ~act2HatP),
 			\degree, Pseq([~nt2HatP.next], inf),
 			\amp, Pseq([~volHat2P.next*~amp2HatP.next], inf),
-			\sustain, Pseq([~sus2HatP.next],inf)*~susMulHat
+			\sustain, Pseq([~sus2HatP.next],inf)*~susMulHat,
+			\harmonic, Pseq([~hrmHatP.next], inf)+~harmHat
 		).play(quant:~quantHat2);
 	}
 	*apc40{

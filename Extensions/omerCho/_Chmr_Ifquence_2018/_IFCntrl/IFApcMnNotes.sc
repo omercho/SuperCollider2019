@@ -29,8 +29,10 @@ IFApcMnNotes{
 		~apcNoteBut09=48;~apcNoteBut10=49;~apcNoteBut11=50;~apcNoteBut12=51;
 		~apcNoteBut13=52;~apcNoteBut14=53;~apcNoteBut15=54;~apcNoteBut16=55;
 
+		~apcGreen1=1;
+		~apcGreen2=2;
 		~apcOrng1=5;
-		~apcOrng2=3;
+		~apcRed1=3;
 
 	}//globals
 
@@ -54,7 +56,7 @@ IFApcMnNotes{
 		IFApcMnNotes.noteButL2(~apcNoteBut14,\lncNote07);
 		IFApcMnNotes.noteButL2(~apcNoteBut15,\lncNote08);
 		IFApcMnNotes.noteButL2(~apcNoteBut16,\lncNote11);
-		~apcMn.noteOn(0,~apcNoteBut01,~apcOrng1);
+		//~apcMn.noteOn(0,~apcNoteBut01,~apcOrng1);
 	}
 	*noteButL1{|ntNum,nameOn, nameOff|
 		MIDIdef.noteOn(nameOn, {
@@ -80,62 +82,51 @@ IFApcMnNotes{
 				~apcNoteBut09,{~local.sendMsg('nt-6', 1);},
 				~apcNoteBut10,{~local.sendMsg('nt-5', 1);},
 				~apcNoteBut11,{~local.sendMsg('nt-4', 1);},
-				~apcNoteBut12,{~local.sendMsg('shufMelHarm', 1);},
-				~apcNoteBut13,{~local.sendMsg('nt_5', 1);},
-				~apcNoteBut14,{~local.sendMsg('nt_6', 1);},
-				~apcNoteBut15,{~local.sendMsg('nt_7', 1);},
+				~apcNoteBut12,{~local.sendMsg('nt_5', 1);},
+				~apcNoteBut13,{~local.sendMsg('nt_6', 1);},
+				~apcNoteBut14,{~local.sendMsg('nt_7', 1);},
+				~apcNoteBut15,{~local.sendMsg('nt_8', 1);},
 				~apcNoteBut16,{~local.sendMsg('nt_11', 1);}
 			);
 		},srcID:~apcMnInID, chan:~apcMnCh,noteNum:ntNum);
 	}
+	*oscResp{|respName,oscName,playDir|
+		OSCdef(respName, {
+			arg msg;
+			playDir.switch(
+				'ntP0',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut04, 3); });},
+				'ntP1',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut05, 3); });},
+				'ntP2',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut06, 3); });},
+				'ntP3',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut07, 3); });},
+				'ntP4',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut08, 3); });},
+				'ntP5',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut12, 3); });},
+				'ntP6',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut13, 3); });},
+				'ntP7',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut14, 3); });},
+				'ntP8',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut15, 3); });},
+				'ntP9',{if ( msg[1]==1, {this.noteButsReset; });},
+				'ntP10',{if ( msg[1]==1, {this.noteButsReset; });},
+				'ntP11',{if ( msg[1]==1, {this.noteButsReset; });},
+				'ntP12',{if ( msg[1]==1, {this.noteButsReset; });},
+				'ntP13',{if ( msg[1]==1, {this.noteButsReset; });},
+				'ntP14',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut16, 5); });},
 
-	*noteButsReset{
-		//Notes
-		//Lounch 7 - nt line1
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut01, ~apcOrng1); //But 1
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut02, ~apcOrng1); //But 2
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut03, ~apcOrng1); //But 3
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut04, ~apcOrng2); //But 4
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut05, ~apcOrng1); //But 5
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut06, ~apcOrng1); //But 6
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut07, ~apcOrng1); //But 7
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut08, ~apcOrng1); //But 8
-		//Lounch 8 - nt line2
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut09, ~apcOrng1); //But 1
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut10, ~apcOrng1); //But 2
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut11, ~apcOrng1); //But 3
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut12, ~apcOrng1); //But 4
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut13, ~apcOrng1); //But 5
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut14, ~apcOrng1); //But 6
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut15, ~apcOrng1); //But 7
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut16, ~apcOrng1); //But 8
+				'ntM1',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut03, 3); });},
+				'ntM2',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut02, 3); });},
+				'ntM3',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut01, 3); });},
+				'ntM4',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut11, 3); });},
+				'ntM5',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut10, 3); });},
+				'ntM6',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut09, 3); });},
+				'ntM7',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM8',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM9',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM10',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM11',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM12',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM13',{if ( msg[1]==1, {this.noteButsReset;});},
+				'ntM14',{if ( msg[1]==1, {this.noteButsReset;});}
+			);
+		},path:oscName);
 	}
-
-	/*
-	IFApcMnNotes.resetLeds;
-	*/
-	*resetLeds{
-		//Notes
-		//Lounch 7
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut01, ~apcOrng1); //But 1
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut02, ~apcOrng1); //But 2
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut03, ~apcOrng1); //But 3
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut04, ~apcOrng2); //But 4
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut05, ~apcOrng1); //But 5
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut06, ~apcOrng1); //But 6
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut07, ~apcOrng1); //But 7
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut08, ~apcOrng1); //But 8
-		//Lounch 8
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut09, ~apcOrng1); //But 1
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut10, ~apcOrng1); //But 2
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut11, ~apcOrng1); //But 3
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut12, ~apcOrng1); //But 4
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut13, ~apcOrng1); //But 5
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut14, ~apcOrng1); //But 6
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut15, ~apcOrng1); //But 7
-		~apcMn.noteOn(~apcMnCh, ~apcNoteBut16, ~apcOrng1); //But 8
-	}
-
 	*makeOSCResponders{
 		//ntPlus
 		IFApcMnNotes.oscResp(respName:'notePlusApcMn00', oscName:'nt_0', playDir:'ntP0');
@@ -170,42 +161,51 @@ IFApcMnNotes{
 		IFApcMnNotes.oscResp(respName:'noteMinusApcMn14', oscName:'nt-14', playDir:'ntM14');
 
 	}
-	*oscResp{|respName,oscName,playDir|
-		OSCdef(respName, {
-			arg msg;
-			playDir.switch(
-				'ntP0',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut04, 3); });},
-				'ntP1',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut05, 3); });},
-				'ntP2',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut06, 3); });},
-				'ntP3',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut07, 3); });},
-				'ntP4',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut08, 3); });},
-				'ntP5',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut13, 3); });},
-				'ntP6',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut14, 3); });},
-				'ntP7',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut15, 3); });},
-				'ntP8',{if ( msg[1]==1, {this.noteButsReset; });},
-				'ntP9',{if ( msg[1]==1, {this.noteButsReset; });},
-				'ntP10',{if ( msg[1]==1, {this.noteButsReset; });},
-				'ntP11',{if ( msg[1]==1, {this.noteButsReset; });},
-				'ntP12',{if ( msg[1]==1, {this.noteButsReset; });},
-				'ntP13',{if ( msg[1]==1, {this.noteButsReset; });},
-				'ntP14',{if ( msg[1]==1, {this.noteButsReset; ~apcMn.noteOn(~apcMnCh, ~apcNoteBut16, 3); });},
+	*noteButsReset{
+		//Notes
+		//Lounch 7 - nt line1
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut01, ~apcGreen1); //But 1
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut02, ~apcGreen1); //But 2
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut03, ~apcGreen1); //But 3
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut04, ~apcRed1); //But 4
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut05, ~apcOrng1); //But 5
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut06, ~apcOrng1); //But 6
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut07, ~apcOrng1); //But 7
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut08, ~apcOrng1); //But 8
+		//Lounch 8 - nt line2
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut09, ~apcGreen1); //But 1
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut10, ~apcGreen1); //But 2
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut11, ~apcGreen1); //But 3
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut12, ~apcOrng1); //But 4
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut13, ~apcOrng1); //But 5
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut14, ~apcOrng1); //But 6
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut15, ~apcOrng1); //But 7
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut16, ~apcOrng1); //But 8
+	}
 
-				'ntM1',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut03, 3); });},
-				'ntM2',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut02, 3); });},
-				'ntM3',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut01, 3); });},
-				'ntM4',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut11, 3); });},
-				'ntM5',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut10, 3); });},
-				'ntM6',{if ( msg[1]==1, {this.noteButsReset;~apcMn.noteOn(~apcMnCh, ~apcNoteBut09, 3); });},
-				'ntM7',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM8',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM9',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM10',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM11',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM12',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM13',{if ( msg[1]==1, {this.noteButsReset;});},
-				'ntM14',{if ( msg[1]==1, {this.noteButsReset;});}
-			);
-		},path:oscName);
+	/*
+	IFApcMnNotes.resetLeds;
+	*/
+	*resetLeds{
+		//Notes
+		//Lounch 7
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut01, ~apcGreen1); //But 1
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut02, ~apcGreen1); //But 2
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut03, ~apcGreen1); //But 3
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut04, ~apcRed1); //But 4
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut05, ~apcOrng1); //But 5
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut06, ~apcOrng1); //But 6
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut07, ~apcOrng1); //But 7
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut08, ~apcOrng1); //But 8
+		//Lounch 8
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut09, ~apcGreen1); //But 1
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut10, ~apcGreen1); //But 2
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut11, ~apcGreen1); //But 3
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut12, ~apcOrng1); //But 4
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut13, ~apcOrng1); //But 5
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut14, ~apcOrng1); //But 6
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut15, ~apcOrng1); //But 7
+		~apcMn.noteOn(~apcMnCh, ~apcNoteBut16, ~apcOrng1); //But 8
 	}
 }
 

@@ -8,23 +8,52 @@ IFLoad.loadVolca;
 
 */
 IFRoot {
-	*load{this.globals;}
+	*load{this.globals;this.loadProxy}
 	*globals{
 
 		~ifRootPlayer=TaskProxy.new;
 		~ifPlayer_Mel2=TaskProxy.new;
 		~ifPlayer_Mel3=TaskProxy.new;
 		~ifPlayer_Mel4=TaskProxy.new;
+		~ifCountPlayer1=TaskProxy.new;
 		this.responders;
 
+	}
+	*loadProxy {
+		~dur = PatternProxy( Pseq([2],inf) );
+		~durP= Pseq([~dur], inf).asStream;
+		~durMul = PatternProxy( Pseq([2], inf));
+		~durMulP= Pseq([~durMul], inf).asStream;
+
+		~dur2 = PatternProxy( Pseq([2],inf) );
+		~dur2P= Pseq([~dur2], inf).asStream;
+		~durMul2 = PatternProxy( Pseq([1/4], inf));
+		~durMul2P= Pseq([~durMul2], inf).asStream;
+
+		~dur3 = PatternProxy( Pseq([2],inf) );
+		~dur3P= Pseq([~dur3], inf).asStream;
+		~durMul3 = PatternProxy( Pseq([1/2], inf));
+		~durMul3P= Pseq([~durMul3], inf).asStream;
+
+		~dur4 = PatternProxy( Pseq([2],inf) );
+		~dur4P= Pseq([~dur4], inf).asStream;
+		~durMul4 = PatternProxy( Pseq([1/4], inf));
+		~durMul4P= Pseq([~durMul4], inf).asStream;
+
+		~durCnt1 = PatternProxy( Pseq([2],inf) );
+		~durCnt1P= Pseq([~durCnt1], inf).asStream;
+		~durCntMul1 = PatternProxy( Pseq([1/4], inf));
+		~durCntMul1P= Pseq([~durCntMul1], inf).asStream;
 	}
 
 	*play{
 		IFCounter.getClockNow;
+		IFCounter.getClockStart;
 		~ifRootPlayer.play(TempoClock.default, quant: 0);
 		~ifPlayer_Mel2.play(TempoClock.default, quant: 0);
 		~ifPlayer_Mel3.play(TempoClock.default, quant: 0);
 		~ifPlayer_Mel4.play(TempoClock.default, quant: 0);
+		~ifCountPlayer1.play(TempoClock.default, quant: 0);
 
 	}
 	/*
@@ -36,6 +65,7 @@ IFRoot {
 		~ifPlayer_Mel2.stop;
 		~ifPlayer_Mel3.stop;
 		~ifPlayer_Mel4.stop;
+		~ifCountPlayer1.stop;
 	}
 
 
@@ -47,10 +77,8 @@ IFRoot {
 			inf.do{
 				1.do {
 					IFSequence.step(~stepNumP.next);
-					IFStat.ln01;IFStat.ln02;IFStat.ln03;
-					IFStat.ln04;IFStat.ln05;
-					//IFStat.ln06;
-					IFCounter.count;
+					IFStat.ln01;IFStat.ln02;IFStat.ln03;IFStat.ln04;
+					IFStat.ln05;IFStat.ln06;//IFStat.ln07;IFStat.ln08;
 					/*~cntApcUpdate = ~cntApcUpdate + 1;
 					~cntApcUpdate.switch(
 					0,{},
@@ -89,6 +117,8 @@ IFRoot {
 			//~cntPlayerMel3=0;
 			inf.do{
 				1.do {
+
+
 					IFSequence.step3(~stepNum3P.next);
 					IFBass(~tmMulBassP.next*~tmBassP.next);
 					IFKeys(~tmMulKeysP.next*~tmKeysP.next);
@@ -120,6 +150,24 @@ IFRoot {
 					}
 					);*/
 					((~dur4P.next)*(~durMul4P.next)).wait;
+				};
+			};
+		};
+		~ifCountPlayer1.source={
+			//~cntPlayerMel4=0;
+			inf.do{
+				1.do {
+					IFCounter.cnt8;
+					IFCounter.count;
+					/*~cntPlayerMel4 = ~cntPlayerMel4 + 1;
+					~cntPlayerMel4.switch(
+					0,{},
+					16,{
+					IFAPCMn.update;
+					~cntPlayerMel4=0;
+					}
+					);*/
+					((~durCnt1P.next)*(~durCntMul1P.next)).wait;
 				};
 			};
 		};

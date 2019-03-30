@@ -11,6 +11,7 @@ IFMopho.p1_SC(1);
 
 ~vMopho.noteOn(~chMopho, 26, 111); //But 1
 ~vMopho.noteOff(~chMopho, 26, 1); //But 1
+IFMopho.lng(0,0.1,118,1);
 
 */
 IFMopho {
@@ -54,7 +55,8 @@ IFMopho {
 
 
 	*proxy {
-
+		~rootMopho = PatternProxy( Pseq([0], inf));
+		~rootMophoP = Pseq([~rootMopho], inf).asStream;
 		~nt1Mopho = PatternProxy( Pseq([0], inf));
 		~nt1MophoP = Pseq([~nt1Mopho], inf).asStream;
 		~dur1Mopho = PatternProxy( Pseq([1], inf));
@@ -68,7 +70,8 @@ IFMopho {
 		~transMophoP = Pseq([~transMopho], inf).asStream;
 		~transShufMopho = PatternProxy( Pseq([0], inf));
 		~transShufMophoP = Pseq([~transShufMopho], inf).asStream;
-
+		~transCntSamp = PatternProxy( Pseq([0], inf));
+		~transCntSampP = Pseq([~transCntSamp], inf).asStream;
 
 		~octMopho = PatternProxy( Pseq([4], inf));
 		~octMophoP = Pseq([~octMopho], inf).asStream;
@@ -92,6 +95,23 @@ IFMopho {
 
 		~volMopho = PatternProxy( Pseq([0.9], inf));
 		~volMophoP = Pseq([~volMopho], inf).asStream;
+
+		//lng
+		~rootLngMopho = PatternProxy( Pseq([0], inf));
+		~rootLngMophoP = Pseq([~rootLngMopho], inf).asStream;
+		~nt1LngMopho = PatternProxy( Pseq([0], inf));
+		~nt1LngMophoP = Pseq([~nt1LngMopho], inf).asStream;
+		~dur1LngMopho = PatternProxy( Pseq([1], inf));
+		~dur1LngMophoP = Pseq([~dur1LngMopho], inf).asStream;
+		~amp1LngMopho = PatternProxy( Pseq([0.9], inf));
+		~amp1LngMophoP = Pseq([~amp1LngMopho], inf).asStream;
+		~sus1LngMopho = PatternProxy( Pseq([1], inf));
+		~sus1LngMophoP = Pseq([~sus1LngMopho], inf).asStream;
+
+		~transLngMopho = PatternProxy( Pseq([0], inf));
+		~transLngMophoP = Pseq([~transLngMopho], inf).asStream;
+		~transShufLngMopho = PatternProxy( Pseq([0], inf));
+		~transShufLngMophoP = Pseq([~transShufLngMopho], inf).asStream;
 
 	}
 
@@ -120,7 +140,8 @@ IFMopho {
 			\degree, Pseq([~nt1MophoP.next], inf),
 			\amp, Pseq([~volMophoP.next*~amp1MophoP.next], inf),
 			\sustain, Pseq([~sus1MophoP.next],inf)*~susMulMopho,
-			\mtranspose, Pseq([~transMophoP.next], inf)+~trMopho+~transShufMophoP.next,
+			\mtranspose, Pseq([~transMophoP.next], inf)+~transCntSampP.next+~trMopho+~transShufMophoP.next,
+			\ctranspose, Pseq([~rootMophoP.next],inf),
 			\octave, Pseq([~octMophoP.next], inf)+~octMulMopho,
 			\harmonic, Pseq([~hrmMophoP.next], inf)+~harmMopho
 		).play;
@@ -140,6 +161,20 @@ IFMopho {
 		).play;*/
 
 	}//p1
+	*lng{|deg=0,amp=1,sus=4|
+		Pbind(
+			\chan, ~chMopho,
+			\type, \midi, \midiout,~vMopho, \scale, Pfunc({~scl2}, inf),
+			\dur, Pseq([~dur1LngMophoP.next],1),
+			\degree, Pseq([~nt1LngMophoP.next], inf)+deg,
+			\amp, Pseq([~volMophoP.next*~amp1LngMophoP.next], inf)*amp,
+			\sustain, Pseq([~sus1LngMophoP.next],inf)*sus,
+			\mtranspose, Pseq([~transLngMophoP.next], inf)+~transCntSampP.next+~transShufLngMophoP.next,
+			\ctranspose, Pseq([~rootLngMophoP.next],inf),
+			\octave, Pseq([~octMophoP.next], inf)+~octMulMopho,
+			\harmonic, Pseq([~hrmMophoP.next], inf)+~harmMopho
+		).play(TempoClock.default, quant: 0);
+	}
 	*apc40{
 
 		/*~volMopho_APC.free;
@@ -260,8 +295,8 @@ IFMopho {
 			val=msg[1];
 			vel=msg[1]*127;
 			~tOSCAdrr.sendMsg('volMopho', msg[1]);
-			//~vMopho.control(5, 1, vel);
 			~volMopho.source = val;
+			//Mopho.cc(\voiVol, vel);
 		},
 		'/volMopho'
 		);
@@ -474,7 +509,6 @@ IFMopho {
 
 }
 /*
-
 ~vMopho.noteOn(~chMopho, 26, 111); //But 1
 ~vMopho.noteOff(~chMopho, 26, 1); //But 1
 
@@ -492,7 +526,6 @@ IFMopho {
 
 ~vMopho.control(~chMopho, 30, 0); //Sub Osc_1
 ~vMopho.control(~chMopho, 31, 120); //Sub Osc_2
-
 
 ~vMopho.control(~chMopho, 102, 110); //Filter Freq CutOff
 ~vMopho.control(~chMopho, 103, 17); //Filter Resonans
@@ -523,7 +556,6 @@ IFMopho {
 ~vMopho.control(~chMopho, 90, 7); //Env3 Dec
 ~vMopho.control(~chMopho, 77, 7); //Env3 Sus
 ~vMopho.control(~chMopho, 78, 7); //Env3 Rel
-
 
 ~vMopho.control(~chMopho, 29, 0); //Noise Lev
 ~vMopho.control(~chMopho, 14, 123); //BPM

@@ -104,7 +104,7 @@ IFStat {
 		~actVTomLP= Pseq([~actVTomL], inf).asStream;
 		~durVTomL = PatternProxy( Pseq([1], inf));
 		~durVTomLP = Pseq([~durVTomL], inf).asStream;
-		~ampVTomL = PatternProxy( Pseq([0,1,1,0,1], inf));
+		~ampVTomL = PatternProxy( Pseq([0,0,0,0,1], inf));
 		~ampVTomLP = Pseq([~ampVTomL], inf).asStream;
 		~ntVTomL = PatternProxy( Pseq([[~vTomL]], inf));
 		~ntVTomLP = Pseq([~ntVTomL], inf).asStream;
@@ -148,7 +148,7 @@ IFStat {
 			\octave,~octVKick,
 			\dur, Pseq([~durVKickP.next],~actVKickP.next),
 			\degree, Pseq([~ntVKickP.next], inf),
-			\amp, Pseq([~volKickP.next*~ampVKickP.next], inf),
+			\amp, Pseq([~volVKickP.next*~ampVKickP.next], inf),
 			\sustain, Pseq([~susVKickP.next],inf)*~susMulKick
 		).play(TempoClock.default, quant: 0);
 	}//stat01
@@ -161,7 +161,7 @@ IFStat {
 			\octave,~octVSnr,
 			\dur, Pseq([~durVSnrP.next],~actVSnrP.next),
 			\degree, Pseq([~ntVSnrP.next], inf),
-			\amp, Pseq([~volSnrP.next*~ampVSnrP.next], inf),
+			\amp, Pseq([~volVSnrP.next*~ampVSnrP.next], inf),
 			\sustain, Pseq([~susVSnrP.next],inf)*~susMulSnr
 		).play(TempoClock.default, quant: 0);
 	}
@@ -174,7 +174,7 @@ IFStat {
 			\octave,~octVHat,
 			\dur, Pseq([~durVHatP.next],~actVHatP),
 			\degree, Pseq([~ntVHatP.next], inf),
-			\amp, Pseq([~volHatP.next*~ampVHatP.next], inf),
+			\amp, Pseq([~volVHatP.next*~ampVHatP.next], inf),
 			\sustain, Pseq([~susVHatP.next],inf)*~susMulHat
 		).play(TempoClock.default, quant: 0);
 	}
@@ -269,6 +269,7 @@ IFStat {
 
 		},srcID:~mdMixInID, chan:~mdMixLn4, ccNum:30);*/
 	}//*mdMix
+
 	*preSet{
 
 		IFSeqVKick.stGrpSet  (1,0,1,0, 1,0,1,0,  1,0,1,0, 1,0,1,0);

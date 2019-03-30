@@ -37,13 +37,13 @@ IFPitchSamp {
 					1, {"PITCHSamp SWITCH ON".postln;
 						~tOSCAdrr.sendMsg('pitchSamp', 1);
 						IFPitchSamp.noteSampOn;
-						~apcMn.noteOn(~apcMnCh, 83, 1); //But 5
+						~apcMn.noteOn(~apcMnCh, ~actButD6, 4); //But 5
 					},
 					2,{"PITCHSamp SWITCH OFF".postln;
 						~tOSCAdrr.sendMsg('pitchSamp', 0);
 						~countPSamp=0;
 						IFPitchSamp.noteSampOff;
-						~apcMn.noteOn(~apcMnCh, 83, 0); //But 5
+						~apcMn.noteOn(~apcMnCh, ~actButD6, 3); //But 5
 					}
 				)
 				}
@@ -67,7 +67,7 @@ IFPitchSamp {
 					}
 				)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:83);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButD6);
 	}
 
 	*noteSampOn {

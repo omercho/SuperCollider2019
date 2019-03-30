@@ -125,7 +125,7 @@ IFKick {
 
 		Pbind(
 			\chan, ~chKick,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1KickP.next],~actKickP),
 			\degree,  Pseq([~nt1KickP.next], inf),
 			\amp, Pseq([~volKickP.next*~amp1KickP.next], inf),
@@ -137,12 +137,13 @@ IFKick {
 		//Kick2
 		Pbind(
 			\chan, ~chKick,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~durKick2P.next], ~actKick2P),
 			\degree, Pseq([~ntKick2P.next], inf),
 			\octave, Pseq([~octKickP.next], inf)+~octMulKick,
 			\amp, Pseq([~volKick2P.next*~ampKick2P.next], inf),
-			\sustain, Pseq([~susKick2P.next],inf)*~susMulKick
+			\sustain, Pseq([~susKick2P.next],inf)*~susMulKick,
+			\harmonic, Pseq([~hrmKickP.next], inf)+~harmKick,
 		).play(quant:~quantKick2);
 		//this.count2;
 		//this.timesCount;

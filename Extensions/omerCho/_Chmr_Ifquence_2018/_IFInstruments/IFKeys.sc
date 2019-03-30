@@ -16,9 +16,9 @@ IFKeys {
 
 
 	/**initClass{
-		StartUp add: {
-			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default;this.osc; });*/
-		}
+	StartUp add: {
+	/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default;this.osc; });*/
+	}
 	}*/
 	*load{
 		this.globals;
@@ -66,6 +66,8 @@ IFKeys {
 
 	}
 	*proxy{
+		~rootKeys = PatternProxy( Pseq([0], inf));
+		~rootKeysP = Pseq([~rootKeys], inf).asStream;
 		~nt1Keys = PatternProxy( Pseq([0], inf));
 		~nt1KeysP = Pseq([~nt1Keys], inf).asStream;
 		~dur1Keys = PatternProxy( Pseq([1], inf));
@@ -79,6 +81,8 @@ IFKeys {
 		~transKeysP = Pseq([~transKeys], inf).asStream;
 		~transShufKeys = PatternProxy( Pseq([1], inf));
 		~transShufKeysP = Pseq([~transShufKeys], inf).asStream;
+		~transCntKeys = PatternProxy( Pseq([0], inf));
+		~transCntKeysP = Pseq([~transCntKeys], inf).asStream;
 
 		~octKeys = PatternProxy( Pseq([3], inf));
 		~octKeysP = Pseq([~octKeys], inf).asStream;
@@ -113,6 +117,23 @@ IFKeys {
 		~volKeys = PatternProxy( Pseq([0.9], inf));
 		~volKeysP = Pseq([~volKeys], inf).asStream;
 
+		//lng
+		~rootLngKeys = PatternProxy( Pseq([0], inf));
+		~rootLngKeysP = Pseq([~rootLngKeys], inf).asStream;
+		~nt1LngKeys = PatternProxy( Pseq([0], inf));
+		~nt1LngKeysP = Pseq([~nt1LngKeys], inf).asStream;
+		~dur1LngKeys = PatternProxy( Pseq([1], inf));
+		~dur1LngKeysP = Pseq([~dur1LngKeys], inf).asStream;
+		~amp1LngKeys = PatternProxy( Pseq([0.9], inf));
+		~amp1LngKeysP = Pseq([~amp1LngKeys], inf).asStream;
+		~sus1LngKeys = PatternProxy( Pseq([1], inf));
+		~sus1LngKeysP = Pseq([~sus1LngKeys], inf).asStream;
+
+		~transLngKeys = PatternProxy( Pseq([0], inf));
+		~transLngKeysP = Pseq([~transLngKeys], inf).asStream;
+		~transShufLngKeys = PatternProxy( Pseq([0], inf));
+		~transShufLngKeysP = Pseq([~transShufLngKeys], inf).asStream;
+
 	}
 
 	*new{|i=1|
@@ -138,7 +159,8 @@ IFKeys {
 			\degree, Pseq([~nt1KeysP.next], inf),
 			\amp, Pseq([~volKeysP.next*~amp1KeysP.next], inf),
 			\sustain, Pseq([~sus1KeysP.next],inf)*~susMulKeys,
-			\mtranspose, Pseq([~transKeysP.next], inf)+~trKeys+~transShufKeysP.next,
+			\mtranspose, Pseq([~transKeysP.next], inf)+~transCntKeysP.next+~trKeys+~transShufKeysP.next,
+			\ctranspose, Pseq([~rootKeysP.next],inf),
 			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
 			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
 		).play(TempoClock.default, quant: 0);
@@ -159,6 +181,22 @@ IFKeys {
 		).play(TempoClock.default, quant: 0);
 
 	}//p1
+
+	*lng{|deg=0,amp=1,sus=4|
+		Pbind(
+			\chan, ~chKeys,
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
+			\dur, Pseq([~dur1LngKeysP.next],1),
+			\degree, Pseq([~nt1LngKeysP.next], inf)+deg,
+			\amp, Pseq([~volKeysP.next*~amp1LngKeysP.next], inf)*amp,
+			\sustain, Pseq([~sus1LngKeysP.next],inf)*sus,
+			\mtranspose, Pseq([~transLngKeysP.next], inf)+~transCntKeysP.next+~transShufLngKeysP.next,
+			\ctranspose, Pseq([~rootLngKeysP.next],inf),
+			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
+			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
+		).play(TempoClock.default, quant: 0);
+	}
+
 	*apc40{
 
 		/*~volKeys_APC.free;
@@ -288,15 +326,9 @@ IFKeys {
 			arg msg,vel,val;
 			vel=msg[1]*127;
 			val=msg[1];
-			if ( ~volcaBoolean==1, {
-				//~tOSCAdrr.sendMsg('attKeys', msg[1]);
-				VKeys.cc(\envAttVK,vel);
-				//~vKeys.control(0, ~envAtt, val);
-				//~attKeys=val+0.01;
-			},{
-				~tOSCAdrr.sendMsg('attKeys', msg[1]);
-				~mdOut.control(6, 5, vel);
-			});
+			~tOSCAdrr.sendMsg('attKeys', msg[1]);
+			VKeys.cc(\envAttVK,vel);
+			~mdOut.control(6, 5, vel);
 		},
 		'/attKeys'
 		);
@@ -305,14 +337,9 @@ IFKeys {
 			arg msg,val,vel;
 			val=msg[1];
 			vel=msg[1]*127;
-			if ( ~volcaBoolean==1, {
-				~tOSCAdrr.sendMsg('susKeys', msg[1]);
-				~vKeys.control(0, ~envSus, vel+0.01);
-				~susLevKeys=val;
-			},{
-				~tOSCAdrr.sendMsg('susKeys', msg[1]);
-				~mdOut.control(6, 6, vel);
-			});
+			~tOSCAdrr.sendMsg('susKeys', msg[1]);
+			VKeys.cc(\envSusVK,vel+0.01);
+			~mdOut.control(6, 6, vel);
 		},
 		'/susKeys'
 		);
@@ -321,15 +348,9 @@ IFKeys {
 			arg msg,val,vel;
 			val=msg[1];
 			vel=msg[1]*127;
-			if ( ~volcaBoolean==1, {
-				~tOSCAdrr.sendMsg('decKeys', val);
-				~vKeys.control(0, ~envDec, vel+0.01);
-				~decKeys=val;
-				~relKeys=val*0.7;
-			},{
-				~tOSCAdrr.sendMsg('decKeys', val);
-				~mdOut.control(6, 127, vel);
-			});
+			~tOSCAdrr.sendMsg('decKeys', val);
+			VKeys.cc(\envDecVK,vel+0.01);
+			~mdOut.control(6, 127, vel);
 		},
 		'/decKeys'
 		);
@@ -340,17 +361,11 @@ IFKeys {
 			val1=msg[1];
 			val2=msg[2];
 			vel=msg[1]*127;
-			if ( ~volcaBoolean==1, {
-				//~vKeys.control(0, ~dlyTime, msg[2]*127); //Delay Time
-				//~vKeys.control(0, ~dlyFeed, msg[1]*127); //Delay FeedBack
-				VKeys.cc(\dlyTimeVK,msg[2]*127);
-				VKeys.cc(\dlyFeedVK,msg[1]*127);
-				~tOSCAdrr.sendMsg('xy1Keys', msg[1], msg[2]);
-			},{
-				~mdOut.control(6, 12, vel);
-				~mdOut.control(6, 11, vel);
-				~tOSCAdrr.sendMsg('xy1Keys', msg[1], msg[2]);
-			});
+			~mdOut.control(6, 12, vel);
+			~mdOut.control(6, 11, vel);
+			VKeys.cc(\dlyTimeVK,msg[2]*127);
+			VKeys.cc(\dlyFeedVK,msg[1]*127);
+			~tOSCAdrr.sendMsg('xy1Keys', msg[1], msg[2]);
 		},
 		'/xy1Keys'
 		);

@@ -66,7 +66,7 @@ IFProjectGlobals.setTempo(20);
 	*setAddr{
 
 		//~tOSCAdrr = NetAddr.new("192.168.1.2", 57130); // router OTE
-		~tOSCAdrr = NetAddr.new("192.168.1.3", 5001); // router OTE
+		~tOSCAdrr = NetAddr.new("192.168.1.2", 5001); // router OTE
 		~local = NetAddr("localhost", 57120);
 
 		~mdOut = MIDIOut.newByName("IAC Driver", "SC-Abl");
@@ -80,7 +80,7 @@ IFProjectGlobals.setTempo(20);
 		~mdTouchOutID= (-1632639753);
 		~midiVel=127;
 
-		//IFProjectGlobals.setTempo(124);
+		//IFProjectGlobals.setTempo(120);
 		~chMopho=1;
 
 	}

@@ -154,7 +154,7 @@ IFSnr {
 		val=i;
 		Pbind(
 			\chan, ~chSnr,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1SnrP.next], ~actSnrP),
 			\degree, Pseq([~nt1SnrP.next], inf),
 			\amp, Pseq([~volSnrP.next*~amp1SnrP.next], inf),
@@ -167,11 +167,12 @@ IFSnr {
 		//snr2
 		Pbind(
 			\chan, ~chSnr,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur2SnrP.next], ~act2SnrP),
 			\degree, Pseq([~nt2SnrP.next], inf),
 			\amp, Pseq([~volSnr2P.next*~amp2SnrP.next], inf),
-			\sustain, Pseq([~sus2SnrP.next],inf)*~susMulSnr
+			\sustain, Pseq([~sus2SnrP.next],inf)*~susMulSnr,
+			\harmonic, Pseq([~hrmSnrP.next], inf)+~harmSnr
 		).play(quant:~quantSnr2);
 
 		/*Pbind(//LFO Amp
