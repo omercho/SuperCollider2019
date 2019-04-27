@@ -208,7 +208,7 @@ IFKeys {
 
 		//Act ButA5
 		//Keys Activate
-		~cntActLine5ButA5=0;
+		/*~cntActLine5ButA5=0;
 		~mdActLine5ButA5.free;
 		~mdActLine5ButA5=MIDIFunc.noteOn({
 			arg vel;
@@ -264,7 +264,7 @@ IFKeys {
 					}
 			)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC5);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC5);*/
 
 	}//*apc40
 	*osc{
@@ -368,15 +368,6 @@ IFKeys {
 			~tOSCAdrr.sendMsg('xy1Keys', msg[1], msg[2]);
 		},
 		'/xy1Keys'
-		);
-
-		~chainKeysFader.free;
-		~chainKeysFader= OSCFunc({
-			arg msg, val;
-			val=msg[1]*127;
-			~tOSCAdrr.sendMsg('chainKeys', msg[1]);
-		},
-		'/chainKeys'
 		);
 
 		~sendsKeys.free;

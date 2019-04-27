@@ -539,15 +539,9 @@ IFCntrl {
 		'/tapAbl'
 		);
 
-
-
 	}
 	*freeAll {
-
-
-
 	}
-
 }
 
 /*

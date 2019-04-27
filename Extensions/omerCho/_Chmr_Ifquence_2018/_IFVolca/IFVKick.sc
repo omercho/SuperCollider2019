@@ -115,53 +115,16 @@ IFVKick {
 
 	}
 	*midi{
-		~volVKick_md.free;
+		/*~volVKick_md.free;
 		~volVKick_md=MIDIFunc.cc( {
 			arg vel;
 			/*~tOSCAdrr.sendMsg('volVKick', vel/127);
 			~volVKick.source = vel;*/
 		},srcID:~mdMixInID, chan:~mdMixLnMaster, ccNum:30);
-
+*/
 		//Act ButA1
 		//Kick Activate
-		IFMIDIMix.actBankButA(0);
-		~cntMixActBankButA=0;
-		~mdActBankButA.free;
-		~mdActBankButA=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntMixActBankButA = ~cntMixActBankButA + 1;
-				~cntMixActBankButA.switch(
-					0,{},
-					1, {
-						IFMIDIMix.actBankButA(1);
-					},
-					2,{
-						IFMIDIMix.actBankButA(0);
-					}
-				)}
-			);
-		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~bankRight);
 
-		//Act ButB
-		//VKick Time Div2
-		~cntMixActBankButB=0;
-		~mdActBankButB.free;
-		~mdActBankButB=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntMixActBankButB = ~cntMixActBankButB + 1;
-				~cntMixActBankButB.switch(
-					0,{},
-					1, {
-						IFMIDIMix.actBankButB(1);
-					},
-					2,{
-						IFMIDIMix.actBankButB(0);
-					}
-				)}
-			);
-		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~bankLeft);
 
 
 	}//*midi

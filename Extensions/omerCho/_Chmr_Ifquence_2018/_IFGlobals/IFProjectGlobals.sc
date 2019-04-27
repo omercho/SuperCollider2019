@@ -163,13 +163,72 @@ IFProjectGlobals.setTempo(20);
 			},
 			'/shiftDirect'
 		);
-
 	}
-
-
-
 }
 
+IFGlobal{
+	*envBass{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,sndX=0,sndY=0|
+		~local.sendMsg('volBass', vol);
+		~local.sendMsg('attBass', att);
+		~local.sendMsg('decBass', dec);
+		~local.sendMsg('susBass', sus);
+		~local.sendMsg('rlsBass', rls);
+		~local.sendMsg('sendBass', sndX, sndY);
+	}
+	*mulBass{|octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,lfo1=0,lfo2=0|
+		IFBass.octMul(octMul);
+		~local.sendMsg('susMulBass', susMul);
+		~local.sendMsg('xy1Bass', xy1X, xy1Y);
+		~local.sendMsg('lfoMulBass1',lfo1);
+		~local.sendMsg('lfoMulBass2',lfo2);
+	}
+	*envKeys{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,sndX=0,sndY=0|
+		~local.sendMsg('volKeys', vol);
+		~local.sendMsg('attKeys', att);
+		~local.sendMsg('decKeys', dec);
+		~local.sendMsg('susKeys', sus);
+		~local.sendMsg('rlsKeys', rls);
+		~local.sendMsg('sendKeys', sndX, sndY);
+	}
+	*mulKeys{|octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,lfo1=0,lfo2=0|
+		IFKeys.octMul(octMul);
+		~local.sendMsg('susMulKeys', susMul);
+		~local.sendMsg('xy1Keys', xy1X, xy1Y);
+		~local.sendMsg('lfoMulKeys1',lfo1);
+		~local.sendMsg('lfoMulKeys2',lfo2);
+	}
+	*envSamp{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,sndX=0,sndY=0|
+		~local.sendMsg('volSamp', vol);
+		~local.sendMsg('attSamp', att);
+		~local.sendMsg('decSamp', dec);
+		~local.sendMsg('susSamp', sus);
+		~local.sendMsg('rlsSamp', rls);
+		~local.sendMsg('sendSamp', sndX, sndY);
+	}
+	*mulSamp{|octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,lfo1=0,lfo2=0|
+		IFSamp.octMul(octMul);
+		~local.sendMsg('susMulSamp', susMul);
+		~local.sendMsg('xy1Samp', xy1X, xy1Y);
+		~local.sendMsg('lfoMulSamp1',lfo1);
+		~local.sendMsg('lfoMulSamp2',lfo2);
+	}
+	*envMopho{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,sndX=0,sndY=0|
+		Mopho.cc(\voiVol, vol*127);
+		Mopho.cc(\vcaEnvAtt, att*127);
+		Mopho.cc(\vcaEnvDec, dec*127);
+		Mopho.cc(\vcaEnvSus, sus*127);
+		Mopho.cc(\vcaEnvRls, rls*127);
+		~local.sendMsg('sendMopho', sndX, sndY);
+	}
+	*mulMopho{|octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,lfo1=0,lfo2=0,xy2X=0,xy2Y=0.1|
+		IFMopho.octMul(octMul);
+		~local.sendMsg('susMulMopho', susMul);
+		~local.sendMsg('xy1Mopho', xy1X, xy1Y);
+		Mopho.cc('lfo1Amnt', lfo1*127);
+		Mopho.cc('lfo2Amnt', lfo2*127);
+		~local.sendMsg('xy2Mopho', xy2X, xy2Y);
+	}
+}
 /*
 
 IFProjectGlobals.times(kickT:1, snrT:1, hatT:1, bassT:1, sampT:1, ortaT:1, flatT:1, res1T:1);

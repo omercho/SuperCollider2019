@@ -302,7 +302,29 @@ IFTxt{
 			file.close;
 		}
 	}
-
+	*rndMel{|dir,fileName|
+		var cnt=1, min=0,max=1;
+		fork{
+			this.makePath(dir,fileName);
+			file=File.new(path.standardizePath,"w");
+			0.02.wait;
+			(1..96).do{|n|
+				case
+				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
+				{cnt>16&&cnt<=32}{min=(-4);max=(7);}//nt
+				{cnt>32&&cnt<=48}{min=(1);max=(3);}//vel
+				{cnt>48&&cnt<=64}{min=(1);max=(5);}//sus
+				{cnt>64&&cnt<=80}{min=(1);max=(1);}//tm
+				{cnt>80&&cnt<=96}{min=(4);max=(4);};//dur
+				file.write(
+					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+				);
+				cnt=cnt+1;
+			};
+			0.02.wait;
+			file.close;
+		}
+	}
 	*rnd11Line{|dir,fileName|
 		var cnt=1, min=0,max=1;
 		fork{

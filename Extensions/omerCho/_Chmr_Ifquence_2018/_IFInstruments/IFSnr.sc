@@ -225,7 +225,7 @@ IFSnr {
 
 		//Act ButA2
 		//Snr Activate
-		~cntActLine2ButA2=0;
+		/*~cntActLine2ButA2=0;
 		~mdActLine2ButA2.free;
 		~mdActLine2ButA2=MIDIFunc.noteOn({
 			arg vel;
@@ -268,7 +268,7 @@ IFSnr {
 					2,{IFAPCMn.actLine2ButC2(0);}
 			)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC2);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC2);*/
 
 
 	}//*apc40
@@ -282,7 +282,7 @@ IFSnr {
 
 	*osc{
 
-		~actSnrBut.free;
+		/*~actSnrBut.free;
 		~actSnrBut = OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
@@ -324,7 +324,7 @@ IFSnr {
 			});
 		},
 		'/time2Snr'
-		);
+		);*/
 
 		~volSnrFader.free;
 		~volSnrFader= OSCFunc({

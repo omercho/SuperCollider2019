@@ -102,17 +102,17 @@ IFVSamp {
 
 	*midiMix{
 
-		~volVSamp5_MDMix.free;
+	/*	~volVSamp5_MDMix.free;
 		~volVSamp5_MDMix=MIDIFunc.cc( {
 			arg vel;
 			~tOSCAdrr.sendMsg('volVSamp5', vel/127);
 			~vSamp.control(~smp05, ~smpLvl, vel);
 
-		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:30);
+		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:30);*/
 
 		//Act ButA
 		//VSamp Activate
-		~cntMDMixact5ButA=0;
+		/*~cntMDMixact5ButA=0;
 		~mdMDMixact4ButA.free;
 		~mdMDMixact4ButA=MIDIFunc.noteOn({
 			arg vel;
@@ -150,7 +150,7 @@ IFVSamp {
 					}
 				)}
 			);
-		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut5);
+		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut5);*/
 
 		//Act ButC
 		//Static VSamp Activate

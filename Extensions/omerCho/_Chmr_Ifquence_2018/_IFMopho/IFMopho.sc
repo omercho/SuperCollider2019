@@ -186,7 +186,7 @@ IFMopho {
 
 		//Act ButA4
 		//Mopho Activate
-		~cntActLine7ButA7=0;
+		/*~cntActLine7ButA7=0;
 		~mdActLine7ButA7.free;
 		~mdActLine7ButA7=MIDIFunc.noteOn({
 			arg vel;
@@ -242,7 +242,7 @@ IFMopho {
 					}
 			)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC7);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC7);*/
 	}//*apc40
 
 	*osc{
@@ -301,64 +301,6 @@ IFMopho {
 		'/volMopho'
 		);
 
-
-		~attMophoFader.free;
-		~attMophoFader= OSCFunc({
-			arg msg,vel,val;
-			vel=msg[1]*127;
-			val=msg[1];
-			if ( ~volcaBoolean==1, {
-				~tOSCAdrr.sendMsg('attMopho', val);
-				//~vMopho.control(~chMopho, ~egAtt, vel+0.01);
-				//~vMopho.control(~chMopho, 118, vel+0.01); //Amp Att
-				~attMopho=val+0.01;
-			},{
-				~tOSCAdrr.sendMsg('attMopho', val);
-				~attMopho=val+0.01;
-			});
-
-		},
-		'/attMopho'
-		);
-
-		~susMophoFader.free;
-		~susMophoFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			if ( ~volcaBoolean==1, {
-				~tOSCAdrr.sendMsg('susMopho', msg[1]);
-				//~vMopho.control(~chMopho, 75, vel); //Amp Sus
-				~susLevMopho=val;
-			},{
-				~tOSCAdrr.sendMsg('susMopho', msg[1]);
-				~susLevMopho=val;
-			});
-		},
-		'/susMopho'
-		);
-
-		~decMophoFader.free;
-		~decMophoFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			if ( ~volcaBoolean==1, {
-				~tOSCAdrr.sendMsg('decMopho', val);
-				~decMopho=val;
-				~relMopho=val*0.7;
-				//~vMopho.control(~chMopho, 119, vel); //Amp Dec
-				//~vMopho.control(~chMopho, 76, vel/2);
-			},{
-				~tOSCAdrr.sendMsg('decMopho', val);
-				~decMopho=val;
-				~relMopho=val*0.7;
-			});
-		},
-		'/decMopho'
-		);
-
-
 		~susMulMophoFader.free;
 		~susMulMophoFader= OSCFunc({
 			arg msg, val,vel;
@@ -368,17 +310,6 @@ IFMopho {
 			~susMulMopho=val;
 		},
 		'/susMulMopho'
-		);
-
-		~chainMophoFader.free;
-		~chainMophoFader= OSCFunc({
-			arg msg, val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('chainMopho',val);
-
-		},
-		'/chainMopho'
 		);
 
 		~sendMophoFader.free;
@@ -394,34 +325,46 @@ IFMopho {
 		'/sendMopho'
 		);
 
-		~lfo1AmntMophoFad.free;
-		~lfo1AmntMophoFad= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=val*127;
+		~xy1Mopho.free;
+		~xy1Mopho= OSCFunc({
+			arg msg,vel1,vel2;
 
-			~tOSCAdrr.sendMsg('lfo1AmntMopho', val);
-			//Mopho.control(1, 0, 39, 0, vel);//0->127  LFO1 Amount
+			vel1=msg[1]*127;
+			vel2=msg[2]*127;
+			Mopho.cc(\osc1Glide,vel2);
+			Mopho.cc(\osc2Glide,vel1);
+			~tOSCAdrr.sendMsg('xy1Samp', msg[1], msg[2]);
+
 		},
-		'/lfo1AmntMopho'
+		'xy1Mopho'
 		);
 
-		~lfoMulMophoFad1.free;
-		~lfoMulMophoFad1= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('lfoMulMopho1', msg[1]);
-			//~lfoMulMopho1=msg[1]*1.1;
+		~xy1Mopho.free;
+		~xy1Mopho= OSCFunc({
+			arg msg,vel1,vel2;
+
+			vel1=msg[1]*127;
+			vel2=msg[2]*127;
+			Mopho.cc(\osc1Glide,vel2);
+			Mopho.cc(\osc2Glide,vel1);
+			~tOSCAdrr.sendMsg('xy1Samp', msg[1], msg[2]);
+
 		},
-		'/lfoMulMopho1'
+		'xy1Mopho'
 		);
 
-		~lfoMulMophoFad2.free;
-		~lfoMulMophoFad2= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('lfoMulMopho2', msg[1]);
-			//~lfoMulMopho2=msg[1]*1.1;
+		~xy2Mopho.free;
+		~xy2Mopho= OSCFunc({
+			arg msg,vel1,vel2;
+
+			vel1=msg[1]*127;
+			vel2=msg[2]*127;
+			Mopho.cc('lfo3Amnt', vel2);
+			Mopho.cc('lfo4Amnt', vel1);
+			~tOSCAdrr.sendMsg('xy1Samp', msg[1], msg[2]);
+
 		},
-		'/lfoMulMopho2'
+		'xy2Mopho'
 		);
 
 		//TIME

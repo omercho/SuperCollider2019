@@ -215,7 +215,7 @@ IFSamp {
 
 		//Act ButA6
 		//Samp Activate
-		~cntActLine6ButA6=0;
+		/*~cntActLine6ButA6=0;
 		~mdActLine6ButA6.free;
 		~mdActLine6ButA6=MIDIFunc.noteOn({
 			arg vel;
@@ -271,7 +271,7 @@ IFSamp {
 					}
 			)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC6);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC6);*/
 
 	}//*apc40
 

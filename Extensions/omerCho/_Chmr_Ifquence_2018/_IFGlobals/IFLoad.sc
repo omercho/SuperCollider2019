@@ -10,16 +10,17 @@ IFLoad{
 		StartUp add: {
 			fork{
 				1.1.wait;
-				Server.default.doWhenBooted({this.loadVolca; });
+				Server.default.doWhenBooted({this.load; });
 			};
 		}
 	}
-	*loadVolca{
+	*load{
 		fork{
 			"Booting Ifquence: CHMR 2019".postln;
 			1.1.wait;
 			~volcaBoolean=0;
 			Mopho.load;
+			JmxMBs.load;
 			IFProjectGlobals.load;
 			0.1.wait;
 			IFiConnectMIDI4.load;
@@ -73,8 +74,8 @@ IFLoad{
 			IFMopho.load;
 			IFMophoResp.load;
 			0.1.wait;
-			IFRes.load;
-			IFMast.load;
+			//IFRes.load;
+			//IFMast.load;
 			0.1.wait;
 			IFExt.load;
 			0.1.wait;
@@ -95,78 +96,6 @@ IFLoad{
 			*/
 		};//--fork--
 	}//--*loadVolca--
-
-	*load{
-		fork{
-			Server.default.doWhenBooted({
-				~volcaBoolean=0;
-				IFProjectGlobals.load;
-				0.1.wait;
-				IFSequence.loadAll;
-				0.1.wait;
-				IFCounter.zero;IFCounter.loadProxy;
-				0.1.wait;
-				IFCntrl.loadAll;
-				0.1.wait;
-				IFPitch.loadAll;
-				0.1.wait;
-				IFTracks.loadButtons;
-				0.1.wait;
-				"Loading Pitches".postln;
-				IFPitchBass.loadAll;
-				0.1.wait;
-				"Loading Pitches".postln;
-				IFPitchKeys.loadAll;
-				0.1.wait;
-				"Loading Pitches".postln;
-				IFPitchSamp.loadAll;
-				0.1.wait;
-				"Loading Pitches".postln;
-				IFPitchExt.loadAll;
-				0.1.wait;
-				"Loading Pitches".postln;
-				IFPitchVChord.loadAll;
-				IFShuf.load;
-				0.1.wait;
-				//VBass.globals; VBass.preSet01; VKeys.globals; VKeys.preSet01;
-				//0.1.wait;
-				//VBeats.globals; VBeats.preSet01; VBeats.oscMIDI;
-				//IFVKick.globals; IFVKick.preSet; IFVKick.default; IFVKick.osc;
-				//IFVSnr.globals; IFVSnr.preSet; IFVSnr.default; IFVSnr.osc;
-				//IFVTom.globals; IFVTom.preSet; IFVTom.default; IFVTom.osc;
-				//IFVHat.globals; IFVHat.preSet; IFVHat.default; IFVHat.osc;
-				0.1.wait;
-				"Loading Instruments".postln;
-				IFStat.load;
-				0.1.wait;
-				IFKick.load;
-				0.1.wait;
-				IFSnr.load;
-				0.1.wait;
-				IFHat.load;
-				0.1.wait;
-				IFBass.load;
-				0.1.wait;
-				IFKeys.load;
-				0.1.wait;
-				IFSamp.load;
-				0.1.wait;
-				IFRes.load;
-				IFMast.load;
-				0.1.wait;
-				IFExt.load;
-				0.1.wait;
-				IFRoot.load;
-				0.1.wait;
-				IFSeqSteps.load;
-				0.1.wait;
-				"Track: Not loaded".postln;
-				~tOSCAdrr.sendMsg('trackLabel', 'Track: Not loaded');
-
-			});
-		};//--fork--
-	}//--*load--
-
 
 }
 

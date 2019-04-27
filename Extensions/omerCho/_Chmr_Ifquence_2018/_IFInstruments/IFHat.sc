@@ -188,7 +188,7 @@ IFHat {
 
 		//Act ButA3
 		//Hat Activate
-		~cntActLine3ButA3=0;
+		/*~cntActLine3ButA3=0;
 		~mdActLine3ButA3.free;
 		~mdActLine3ButA3=MIDIFunc.noteOn({
 			arg vel;
@@ -240,7 +240,7 @@ IFHat {
 					}
 			)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC3);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC3);*/
 
 	}//*apc40
 

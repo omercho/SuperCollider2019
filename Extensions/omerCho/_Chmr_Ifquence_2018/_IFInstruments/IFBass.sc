@@ -164,18 +164,18 @@ IFBass {
 		).play(TempoClock.default, quant: 0);
 
 
-		/*Pbind(//LFO CUT BASS INT
-		\midicmd, \control, \type, \midi,
-		\midiout,~vBass, \chan, 0, \ctlNum, ~lfoInt,
-		\delta, Pseq([~delta1BassP.next], 1),
-		\control, Pseq([~lfo1BassP.value], 1)*~lfoMulBass1,
-		).play;
+		Pbind(//LFO CUT BASS INT
+			\midicmd, \control, \type, \midi,
+			\midiout,~vBass, \chan, 0, \ctlNum, ~lfoInt,
+			\delta, Pseq([~delta1BassP.next], 1),
+			\control, Pseq([~lfo1BassP.value], 1)*~lfoMulBass1,
+		).play(TempoClock.default, quant: 0);
 		Pbind(//LFO CUT BASS RATE
-		\midicmd, \control, \type, \midi,
-		\midiout,~vBass, \chan, 0, \ctlNum, ~lfoRate,
-		\delta, Pseq([~delta2BassP.next], 1),
-		\control, Pseq([~lfo2BassP.value], 1)*~lfoMulBass2,
-		).play;*/
+			\midicmd, \control, \type, \midi,
+			\midiout,~vBass, \chan, 0, \ctlNum, ~lfoRate,
+			\delta, Pseq([~delta2BassP.next], 1),
+			\control, Pseq([~lfo2BassP.value], 1)*~lfoMulBass2,
+		).play(TempoClock.default, quant: 0);
 
 	}//p1
 
@@ -205,7 +205,7 @@ IFBass {
 
 		//Act ButA4
 		//Bass Activate
-		~cntActLine4ButA4=0;
+		/*~cntActLine4ButA4=0;
 		~mdActLine4ButA4.free;
 		~mdActLine4ButA4=MIDIFunc.noteOn({
 			arg vel;
@@ -261,7 +261,7 @@ IFBass {
 					}
 			)}
 			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC4);
+		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC4);*/
 	}//*apc40
 
 	*osc{
