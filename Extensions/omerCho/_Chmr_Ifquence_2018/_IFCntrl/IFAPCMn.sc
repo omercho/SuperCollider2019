@@ -482,7 +482,7 @@ IFAPCMn{
 			arg vel;
 			~tOSCAdrr.sendMsg('volKick', vel/127);
 			~volKick.source = vel/127;
-			~volKick2.source = vel/127;
+			//~volKick2.source = vel/127;
 			/*~tOSCAdrr.sendMsg('volVKick', vel/127);
 			~volVKick.source = vel;*/
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd1);
@@ -497,8 +497,7 @@ IFAPCMn{
 					0,{},
 					1, {IFAPCMn.actLine1ButA1(1);},
 					2,{IFAPCMn.actLine1ButA1(0);}
-			)}
-			);
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA1);
 		//Act ButB1
 		~cntActLine1ButB1=0;
@@ -510,15 +509,10 @@ IFAPCMn{
 				~cntActLine1ButB1.switch(
 					0,{},
 					1, {IFAPCMn.actLine1ButB1(1);},
-					2,{
-						IFAPCMn.actLine1ButB1(0);
-					}
-			)}
-			);
+					2,{IFAPCMn.actLine1ButB1(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB1);
-
 		//Act ButC1
-		//Static Kick Activate
 		~cntActLine1ButC1=0;
 		~mdActLine1ButC1.free;
 		~mdActLine1ButC1=MIDIFunc.noteOn({
@@ -527,14 +521,9 @@ IFAPCMn{
 				~cntActLine1ButC1 = ~cntActLine1ButC1 + 1;
 				~cntActLine1ButC1.switch(
 					0,{},
-					1, {
-						IFAPCMn.actLine1ButC1(1);
-					},
-					2,{
-						IFAPCMn.actLine1ButC1(0);
-					}
-			)}
-			);
+					1, {IFAPCMn.actLine1ButC1(1);},
+					2,{IFAPCMn.actLine1ButC1(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC1);
 		////--------------------line2
 		~apcMnFad2.free;
@@ -597,10 +586,11 @@ IFAPCMn{
 			arg vel;
 			~tOSCAdrr.sendMsg('volHat', vel/127);
 			~volHat.source = vel/127;
-			~volHat2.source = vel/127;
+			//~volHat2.source = vel/127;
 			/*~tOSCAdrr.sendMsg('volVHat', vel/127);
 			~volVHat.source = vel;*/
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd3);
+		//Act ButA3
 		~cntActLine3ButA3=0;
 		~mdActLine3ButA3.free;
 		~mdActLine3ButA3=MIDIFunc.noteOn({
@@ -609,18 +599,11 @@ IFAPCMn{
 				~cntActLine3ButA3 = ~cntActLine3ButA3 + 1;
 				~cntActLine3ButA3.switch(
 					0,{},
-					1, {
-						IFAPCMn.actLine3ButA3(1);
-					},
-					2,{
-						IFAPCMn.actLine3ButA3(0);
-					}
-			)}
-			);
+					1, {IFAPCMn.actLine3ButA3(1);},
+					2,{IFAPCMn.actLine3ButA3(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA3);
-
 		//Act ButB3
-		//Hat Time Div2
 		~cntActLine3ButB3=0;
 		~mdActLine3ButB3.free;
 		~mdActLine3ButB3=MIDIFunc.noteOn({

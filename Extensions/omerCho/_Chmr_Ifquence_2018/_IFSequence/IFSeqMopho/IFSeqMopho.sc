@@ -469,7 +469,7 @@ IFSeqMopho {
 		{ i == 15 } { this.step15; }
 		{ i == 16 } { this.step16; };
 	}
-
+//~amp1MophoP.next
 	*step01{
 		~amp1Mopho.source  =  Pseq([~seqMopho01.next*~seqVelMopho01.next], inf);
 		~octMopho.source = Pseq([~seqOctMopho01.next], inf);

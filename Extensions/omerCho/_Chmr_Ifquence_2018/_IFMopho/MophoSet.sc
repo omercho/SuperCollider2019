@@ -1,6 +1,20 @@
 /*
+/*
+Mopho.masterTranspose(12);
+Mopho.masterTune(1);
+Mopho.midiClock(0);
+Mopho.parameterSend(1);
+Mopho.parameterReceive(0);
+Mopho.controllerSendReceive(1);
+Mopho.sysexSendReceive(1);
+Mopho.audioOut(0);
+Mopho.midiOut(1);
+*/
 MophoSet(\default);
 MophoSet.makeOSCResps;
+
+Mopho.cc(\extIn, 127);
+
 */
 MophoSet{
 	*new{|key,val|
@@ -33,18 +47,18 @@ MophoSet{
 
 				Mopho.cc(\lpfFreq, 10);
 				Mopho.cc(\lpfRes, 0);
-				Mopho.cc(\lpfAmnt, 0);
-				Mopho.cc(\lpfVel, 100);
-				Mopho.cc(\lpfKeyAmnt, 0);
-				Mopho.cc(\lpfAudMod, 0);
+				Mopho.cc(\lpfAmnt, 80);
+				Mopho.cc(\lpfVel, 120);
+				Mopho.cc(\lpfKeyAmnt, 100);
+				Mopho.cc(\lpfAudMod, 40);
 				Mopho.cc(\lpfPole, 0);
 				Mopho.cc(\lpfEnvAtt, 0);
 				Mopho.cc(\lpfEnvDec, 68);
-				Mopho.cc(\lpfEnvSus, 0);
+				Mopho.cc(\lpfEnvSus, 40);
 				Mopho.cc(\lpfEnvRls, 40);
 
-				Mopho.cc(\vcaLvl, 0);
-				Mopho.cc(\vcaAmnt, 0);
+				Mopho.cc(\vcaLvl, 120);
+				Mopho.cc(\vcaAmnt, 120);
 				Mopho.cc(\vcaVel, 127);
 				Mopho.cc(\vcaEnvAtt, 0);
 				Mopho.cc(\vcaEnvDec, 50);
@@ -120,23 +134,23 @@ MophoSet{
 
 				Mopho.cc(\lpfFreq, 10);
 				Mopho.cc(\lpfRes, 0);
-				Mopho.cc(\lpfAmnt, 0);
+				Mopho.cc(\lpfAmnt, 60);
 				Mopho.cc(\lpfVel, 100);
-				Mopho.cc(\lpfKeyAmnt, 0);
-				Mopho.cc(\lpfAudMod, 0);
-				Mopho.cc(\lpfPole, 0);
+				Mopho.cc(\lpfKeyAmnt, 100);
+				Mopho.cc(\lpfAudMod, 80);
+				Mopho.cc(\lpfPole, 1);
 				Mopho.cc(\lpfEnvAtt, 0);
 				Mopho.cc(\lpfEnvDec, 68);
-				Mopho.cc(\lpfEnvSus, 0);
-				Mopho.cc(\lpfEnvRls, 40);
+				Mopho.cc(\lpfEnvSus, 60);
+				Mopho.cc(\lpfEnvRls, 20);
 
-				Mopho.cc(\vcaLvl, 0);
-				Mopho.cc(\vcaAmnt, 0);
+				Mopho.cc(\vcaLvl, 10);
+				Mopho.cc(\vcaAmnt, 90);
 				Mopho.cc(\vcaVel, 127);
 				Mopho.cc(\vcaEnvAtt, 0);
-				Mopho.cc(\vcaEnvDec, 50);
+				Mopho.cc(\vcaEnvDec, 90);
 				Mopho.cc(\vcaEnvSus, 100);
-				Mopho.cc(\vcaEnvRls, 20);
+				Mopho.cc(\vcaEnvRls, 60);
 
 				Mopho.cc('lfo1Dest', 0);
 				Mopho.cc('lfo2Dest', 0);
@@ -162,6 +176,93 @@ MophoSet{
 				Mopho.cc(\env3Amnt, 127);
 				Mopho.cc('env3Dest', 0);
 				Mopho.cc(\env3Vel, 0);
+				Mopho.cc(\env3Att, 0);
+				Mopho.cc(\env3Dec, 0);
+				Mopho.cc(\env3Sus, 0);
+				Mopho.cc(\env3Rls, 0);
+				Mopho.cc('mod1Dest', 0);
+				Mopho.cc('mod2Dest', 0);
+				Mopho.cc('mod3Dest', 0);
+				Mopho.cc('mod4Dest', 0);
+				Mopho.cc('mod1Src', 0);
+				Mopho.cc('mod2Src', 0);
+				Mopho.cc('mod3Src', 0);
+				Mopho.cc('mod4Src', 0);
+				Mopho.cc(\mod1Amnt, 127);
+				Mopho.cc(\mod2Amnt, 127);
+				Mopho.cc(\mod3Amnt, 127);
+				Mopho.cc(\mod4Amnt, 127);
+			},
+			\oc02,{
+				("MophoSet"+key).postln;
+				Mopho.cc(\extIn, 64);
+				Mopho.cc(\noise, 0);
+				Mopho.cc(\voiVol, 126);
+
+				Mopho.cc(\osc1Freq, 36);
+				Mopho.cc(\osc1Tune,50);
+				Mopho.cc(\osc1Shape,1);
+				Mopho.cc(\osc1Glide,0);
+				Mopho.cc(\osc1Kybrd,2);
+				Mopho.cc(\osc1Sub, 0);
+
+				Mopho.cc(\osc2Freq, 36);
+				Mopho.cc(\osc2Tune,53);
+				Mopho.cc(\osc2Shape,3);
+				Mopho.cc(\osc2Glide,10);
+				Mopho.cc(\osc2Kybrd,2);
+				Mopho.cc(\osc2Sub, 0);
+
+				Mopho.cc(\oscMix, 68);
+				Mopho.cc(\oscSync, 1);
+				Mopho.cc(\oscSlop, 1);
+				Mopho.cc(\keyMode, 1);
+				Mopho.cc(\glideMode, 1);
+
+				Mopho.cc(\lpfFreq, 10);
+				Mopho.cc(\lpfRes, 20);
+				Mopho.cc(\lpfAmnt, 60);
+				Mopho.cc(\lpfVel, 100);
+				Mopho.cc(\lpfKeyAmnt, 100);
+				Mopho.cc(\lpfAudMod, 80);
+				Mopho.cc(\lpfPole, 2);
+				Mopho.cc(\lpfEnvAtt, 0);
+				Mopho.cc(\lpfEnvDec, 68);
+				Mopho.cc(\lpfEnvSus, 90);
+				Mopho.cc(\lpfEnvRls, 20);
+
+				Mopho.cc(\vcaLvl, 0);
+				Mopho.cc(\vcaAmnt, 90);
+				Mopho.cc(\vcaVel, 127);
+				Mopho.cc(\vcaEnvAtt, 0);
+				Mopho.cc(\vcaEnvDec, 90);
+				Mopho.cc(\vcaEnvSus, 100);
+				Mopho.cc(\vcaEnvRls, 60);
+
+				Mopho.cc('lfo1Dest', 4);
+				Mopho.cc('lfo2Dest', 6);
+				Mopho.cc('lfo3Dest', 8);
+				Mopho.cc('lfo4Dest', 10);
+				Mopho.cc('lfo1Amnt', 22);
+				Mopho.cc('lfo2Amnt', 12);
+				Mopho.cc('lfo3Amnt', 33);
+				Mopho.cc('lfo4Amnt', 42);
+				Mopho.cc('lfo1Freq', 1);
+				Mopho.cc('lfo2Freq', 3);
+				Mopho.cc('lfo3Freq', 4);
+				Mopho.cc('lfo4Freq', 2);
+				Mopho.cc('lfo1Shape', 1);
+				Mopho.cc('lfo2Shape', 6);
+				Mopho.cc('lfo3Shape', 4);
+				Mopho.cc('lfo4Shape', 2);
+				Mopho.cc('lfo1KeySync', 1);
+				Mopho.cc('lfo2KeySync', 1);
+				Mopho.cc('lfo3KeySync', 1);
+				Mopho.cc('lfo4KeySync', 1);
+
+				Mopho.cc(\env3Amnt, 127);
+				Mopho.cc('env3Dest', 3);
+				Mopho.cc(\env3Vel, 27);
 				Mopho.cc(\env3Att, 0);
 				Mopho.cc(\env3Dec, 0);
 				Mopho.cc(\env3Sus, 0);

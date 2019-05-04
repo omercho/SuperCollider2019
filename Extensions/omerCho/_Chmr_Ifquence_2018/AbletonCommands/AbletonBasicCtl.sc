@@ -44,7 +44,7 @@
 				\type, \midi, \midicmd, \control,
 				\midiout,~mdOut, \chan, 15, \ctlNum, 2,
 				\delta, Pseq([1], 8),\control, Pseq([100], 8)
-			).play(TempoClock.default, quant: 0);
+			).play(~clkMaster, quant: 0);
 			4.01.wait;
 			//this.stop;
 		}.fork;

@@ -24,10 +24,9 @@ IFKeys {
 		this.globals;
 		this.proxy;
 		this.osc;
-		this.apc40;
 	}
 	*globals{
-
+		~chVKeys=0;
 		~chKeys=4;
 		~lateKeys= 0.0;
 		~timesKeys=1;
@@ -35,8 +34,6 @@ IFKeys {
 		~rootKeys=0;
 		~harmKeys=0;
 		~susMulKeys=1;
-		~lfoMulKeys1=0;
-		~lfoMulKeys2=0;
 		~trKeys=0;
 		~lfoMulKeys1=0.2;
 		~lfoMulKeys2=0.2;
@@ -134,6 +131,9 @@ IFKeys {
 		~transShufLngKeys = PatternProxy( Pseq([0], inf));
 		~transShufLngKeysP = Pseq([~transShufLngKeys], inf).asStream;
 
+		~cntKeysLfo=0;
+		~cntKeys=0;
+
 	}
 
 	*new{|i=1|
@@ -143,44 +143,61 @@ IFKeys {
 		{ i == val }  {
 			{val.do{
 				~lateKeys.wait;
-				this.p1(val);
+				~cntKeys=~cntKeys+1;
+				//~cntKeys.postln;
+				~cntKeys.switch(
+					0,{},
+					1,{this.p1(val);},
+					8,{~cntKeys=0;}
+				);
 				((~dur1KeysP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
 		}
-
 	}
 	*p1 {|i=1|
 		var val;
 		val=i;
 		Pbind(
-			\chan, ~chKeys,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
-			\dur, Pseq([~dur1KeysP.next],~actKeysP),
+			\chan, ~chVKeys,
+			\type, \midi, \midiout,~vKeys, \scale, Pfunc({~scl2}, inf),
+			\dur, Pseq([~dur1KeysP.next],~actKeysP.next),
 			\degree, Pseq([~nt1KeysP.next], inf),
 			\amp, Pseq([~volKeysP.next*~amp1KeysP.next], inf),
-			\sustain, Pseq([~sus1KeysP.next],inf)*~susMulKeys,
+			\sustain, Pseq([2.0*~sus1KeysP.next],inf)*~susMulKeys,
 			\mtranspose, Pseq([~transKeysP.next], inf)+~transCntKeysP.next+~trKeys+~transShufKeysP.next,
 			\ctranspose, Pseq([~rootKeysP.next],inf),
 			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
 			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
-		).play(TempoClock.default, quant: 0);
+		).play(~clkKeys, quant: 0);
 
-		//VKeys
+		~cntKeysLfo=~cntKeysLfo+1;
+		//~cntKeysLfo.postln;
+		~cntKeysLfo.switch(
+			0,{},
+			1,{
+				this.pLfo;
+			},
+			2,{
+				~cntKeysLfo=0;
+			}
+		);
+	}//p1
+	*pLfo{
+
 		Pbind(//LFO CUT KEYS INT
 			\midicmd, \control, \type, \midi,
-			\midiout,~mdOut, \chan, 6, \ctlNum, 40,
-			\delta, Pseq([~delta1KeysP.value], ~actKeysP),
-			\control, ~lfoMulKeys1*Pexprand(0.1*~lfoCtKeysP.value,1*~lfoCtKeysP.value, inf).round,
-		).play(TempoClock.default, quant: 0);
+			\midiout,~vKeys, \chan, 0, \ctlNum, Pseq([~vcfEg,~envAtt*0.6,~vcoPort],inf),
+			\delta, Pseq([~delta1KeysP.next], ~actKeysP.next),
+			\control, ~lfoMulKeys1*Pexprand(0.5*~lfoCtKeysP.next,1*~lfoCtKeysP.next, inf).round,
+		).play(~clkKeys, quant: 0);
 
 		Pbind(//LFO RATE KEYS
 			\midicmd, \control, \type, \midi,
-			\midiout,~mdOut, \chan, 6, \ctlNum, 41,
-			\delta, Pseq([~delta2KeysP.value], ~actKeysP),
-			\control, ~lfoMulKeys2*Pexprand(0.1*~lfoRtKeysP.value,0.5*~lfoRtKeysP.value, inf).round,
-		).play(TempoClock.default, quant: 0);
-
-	}//p1
+			\midiout,~vKeys, \chan, 0, \ctlNum, Pseq([~envDec,~vcoDtn],inf),
+			\delta, Pseq([~delta2KeysP.next], ~actKeysP.next),
+			\control, ~lfoMulKeys2*Pexprand(0.8*~lfoRtKeysP.next,0.5*~lfoRtKeysP.next, inf).round,
+		).play(~clkKeys, quant: 0);
+	}//pLfo
 
 	*lng{|deg=0,amp=1,sus=4|
 		Pbind(
@@ -194,79 +211,9 @@ IFKeys {
 			\ctranspose, Pseq([~rootLngKeysP.next],inf),
 			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
 			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
-		).play(TempoClock.default, quant: 0);
+		).play(~clkKeys, quant: 0);
 	}
 
-	*apc40{
-
-		/*~volKeys_APC.free;
-		~volKeys_APC=MIDIFunc.cc( {
-		arg vel;
-		~tOSCAdrr.sendMsg('volKeys', vel/127);
-		~volKeys.source = vel/127;
-		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd5);*/
-
-		//Act ButA5
-		//Keys Activate
-		/*~cntActLine5ButA5=0;
-		~mdActLine5ButA5.free;
-		~mdActLine5ButA5=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine5ButA5 = ~cntActLine5ButA5 + 1;
-				~cntActLine5ButA5.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine5ButA5(1);
-					},
-					2,{
-						IFAPCMn.actLine5ButA5(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA5);
-
-		//Act ButB5
-		//Keys Time Div2
-		~cntActLine5ButB5=0;
-		~mdActLine5ButB5.free;
-		~mdActLine5ButB5=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine5ButB5 = ~cntActLine5ButB5 + 1;
-				~cntActLine5ButB5.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine5ButB5(1);
-					},
-					2,{
-						IFAPCMn.actLine5ButB5(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB5);
-
-		//Act ButC5
-		//Static Keys Activate
-		~cntActLine5ButC5=0;
-		~mdActLine5ButC5.free;
-		~mdActLine5ButC5=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine5ButC5 = ~cntActLine5ButC5 + 1;
-				~cntActLine5ButC5.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine5ButC5(1);
-					},
-					2,{
-						IFAPCMn.actLine5ButC5(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC5);*/
-
-	}//*apc40
 	*osc{
 
 		~actKeysBut.free;

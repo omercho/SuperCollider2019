@@ -19,24 +19,60 @@ IFPitch {
 			});*/
 		}
 	}
-
 	*loadAll {
+		~nt=(0);
 		this.buttons;
 		//this.shufTrans;
 		//this.note;
+		this.loadProxy;
+		this.loadScaleList;
 		this.noteBass;
 		this.noteKeys;
 		this.noteSamp;
 		this.noteMopho;
 		this.trans;
 	}
-	*setScl{|scl=16,root=4|
-		~scl2=~ifSclList[scl];
+	*loadProxy {
+		~ifPitchPat = PatternProxy( Pseq([0], inf));
+		~ifPitchPatP= Pseq([~ifPitchPat], inf).asStream;
+	}
+	*pat{|nt1=0,nt2=0,nt3=0,nt4=0,nt5=0,nt6=0,nt7=0,nt8=0|
+		~ifPitchPat.source=Pseq([nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8], inf);
+	}
+	*loadScaleList{
+		~ifSclList = [
+			/*00*/Scale.chromatic,
+			//5Nt
+			/*01*/Scale.minorPentatonic,/*02*/Scale.majorPentatonic,
+			/*03*/Scale.ritusen,        /*04*/Scale.egyptian,
+			/*05*/Scale.kumoi,          /*06*/Scale.hirajoshi,
+			/*07*/Scale.chinese,        /*08*/Scale.indian,
+			/*09*/Scale.pelog,          /*10*/Scale.prometheus,
+			/*11*/Scale.scriabin,       /*12*/Scale.gong,
+			/*13*/Scale.jiao,           /*14*/Scale.zhi,
+			/*15*/Scale.yu,             /*16*/Scale.shang,
+			//7Nt
+			/*17*/Scale.minor,          /*18*/Scale.major,
+			/*19*/Scale.harmonicMinor,  /*20*/Scale.harmonicMajor,
+			/*21*/Scale.melodicMinor,   /*22*/Scale.melodicMajor,
+			/*23*/Scale.ionian,         /*24*/Scale.dorian,
+			/*25*/Scale.phrygian,       /*26*/Scale.lydian,
+			/*27*/Scale.mixolydian,     /*28*/Scale.aeolian,
+			/*29*/Scale.locrian
+		];
+	}
+	*randscale{
+		~scl2=~ifSclList[(0..29).choose];
+	}
+	*setScl{|scl1=0,scl2=16,root=4|
+		~tOSCAdrr.sendMsg('scaleLabel', (~ifSclList[17]).asStream);
+		~scl1=~ifSclList[scl1];
+		~scl2=~ifSclList[scl2];
 
 		~rootBass.source =(root);
 		~rootKeys.source =(root);
-		~rootSamp.source =(root);
 		~rootMopho.source =(root);
+		~rootSamp.source =(root);
 		~rootExt.source =(root);
 
 		~rootLngBass.source=(root);
@@ -498,7 +534,6 @@ IFPitch {
 		);
 	}
 	*trans {
-
 		//----Kick-------
 		~transKickMulBut.free;
 		~transKickMulBut= OSCFunc({
@@ -696,9 +731,7 @@ IFPitch {
 				~transBass.source=0;
 				~tOSCAdrr.sendMsg('noteBassLabel', '0');
 			});
-		},
-		'/ntBass_0'
-		);
+		},'/ntBass_0');
 		~noteBass_1.free;
 		~noteBass_1 = OSCFunc({
 			arg msg;
@@ -708,9 +741,7 @@ IFPitch {
 				~transBass.source=1;
 				~tOSCAdrr.sendMsg('noteBassLabel', '1');
 			});
-		},
-		'/ntBass_1'
-		);
+		},'/ntBass_1');
 		~noteBass_2.free;
 		~noteBass_2 = OSCFunc({
 			arg msg;
@@ -720,9 +751,7 @@ IFPitch {
 				~transBass.source=2;
 				~tOSCAdrr.sendMsg('noteBassLabel', '2');
 			});
-		},
-		'/ntBass_2'
-		);
+		},'/ntBass_2');
 		~noteBass_3.free;
 		~noteBass_3 = OSCFunc({
 			arg msg;
@@ -732,9 +761,7 @@ IFPitch {
 				~transBass.source=3;
 				~tOSCAdrr.sendMsg('noteBassLabel', '3');
 			});
-		},
-		'/ntBass_3'
-		);
+		},'/ntBass_3');
 		~noteBass_4.free;
 		~noteBass_4 = OSCFunc({
 			arg msg;
@@ -744,9 +771,7 @@ IFPitch {
 				~transBass.source=4;
 				~tOSCAdrr.sendMsg('noteBassLabel', '4');
 			});
-		},
-		'/ntBass_4'
-		);
+		},'/ntBass_4');
 		~noteBass_5.free;
 		~noteBass_5 = OSCFunc({
 			arg msg;
@@ -756,9 +781,7 @@ IFPitch {
 				~transBass.source=5;
 				~tOSCAdrr.sendMsg('noteBassLabel', '5');
 			});
-		},
-		'/ntBass_5'
-		);
+		},'/ntBass_5');
 		~noteBass_6.free;
 		~noteBass_6 = OSCFunc({
 			arg msg;
@@ -768,9 +791,7 @@ IFPitch {
 				~transBass.source=6;
 				~tOSCAdrr.sendMsg('noteBassLabel', '6');
 			});
-		},
-		'/ntBass_6'
-		);
+		},'/ntBass_6');
 		~noteBass_7.free;
 		~noteBass_7 = OSCFunc({
 			arg msg;
@@ -780,9 +801,7 @@ IFPitch {
 				~transBass.source=7;
 				~tOSCAdrr.sendMsg('noteBassLabel', '7');
 			});
-		},
-		'/ntBass_7'
-		);
+		},'/ntBass_7');
 		~noteBass_8.free;
 		~noteBass_8 = OSCFunc({
 			arg msg;
@@ -792,9 +811,7 @@ IFPitch {
 				~transBass.source=8;
 				~tOSCAdrr.sendMsg('noteBassLabel', '8');
 			});
-		},
-		'/ntBass_8'
-		);
+		},'/ntBass_8');
 		~noteBass_9.free;
 		~noteBass_9 = OSCFunc({
 			arg msg;
@@ -804,9 +821,7 @@ IFPitch {
 				~transBass.source=9;
 				~tOSCAdrr.sendMsg('noteBassLabel', '9');
 			});
-		},
-		'/ntBass_9'
-		);
+		},'/ntBass_9');
 		~noteBass_10.free;
 		~noteBass_10 = OSCFunc({
 			arg msg;
@@ -816,9 +831,7 @@ IFPitch {
 				~transBass.source=10;
 				~tOSCAdrr.sendMsg('noteBassLabel', '10');
 			});
-		},
-		'/ntBass_10'
-		);
+		},'/ntBass_10');
 		~noteBass_11.free;
 		~noteBass_11 = OSCFunc({
 			arg msg;
@@ -828,9 +841,7 @@ IFPitch {
 				~transBass.source=11;
 				~tOSCAdrr.sendMsg('noteBassLabel', '11');
 			});
-		},
-		'/ntBass_11'
-		);
+		},'/ntBass_11');
 		~noteBass_12.free;
 		~noteBass_12 = OSCFunc({
 			arg msg;
@@ -840,10 +851,7 @@ IFPitch {
 				~transBass.source=12;
 				~tOSCAdrr.sendMsg('noteBassLabel', '12');
 			});
-		},
-		'/ntBass_12'
-		);
-
+		},'/ntBass_12');
 		~noteBass_13.free;
 		~noteBass_13 = OSCFunc({
 			arg msg;
@@ -853,10 +861,7 @@ IFPitch {
 				~transBass.source=13;
 				~tOSCAdrr.sendMsg('noteBassLabel', '13');
 			});
-		},
-		'/ntBass_13'
-		);
-
+		},'/ntBass_13');
 		~noteBass_14.free;
 		~noteBass_14 = OSCFunc({
 			arg msg;
@@ -866,10 +871,7 @@ IFPitch {
 				~transBass.source=14;
 				~tOSCAdrr.sendMsg('noteBassLabel', '14');
 			});
-		},
-		'/ntBass_14'
-		);
-
+		},'/ntBass_14');
 		//////////////////////////// NEGATIVE
 		~noteBass1.free;
 		~noteBass1 = OSCFunc({
@@ -880,11 +882,7 @@ IFPitch {
 				~transBass.source=(-1);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-1');
 			});
-		},
-		'/ntBass-1'
-		);
-
-
+		},'/ntBass-1');
 		~noteBass2.free;
 		~noteBass2 = OSCFunc({
 			arg msg;
@@ -894,10 +892,7 @@ IFPitch {
 				~transBass.source=(-2);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-2');
 			});
-		},
-		'/ntBass-2'
-		);
-
+		},'/ntBass-2');
 		~noteBass3.free;
 		~noteBass3 = OSCFunc({
 			arg msg;
@@ -907,10 +902,7 @@ IFPitch {
 				~transBass.source=(-3);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-3');
 			});
-		},
-		'/ntBass-3'
-		);
-
+		},'/ntBass-3');
 		~noteBass4.free;
 		~noteBass4 = OSCFunc({
 			arg msg;
@@ -920,10 +912,7 @@ IFPitch {
 				~transBass.source=(-4);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-4');
 			});
-		},
-		'/ntBass-4'
-		);
-
+		},'/ntBass-4');
 		~noteBass5.free;
 		~noteBass5 = OSCFunc({
 			arg msg;
@@ -933,10 +922,7 @@ IFPitch {
 				~transBass.source=(-5);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-5');
 			});
-		},
-		'/ntBass-5'
-		);
-
+		},'/ntBass-5');
 		~noteBass6.free;
 		~noteBass6 = OSCFunc({
 			arg msg;
@@ -946,10 +932,7 @@ IFPitch {
 				~transBass.source=(-6);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-6');
 			});
-		},
-		'/ntBass-6'
-		);
-
+		},'/ntBass-6');
 		~noteBass7.free;
 		~noteBass7 = OSCFunc({
 			arg msg;
@@ -959,10 +942,7 @@ IFPitch {
 				~transBass.source=(-7);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-7');
 			});
-		},
-		'/ntBass-7'
-		);
-
+		},'/ntBass-7');
 		~noteBass8.free;
 		~noteBass8 = OSCFunc({
 			arg msg;
@@ -972,10 +952,7 @@ IFPitch {
 				~transBass.source=(-8);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-8');
 			});
-		},
-		'/ntBass-8'
-		);
-
+		},'/ntBass-8');
 		~noteBass9.free;
 		~noteBass9 = OSCFunc({
 			arg msg;
@@ -985,10 +962,7 @@ IFPitch {
 				~transBass.source=(-9);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-9');
 			});
-		},
-		'/ntBass-9'
-		);
-
+		},'/ntBass-9');
 		~noteBass10.free;
 		~noteBass10 = OSCFunc({
 			arg msg;
@@ -998,10 +972,7 @@ IFPitch {
 				~transBass.source=(-10);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-10');
 			});
-		},
-		'/ntBass-10'
-		);
-
+		},'/ntBass-10');
 		~noteBass11.free;
 		~noteBass11 = OSCFunc({
 			arg msg;
@@ -1011,10 +982,7 @@ IFPitch {
 				~transBass.source=(-11);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-11');
 			});
-		},
-		'/ntBass-11'
-		);
-
+		},'/ntBass-11');
 		~noteBass12.free;
 		~noteBass12 = OSCFunc({
 			arg msg;
@@ -1024,10 +992,7 @@ IFPitch {
 				~transBass.source=(-12);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-12');
 			});
-		},
-		'/ntBass-12'
-		);
-
+		},'/ntBass-12');
 		~noteBass13.free;
 		~noteBass13 = OSCFunc({
 			arg msg;
@@ -1037,10 +1002,7 @@ IFPitch {
 				~transBass.source=(-13);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-13');
 			});
-		},
-		'/ntBass-13'
-		);
-
+		},'/ntBass-13');
 		~noteBass14.free;
 		~noteBass14 = OSCFunc({
 			arg msg;
@@ -1050,19 +1012,11 @@ IFPitch {
 				~transBass.source=(-14);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-14');
 			});
-		},
-		'/ntBass-14'
-		);
-
-
+		},'/ntBass-14');
 
 	}
-
 	*noteKeys {
-
 		/////////////////////----- Note -------//////////////
-
-
 		~noteKeys_0.free;
 		~noteKeys_0 = OSCFunc({
 			arg msg;

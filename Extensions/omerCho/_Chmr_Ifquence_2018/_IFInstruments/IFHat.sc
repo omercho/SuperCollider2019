@@ -9,38 +9,25 @@ IFHat.p1(1);
 IFHat {
 	classvar <>counter3=0, timeCnt=0;
 	var<>hTime=1;
-
-
 	/**initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default; this.cntrl; });*/
 		}
 	}*/
-
 	*load {
 		this.globals;
 		this.proxy;
 		this.osc;
-		this.apc40;
-		//this.beh;
 	}
 
 	*globals{
-
 		~chHat=2;
 		~lateHat=0.00;
 		~hatTimes=1;
-		~harmHat=0;
-		~rootHat=0;
 		~susMulHat=1;
 		~trHat=0;
 		~octMulHat=0;
 		~volCHat=1;
-
-		~tuneHat=26;
-
-		~freq2Hat=69;
-		~freq3Hat=49;
 
 		~lfoMulHat=1;
 
@@ -95,20 +82,11 @@ IFHat {
 		~actHatLfo1 = PatternProxy( Pseq([0], inf));
 		~actHatLfo1P= Pseq([~actHatLfo1], inf).asStream;
 
-
-
 		~delta1VSamp07 = PatternProxy( Pseq([1/1], inf));
 		~delta1VSamp07P = Pseq([~delta1VSamp07], inf).asStream;
 
 		~delta2VSamp07 = PatternProxy( Pseq([1/1], inf));
 		~delta2VSamp07P = Pseq([~delta2VSamp07], inf).asStream;
-
-		~attHat=0.01;
-		~decHat=0.8;
-		~susLevHat=0.0;
-		~relHat = 0.2;
-		~lfoMulHat = 1;
-		~harmHatTD =1;
 
 		~lfo1Hat = PatternProxy( Pseq([1], inf));
 		~lfo1HatP = Pseq([~lfo1Hat], inf).asStream;
@@ -117,6 +95,11 @@ IFHat {
 
 	}//proxy
 
+	*octMul{|val|
+		~octMulHat = val;
+		~tOSCAdrr.sendMsg('octHatLabel', val);
+	}
+
 	*new{|i=1|
 		var val;
 		val=i;
@@ -124,12 +107,10 @@ IFHat {
 		{ i == val }  {
 			{val.do{
 				~lateHat.wait;
-				//this.p1_SC(val);
 				this.p1(val);
 				((~dur1HatP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
 		}
-
 	}
 
 	*hat2{|i=1|
@@ -148,7 +129,6 @@ IFHat {
 	*p1 {|i=1|
 		var val;
 		val=i;
-
 		Pbind(
 			\chan, ~chHat,
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
@@ -159,14 +139,11 @@ IFHat {
 			\mtranspose, Pseq([~transHatP.next], inf)+~trHat+~transShufHatP.next,
 			\octave, Pseq([~octHatP.next], inf)+~octMulHat,
 			\harmonic, Pseq([~hrmHatP.next], inf)+~harmHat
-		).play(quant: ~quantHat1);
-
-
+		).play(~clkHat,quant: ~quantHat1);
 	}
 	*p2{|i=1|
 		var val;
 		val=i;
-
 		Pbind(
 			\chan, ~chHat,
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
@@ -175,76 +152,8 @@ IFHat {
 			\amp, Pseq([~volHat2P.next*~amp2HatP.next], inf),
 			\sustain, Pseq([~sus2HatP.next],inf)*~susMulHat,
 			\harmonic, Pseq([~hrmHatP.next], inf)+~harmHat
-		).play(quant:~quantHat2);
+		).play(~clkHat,quant:~quantHat2);
 	}
-	*apc40{
-		/*~volHat_APC.free;
-		~volHat_APC=MIDIFunc.cc( {
-		arg vel;
-		~tOSCAdrr.sendMsg('volHat', vel/127);
-		"HAT_VOL_TestPost"+vel.postln;
-		~volHat.source = vel/127;
-		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd3);*/
-
-		//Act ButA3
-		//Hat Activate
-		/*~cntActLine3ButA3=0;
-		~mdActLine3ButA3.free;
-		~mdActLine3ButA3=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine3ButA3 = ~cntActLine3ButA3 + 1;
-				~cntActLine3ButA3.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine3ButA3(1);
-					},
-					2,{
-						IFAPCMn.actLine3ButA3(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA3);
-
-		//Act ButB3
-		//Hat Time Div2
-		~cntActLine3ButB3=0;
-		~mdActLine3ButB3.free;
-		~mdActLine3ButB3=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine3ButB3 = ~cntActLine3ButB3 + 1;
-				~cntActLine3ButB3.switch(
-					0,{},
-					1,{IFAPCMn.actLine3ButB3(1);},
-					2,{IFAPCMn.actLine3ButB3(0);}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB3);
-
-		//Act ButC3
-		//Static Hat Activate
-		~cntActLine3ButC3=0;
-		~mdActLine3ButC3.free;
-		~mdActLine3ButC3=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine3ButC3 = ~cntActLine3ButC3 + 1;
-				~cntActLine3ButC3.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine3ButC3(1);
-					},
-					2,{
-						IFAPCMn.actLine3ButC3(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC3);*/
-
-	}//*apc40
-
-
 
 	*osc {
 
@@ -291,8 +200,6 @@ IFHat {
 		'/time2Hat'
 		);
 
-
-
 		~volHatFader.free;
 		~volHatFader= OSCFunc({
 			arg msg,vel;
@@ -306,8 +213,6 @@ IFHat {
 		~xy1Hat.free;
 		~xy1Hat= OSCFunc({
 			arg msg;
-
-
 
 		},
 		'/xy1Hat'
@@ -327,7 +232,6 @@ IFHat {
 		~susLevHatFader= OSCFunc({
 			arg msg;
 			~tOSCAdrr.sendMsg('susHat', msg[1]);
-			~susLevHat=msg[1];
 			~mdOut.control(4, 6, msg[1]*127);
 
 		},
@@ -340,9 +244,7 @@ IFHat {
 			val=msg[1];
 			vel=msg[1]*127;
 			~tOSCAdrr.sendMsg('decHat', val);
-			~decHat= val;
 			~mdOut.control(4, 127, vel);
-			//~nobD3_m1Val= vel;
 		},
 		'/decHat'
 		);

@@ -6,6 +6,8 @@ PostAllMIDI.off;
 IFLoad.load;
 IFLoad.loadVolca;
 
+Mopho.cc(\tempo,tmp);
+
 */
 
 IFTrack01 {
@@ -27,45 +29,16 @@ IFTrack01 {
 		},
 		'/shiftParts'
 		);
-		//SampInstruments
-		~mdOut.control(0, 71, 127); //Track 01
-		~mdOut.control(0, 72, 0); //Track 02
-		~mdOut.control(0, 73, 0); //Track 03
-		~mdOut.control(0, 74, 0); //Track 04
-		~mdOut.control(0, 75, 0); //Track 05
-		~mdOut.control(0, 76, 0); //Track 06
-		~mdOut.control(0, 77, 0); //Track 07
-		~mdOut.control(0, 78, 0); //Track 08
-		//ExtInstruments
-		~mdOut.control(0, 81, 127); //Track 01
-		~mdOut.control(0, 82, 0); //Track 02
-		~mdOut.control(0, 83, 0); //Track 03
-		~mdOut.control(0, 84, 0); //Track 04
-		~mdOut.control(0, 85, 0); //Track 05
-		~mdOut.control(0, 86, 0); //Track 06
-		~mdOut.control(0, 87, 0); //Track 07
-		~mdOut.control(0, 88, 0); //Track 08
-		// SHUFFLES from IFShuf
-		IFShuf.setKick(0,1,2,0,0,0,7,4,0);
-		IFShuf.setSnr(1,0,2,0,3,0,1,2,0);
-		IFShuf.setHat(0,1,0,2,0,3,0,4,0);
-		IFShuf.setBass(0,6,0,4,0,2,0,0,2);
-		IFShuf.setKeys(0,4,2,0,4,6,6,0,2);
-		IFShuf.setSamp(0,1,3,2,4,3,5,4,6);
-		IFShuf.setMopho(0,2,0,0,2,4,2,0,6);
-		IFShuf.harmDrum(0,-1,2,-3,2,-5,6,8,7);
-		IFShuf.harmMel(0,-1,2,-3,0,-2,6,1,3);
 	}
 
 	*setActs{
-
-		IFAPCMn.actLine1(1,0,0,0,0);
-		IFAPCMn.actLine2(0,1,0,0,0);
-		IFAPCMn.actLine3(0,0,0,0,0);
+		IFAPCMn.actLine1(0,0,0,0,0);
+		IFAPCMn.actLine2(0,0,0,0,0);
+		IFAPCMn.actLine3(1,0,0,0,0);
 		IFAPCMn.actLine4(0,0,0,0,0);
 		IFAPCMn.actLine5(1,0,0,0,0);
-		IFAPCMn.actLine6(0,0,0,0,0);
-		IFAPCMn.actLine7(1,0,0,0,0);
+		IFAPCMn.actLine6(1,0,0,0,0);
+		IFAPCMn.actLine7(0,0,0,0,0);
 		IFAPCMn.actLine8(0,0,0,0,0);
 
 		IFMIDIMix.act1(0,0,0);
@@ -83,13 +56,13 @@ IFTrack01 {
 		~tOSCAdrr.sendMsg('presetLabel','Prst Trk01');
 		"TRACK 1".postln;
 		~tOSCAdrr.sendMsg('trackLabel','TRACK 1');
-		~scl1= Scale.chromatic;
+		//~scl1= Scale.chromatic;
 		//~scl2= Scale.humayun;
 		//~scl2= Scale.minor;
-		IFPitch.setScl(scl:16, root:4);
-		~tOSCAdrr.sendMsg('scaleLabel', 'humayun');
-
-		~mainTrans.source=Pseq([0,-1,1,-3], inf);
+		IFPitch.setScl(scl1:0,scl2:17, root:4);
+		//~tOSCAdrr.sendMsg('scaleLabel', 'humayun');
+		IFPitch.pat(4,0,2,3, 4,0,2,1);
+		//~ifPitchPat.source=Pseq([0,-1,14,-3], inf);
 
 		IFProjectGlobals.setTempo(122);
 		~tOSCAdrr.sendMsg('tempoLabel', ~tmp1);
@@ -107,48 +80,23 @@ IFTrack01 {
 
 		"STORED GLOBAL SETTINGS:".postln;
 		~local.sendMsg('harm0',1);
-		~local.sendMsg('cutAll',0.5, 0.4);
+		~local.sendMsg('cutMel1',0.5, 0.4);
+		~local.sendMsg('melFader1',0.2);
 		~local.sendMsg('cutMel2',0.2, 0.25);
+		~local.sendMsg('melFader2',0.2);
 		~local.sendMsg('cutMel3',0.4, 0.1);
-		~local.sendMsg('melSends',0.0, 0.0);
-		~local.sendMsg('susMel',0.9);
-		~local.sendMsg('melFader',0.2);
+		~local.sendMsg('melFader3',0.2);
+		~local.sendMsg('susMel',0.3);
+
 
 		~local.sendMsg('cutDrum',0.2, 0.3);
-		~local.sendMsg('drumSends',0.0, 0.0);
 		~local.sendMsg('susDrum',0.3);
 		~local.sendMsg('snrXPose',0.3);//SnrXpose
 		~local.sendMsg('fxFader',0.3);
 		~local.sendMsg('fxComp',0.6);
-		~local.sendMsg('fxDecay',0.2);
+		~local.sendMsg('fxDecay',0.3);
 		~local.sendMsg('AllMasterFXxy1',0.6,0.1);
 
-		"Kick Set".postln;
-		~local.sendMsg('volKick', 0.99);
-		~local.sendMsg('sendKick', 0.0, 0.0);
-		~local.sendMsg('xy1Kick', 0.0, 0.0);
-		~local.sendMsg('attKick', 0.0);
-		~local.sendMsg('susKick', 0.5);
-		~local.sendMsg('decKick', 0.7);
-		~local.sendMsg('chainKick', 0.0);
-
-		"Snr Set".postln;
-		~local.sendMsg('volSnr', 0.9);
-		~local.sendMsg('sendSnr', 0.0, 0.0);
-		~local.sendMsg('xy1Snr', 0.0, 0.0);
-		~local.sendMsg('attSnr', 0.1);
-		~local.sendMsg('susSnr', 0.2);
-		~local.sendMsg('decSnr', 0.2);
-		~local.sendMsg('chainSnr', 0.5);
-
-		"Hat Set".postln;
-		~local.sendMsg('volHat', 0.95);
-		~local.sendMsg('sendHat', 0.0, 0.3);
-		~local.sendMsg('xy1Hat', 0.0, 0.0);
-		~local.sendMsg('attHat', 0.0);
-		~local.sendMsg('susHat', 0.6);
-		~local.sendMsg('decHat', 0.2);
-		~local.sendMsg('chainHat', 0.0);
 
 		"Ext Set".postln;
 		~local.sendMsg('volExt',0.8);
@@ -161,12 +109,13 @@ IFTrack01 {
 
 	*part01{//////                                      - 1 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"Track:01 - Part:01".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
 		//CH -1- [ Static Drums ]
 		IFSeqSteps.long01;
 		IFSeqVKick.stGrpSet  (1,0,1,0, 1,0,1,0,  1,0,1,0, 1,0,1,0);
-		~octVKick=4;~ntVKick.source = Pseq([0], inf);
+		~ntVKick.source=Pseq([0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], inf);
+		~octVKick=4;~susVKick.source=0.1;
 		IFSeqVSnr.stGrpSet  (0,0,1,0, 0,0,1,0,  0,0,1,0, 0,0,1,0);
 		~octVSnr=0;~ntVSnr.source = Pseq([20], inf);
 		IFSeqVHat.stGrpSet  (0,1,0,1, 0,1,0,1,  0,1,0,1, 0,1,0,1);
@@ -178,104 +127,91 @@ IFTrack01 {
 		IFSeqVTomH.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,1,1, 0,0,0,0);
 		~octVTomH=0;~ntVTomH.source = Pseq([37], inf);
 
-		~local.sendMsg('susMel',0.15);
+		~local.sendMsg('susMel',0.2);
 
 		//CH -1- [ Kick ]
-		~local.sendMsg('sendKick', 0.0, 0.0);
-		~local.sendMsg('attKick', 0.0);
-		~local.sendMsg('susKick', 0.9);
-		~local.sendMsg('decKick', 0.2);
-		~local.sendMsg('chainKick', 0.2);
-		IFSeqOctKick.stGrp (0);
-		IFSeqKick.stGrpSet    (1,0,1,0, 1,0,1,0,  1,0,1,0, 1,0,1,0);
+		IFSeqKick.stGrpSet    (0,0,0,1, 0,0,0,1,  0,0,0,1, 0,1,0,1);
+		IFSeqOctKick.stGrpSet  (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
 		IFSeqNtKick.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 0,0,0,0);
 		IFSeqVelKick.stGrpSet (3,1,3,3, 3,2,3,3,  3,3,3,3, 3,3,3,3);
 		IFSeqSusKick.stGrpSet (2,2,3,2, 0,2,0,2,  0,2,0,2, 0,2,0,2);
 		IFSeqTmKick.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurKick.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-		IFSeqKick2.stGrpSet    (0,0,0,0, 0,1,0,0,  0,1,0,0, 0,1,0,0);
-		IFSeqNtKick2.stGrpSet  (0,0,2,3, 0,0,4,3,  0,2,0,3, 0,1,0,3);
-		IFSeqVelKick2.stGrpSet (1,2,1,3, 1,1,1,2,  1,1,1,3, 1,2,1,2);
-		IFSeqSusKick2.stGrpSet (1,2,1,2, 1,2,1,2,  1,2,1,2, 1,2,5,2);
+		IFShuf.setKick        (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
+		IFGlobal.setKick(vol:0.89,octMul:1,susMul:0.5,dec:0.2,dly:0.1,pan:0.1,sndX:0,sndY:0.0);
 
 		//CH -1- [ Snare ]
 		IFSeqSnr.stGrpSet     (0,1,0,0, 0,1,0,0,  0,1,0,0, 0,1,0,0);
+		IFSeqOctSnr.stGrpSet  (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
 		IFSeqNtSnr.stGrpSet   (4,0,2,3, 4,0,2,3,  0,1,4,3, 0,4,2,3);
 		IFSeqVelSnr.stGrpSet  (1,2,3,3, 1,2,3,3,  1,2,3,3, 1,2,1,3);
 		IFSeqSusSnr.stGrpSet  (1,2,1,3, 1,2,3,3,  1,2,2,3, 1,2,1,3);
 		IFSeqTmSnr.stGrpSet   (1,1,1,1, 1,2,1,1,  1,1,1,1, 1,1,2,1);
-		IFSeqDurSnr.stGrpSet  (4,4,4,4, 4,3,4,4,  4,4,4,4, 4,4,4,4);
-		IFSeqSnr2.stGrpSet    (0,0,0,1, 0,0,0,1,  0,1,0,0, 0,0,0,1);
-		IFSeqNtSnr2.stGrpSet  (0,0,0,4, 0,1,5,4,  0,1,2,3, 0,6,7,3);
-		IFSeqVelSnr2.stGrpSet (1,2,1,2, 1,2,1,2,  1,2,1,2, 1,2,1,2);
-		IFSeqSusSnr2.stGrpSet (1,2,1,3, 1,2,1,2,  1,3,1,2, 1,2,3,2);
+		IFShuf.setSnr         (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
+		IFGlobal.setSnr(vol:0.89,octMul:1,susMul:0.5,dec:0.2,dly:0.1,pan:0.1,sndX:0.2,sndY:0.1);
 
 		//CH -2- [ HAT ]
-		IFSeqHat.stGrpSet     (1,0,1,1, 1,0,1,1,  1,1,1,0, 1,1,1,0);
+		IFSeqHat.stGrpSet     (1,0,1,1, 1,0,1,1,  1,0,1,1, 0,1,1,0);
 		IFSeqOctHat.stGrpSet  (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
-		IFSeqNtHat.stGrp      (16);
+		IFSeqNtHat.stGrp      (4,0,2,3, 4,0,2,3,  0,1,4,3, 0,4,2,3);
 		IFSeqVelHat.stGrpSet  (1,3,3,1, 1,3,3,1,  1,3,3,2, 3,2,3,0);
 		IFSeqSusHat.stGrpSet  (3,1,2,1, 3,1,2,1,  3,1,2,1, 3,2,3,1);
-		IFSeqTmHat.stGrp      (2);
-		IFSeqDurHat.stGrp     (4);
-		IFSeqHat2.stGrpSet    (0,1,1,0, 0,1,1,0,  1,1,0,1, 0,1,1,1);
-		IFSeqNtHat2.stGrp     (2);
-		IFSeqVelHat2.stGrpSet (2,2,1,2, 2,2,1,2,  1,2,1,2, 1,2,1,2);
-		IFSeqSusHat2.stGrpSet (1,2,1,3, 1,2,1,2,  1,3,1,2, 1,2,3,2);
-		IFSeqTm2Hat.stGrp     (2);
-		IFSeqDur2Hat.stGrp    (4);
+		IFSeqTmHat.stGrp      (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
+		IFSeqDurHat.stGrp     (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
+		IFShuf.setHat         (0,1,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
+		IFGlobal.setHat(vol:0.89,octMul:1,susMul:0.5,dec:0.2,dly:0.1,pan:0.1,sndX:0.1,sndY:0.1);
 
 		//CH -4- [Bass]
 		IFSeqBass.stGrpSet    (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
+		IFSeqOctBass.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
 		IFSeqNtBass.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 0,0,0,0);
 		IFSeqVelBass.stGrpSet (3,2,3,1, 3,2,3,1,  3,2,3,1, 3,2,3,1);
 		IFSeqSusBass.stGrpSet (3,1,2,1, 3,1,2,1,  3,1,2,1, 3,2,2,3);
 		IFSeqTmBass.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurBass.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-		IFShuf.setBass        (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
+		IFShuf.setBass        (0,-1,0,3, 0,-2,0,1,  -1,0,1,0, 0,-2,1,0);
 		IFLfo.setBass(10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		IFGlobal.envBass(vol:0.99,att:0.01,dec:0.2,sus:0.1,rls:0.3,sndX:0,sndY:0.1);
-		IFGlobal.mulBass(octMul:1,susMul:0.8,xy1X:0.2,xy1Y:0.3,lfo1:0.0,lfo2:0);
-
+		IFGlobal.envBass(vol:0.89,att:0.01,dec:0.2,sus:0.1,rls:0.3,pan:0.1,sndX:0,sndY:0.1);
+		IFGlobal.mulBass(octMul:1,susMul:0.3,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.0,lfo2:0);
 
 		//CH -5- [Keys]
 		IFSeqKeys.stGrpSet    (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqOctKeys.stGrpSet (3,3,3,3, 3,3,3,3,  3,3,3,3, 3,3,3,3);
-		IFSeqNtKeys.stGrpSet  ([0,4],[2,5],0,0, [3,-1],0,0,0,  [0,4],0,0,0, [2,0],0,0,0);
-		IFSeqVelKeys.stGrpSet (3,2,3,2, 3,2,3,3,  3,1,3,2, 3,2,3,0);
-		IFSeqSusKeys.stGrpSet (3,2,3,2, 3,2,3,2,  3,2,3,2, 3,2,3,2);
+		IFSeqNtKeys.stGrpSet  ([0,4],[2,6],0,0, [0,2],0,0,0,  [0,4],0,0,0, [2,0],0,0,0);
+		IFSeqVelKeys.stGrpSet (3,2,3,2, 3,2,3,3,  3,1,3,2, 3,2,3,2);
+		IFSeqSusKeys.stGrpSet (4,2,3,2, 4,2,3,2,  4,2,3,2, 4,2,3,2);
 		IFSeqTmKeys.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurKeys.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-		IFShuf.setKeys           (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
-		IFLfo.setKeys(10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		IFGlobal.envKeys(vol:0.99,att:0.01,dec:0.4,sus:0.1,rls:0.3,sndX:0,sndY:0.1);
-		IFGlobal.mulKeys(octMul:1,susMul:0.8,xy1X:0.2,xy1Y:0.3,lfo1:0.4,lfo2:0);
+		IFShuf.setKeys        (0,-1,0,3, 0,-2,0,1,  -1,0,1,0, 0,-2,1,0);
+		IFLfo.setKeys(110,120,120,30,120,50,80,120,  110,90,80,100,120,127,100);
+		IFGlobal.envKeys(vol:0.99,att:0.1,dec:0.9,sus:0.9,rls:0.3,pan:0.1,sndX:0.2,sndY:0.6);
+		IFGlobal.mulKeys(octMul:1,susMul:0.99,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.9,lfo2:0.4);
 
-		//CH -6- [SAMP]
+		//CH -6- [Mopho]
+		IFSeqMopho.stGrpSet    (1,0,1,1, 1,0,1,1,  1,0,1,0, 0,1,1,0);
+		IFSeqOctMopho.stGrpSet (4,3,4,3, 3,4,3,4,  4,3,4,3, 4,4,3,3);
+		IFSeqNtMopho.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 0,0,0,0);
+		IFSeqVelMopho.stGrpSet (3,3,1,3, 3,2,1,3,  3,3,1,3, 3,2,1,1);
+		IFSeqSusMopho.stGrpSet (1,0,1,2, 4,0,2,1,  3,2,1,1, 1,3,3,4);
+		IFSeqTmMopho.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,2,1, 1,1,1,1);
+		IFSeqDurMopho.stGrpSet (4,4,4,3, 4,4,4,4,  4,4,3,4, 4,4,4,4);
+		IFShuf.setMopho        (0,-1,0,3, 0,-2,0,1,  -1,0,1,0, 0,-2,1,0);
+		IFLfo.setMopho (10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
+		IFGlobal.envMopho(vol:0.89,att:0.01,dec:0.2,sus:0.5,rls:0.3,pan:0.1,sndX:0,sndY:0.1);
+		IFGlobal.mulMopho(octMul:2,susMul:0.5,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.0,lfo2:0);
+
+		//CH -7- [SAMP]
 		IFSeqSamp.stGrpSet    (1,1,0,1, 0,1,1,0,  1,1,0,1, 1,0,1,0);
 		IFSeqOctSamp.stGrpSet (3,3,3,4, 3,3,4,3,  3,3,3,4, 3,3,4,3);
-		IFSeqNtSamp.stGrpSet  ([0,3],[2,5],0,[0,3], [3,-1],0,0,0,  0,0,0,0, [2,0],0,0,0);
+		IFSeqNtSamp.stGrpSet  (0,1,2,3, 4,5,6,7,  8,7,6,5, 4,3,2,1);
 		IFSeqVelSamp.stGrpSet (1,3,1,3, 2,2,2,3,  2,3,1,3, 2,3,2,3);
 		IFSeqSusSamp.stGrpSet (5,2,5,0, 3,2,4,5,  3,1,1,2, 4,1,4,1);
 		IFSeqTmSamp.stGrpSet  (1,1,1,1, 1,1,1,1,  1,1,1,1, 1,1,1,1);
 		IFSeqDurSamp.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-		IFShuf.setSamp           (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
-		IFLfo.setBass(10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		~local.sendMsg('lfoMulSamp1',0.5);
-		~local.sendMsg('lfoMulSamp2',0.4);
-		//CH -7- [Mopho]
-		IFSeqMopho.stGrpSet    (1,0,1,1, 1,0,1,1,  1,1,0,1, 1,1,1,0);
-		IFSeqOctMopho.stGrpSet (4,3,4,3, 3,4,3,4,  4,3,4,3, 4,4,3,3);
-		IFSeqNtMopho.stGrpSet  (0,0,0,0, 0,0,0,0,  0,0,0,0, 0,0,0,0);
-		IFSeqVelMopho.stGrpSet (3,3,1,3, 3,1,2,3,  0,3,1,3, 3,3,1,3);
-		IFSeqSusMopho.stGrpSet (1,0,1,2, 4,0,2,1,  3,2,1,1, 1,3,3,4);
-		IFSeqTmMopho.stGrpSet  (1,1,1,2, 1,1,1,1,  1,1,1,1, 1,1,1,1);
-		IFSeqDurMopho.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
-		IFShuf.setMopho           (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
-		IFLfo.setMopho(10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		~local.sendMsg('lfoMulMopho1',0.2);
-		~local.sendMsg('lfoMulMopho2',0.3);
-
+		IFShuf.setSamp        (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
+		IFLfo.setSamp (10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
+		IFGlobal.envSamp(vol:0.89,att:0.1,dec:0.2,sus:0.1,rls:0.3,pan:0.1,sndX:0,sndY:0.1);
+		IFGlobal.mulSamp(octMul:1,susMul:0.2,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.0,lfo2:0);
 		//CH- -8- [Ext]
 		~local.sendMsg('volExt',0.8);
 		~local.sendMsg('susExt',0.2);
@@ -286,7 +222,7 @@ IFTrack01 {
 
 	*part02{//////                                      - 2 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"part02".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
 
 		IFSeqSteps.long01;
@@ -417,7 +353,7 @@ IFTrack01 {
 
 	*part03{//////                                      - 3 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"Part 03".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
 
 		IFSeqSteps.first8;
@@ -551,7 +487,7 @@ IFTrack01 {
 
 	*part04{//////                                      - 1 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"Part 04".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
 
 		IFSeqSteps.long02;
@@ -685,7 +621,7 @@ IFTrack01 {
 
 	*part05{//////                                      - 1 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"Part 05".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
 
 		IFSeqSteps.long02;
@@ -819,7 +755,7 @@ IFTrack01 {
 
 	*part06{//////                                      - 6 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"Part 06".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt01');
 
 		IFSeqSteps.long03;
@@ -953,7 +889,7 @@ IFTrack01 {
 
 	*part07{//////                                      - 7 -
 		//IFTrack01.setActs;
-		"part01".postln;
+		"Part 07".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt07');
 
 		IFSeqSteps.long04;

@@ -7,6 +7,21 @@ VBass {
 		/*Server.default.doWhenBooted({ this.globals; this.preSet01; });*/
 		}
 	}*/
+	*globals{
+		//~vBass = MIDIOut.newByName("iConnectMIDI4+", "USB3 DIN1");
+		VBass.makeOSCResponders;
+		~exprVB=11; ~octVB=40; ~lfoRateVB=41; ~lfoIntVB=42;
+		~vco1=43; ~vco2=44; ~vco3=45;
+		~envAttVB=46; ~envDecVB=47; ~vcfCutVB=48; ~slideTm=5; ~gateTm=49;
+
+		//octave nob
+		~oct1  = 0;     // 0  - 21
+		~oct2  = 22;    // 22  - 21
+		~oct3  = 44;    // 44  - 21
+		~oct4  = 66;    // 66  - 21
+		~oct5  = 88;    // 88  - 21
+		~oct6  = 110;    // 110  - 127
+	}
 	*lbl{|key,val|
 		var chan;
 		~tOSCAdrr.sendMsg(key, val);
@@ -65,21 +80,6 @@ VBass {
 		this.oscResp(respName:\envDecVBResp, oscName:\TOenvDecVB, playTag:'envDecVB_T');
 		this.oscResp(respName:\slideTmVBResp, oscName:\TOslideTmVB, playTag:'slideTmVB_T');
 		this.oscResp(respName:\gateTmVBResp, oscName:\TOgateTmVB, playTag:'gateTmVB_T');
-	}
-	*globals{
-		//~vBass = MIDIOut.newByName("iConnectMIDI4+", "USB3 DIN1");
-		VBass.makeOSCResponders;
-		~exprVB=11; ~octVB=40; ~lfoRateVB=41; ~lfoIntVB=42;
-		~vco1=43; ~vco2=44; ~vco3=45;
-		~envAttVB=46; ~envDecVB=47; ~vcfCutVB=48; ~slideTm=5; ~gateTm=49;
-
-		//octave nob
-		~oct1  = 0;     // 0  - 21
-		~oct2  = 22;    // 22  - 21
-		~oct3  = 44;    // 44  - 21
-		~oct4  = 66;    // 66  - 21
-		~oct5  = 88;    // 88  - 21
-		~oct6  = 110;    // 110  - 127
 	}
 	*preSet01 {
 		VBass.cc(\expresVB,127);

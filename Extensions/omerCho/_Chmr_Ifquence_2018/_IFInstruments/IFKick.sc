@@ -19,8 +19,6 @@ IFKick {
 		this.globals;
 		this.proxy;
 		this.osc;
-		this.apcMn;
-
 	}
 
 	*globals{
@@ -113,16 +111,19 @@ IFKick {
 			{val.do{
 				~kickLate.wait;
 				this.p1(val);
-				//~durMulP*((~dur1KickP.next)/val).wait;
 				((~dur1KickP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
 		}
 	}
+
+	*octMul{|val|
+		~octMulKick = val;
+		~tOSCAdrr.sendMsg('octKickLabel', val);
+	}
+
 	*p1 {|i=1|
 		var val;
 		val=i;
-
-
 		Pbind(
 			\chan, ~chKick,
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
@@ -133,7 +134,11 @@ IFKick {
 			\mtranspose, Pseq([~transKickP.next], inf)+~trKick+~transShufKickP.next,
 			\octave, Pseq([~octKickP], inf)+~octMulKick,
 			\harmonic, Pseq([~hrmKickP.next], inf)+~harmKick,
-		).play(quant:0);
+		).play(~clkTom,quant:0);
+		//this.count2;
+		//this.timesCount;
+	}
+	*p2{
 		//Kick2
 		Pbind(
 			\chan, ~chKick,
@@ -144,21 +149,9 @@ IFKick {
 			\amp, Pseq([~volKick2P.next*~ampKick2P.next], inf),
 			\sustain, Pseq([~susKick2P.next],inf)*~susMulKick,
 			\harmonic, Pseq([~hrmKickP.next], inf)+~harmKick,
-		).play(quant:~quantKick2);
-		//this.count2;
-		//this.timesCount;
+		).play(~clkTom,quant:~quantKick2);
 	}
 
-	*apcMn{
-		/*~volKick_APC.free;
-		~volKick_APC=MIDIFunc.cc( {
-			arg vel;
-			/*~tOSCAdrr.sendMsg('volKick', vel/127);
-			~volKick.source = vel/127;*/
-		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd1);*/
-
-
-	}//*apcMn
 
 	*osc{
 

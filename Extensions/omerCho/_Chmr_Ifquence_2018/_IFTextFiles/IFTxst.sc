@@ -408,6 +408,10 @@ IFTxt{
 }
 
 /*
+
+IFTxt.trckDflt;
+
+
 (
 AppClock.sched(0.0,{ arg time;
     ["AppClock has been playing for ",time].postln;

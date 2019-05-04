@@ -30,7 +30,6 @@ IFMopho {
 		this.globals;
 		this.proxy;
 		this.osc;
-		this.apc40;
 	}
 	*globals{
 		//~chMopho=1;
@@ -70,8 +69,8 @@ IFMopho {
 		~transMophoP = Pseq([~transMopho], inf).asStream;
 		~transShufMopho = PatternProxy( Pseq([0], inf));
 		~transShufMophoP = Pseq([~transShufMopho], inf).asStream;
-		~transCntSamp = PatternProxy( Pseq([0], inf));
-		~transCntSampP = Pseq([~transCntSamp], inf).asStream;
+		~transCntMopho = PatternProxy( Pseq([0], inf));
+		~transCntMophoP = Pseq([~transCntMopho], inf).asStream;
 
 		~octMopho = PatternProxy( Pseq([4], inf));
 		~octMophoP = Pseq([~octMopho], inf).asStream;
@@ -123,11 +122,9 @@ IFMopho {
 			{val.do{
 				~lateMopho.wait;
 				this.p1(val);
-				//this.p1(val);
 				((~dur1MophoP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
 		}
-
 	}
 
 	*p1 {|i=1|
@@ -136,15 +133,15 @@ IFMopho {
 		Pbind(
 			\chan, ~chMopho,
 			\type, \midi, \midiout,~vMopho, \scale, Pfunc({~scl2}, inf),
-			\dur, Pseq([~dur1MophoP.next],~actMophoP),
+			\dur, Pseq([~dur1MophoP.next],~actMophoP.next),
 			\degree, Pseq([~nt1MophoP.next], inf),
 			\amp, Pseq([~volMophoP.next*~amp1MophoP.next], inf),
 			\sustain, Pseq([~sus1MophoP.next],inf)*~susMulMopho,
-			\mtranspose, Pseq([~transMophoP.next], inf)+~transCntSampP.next+~trMopho+~transShufMophoP.next,
+			\mtranspose, Pseq([~transMophoP.next], inf)+~transCntMophoP.next+~trMopho+~transShufMophoP.next,
 			\ctranspose, Pseq([~rootMophoP.next],inf),
 			\octave, Pseq([~octMophoP.next], inf)+~octMulMopho,
 			\harmonic, Pseq([~hrmMophoP.next], inf)+~harmMopho
-		).play;
+		).play(~clkMopho, quant: 0);
 
 		//VMopho
 		/*Pbind(//LFO CUT Mopho INT
@@ -169,81 +166,12 @@ IFMopho {
 			\degree, Pseq([~nt1LngMophoP.next], inf)+deg,
 			\amp, Pseq([~volMophoP.next*~amp1LngMophoP.next], inf)*amp,
 			\sustain, Pseq([~sus1LngMophoP.next],inf)*sus,
-			\mtranspose, Pseq([~transLngMophoP.next], inf)+~transCntSampP.next+~transShufLngMophoP.next,
+			\mtranspose, Pseq([~transLngMophoP.next], inf)+~transCntMophoP.next+~transShufLngMophoP.next,
 			\ctranspose, Pseq([~rootLngMophoP.next],inf),
 			\octave, Pseq([~octMophoP.next], inf)+~octMulMopho,
 			\harmonic, Pseq([~hrmMophoP.next], inf)+~harmMopho
-		).play(TempoClock.default, quant: 0);
+		).play(~clkMopho, quant: 0);
 	}
-	*apc40{
-
-		/*~volMopho_APC.free;
-		~volMopho_APC=MIDIFunc.cc( {
-			arg vel;
-			~tOSCAdrr.sendMsg('volMopho', vel/127);
-			~volMopho.source = vel/127;
-		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd7);*/
-
-		//Act ButA4
-		//Mopho Activate
-		/*~cntActLine7ButA7=0;
-		~mdActLine7ButA7.free;
-		~mdActLine7ButA7=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine7ButA7 = ~cntActLine7ButA7 + 1;
-				~cntActLine7ButA7.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine7ButA7(1);
-					},
-					2,{
-						IFAPCMn.actLine7ButA7(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA7);
-
-		//Act ButB4
-		//Mopho Time Div2
-		~cntActLine7ButB7=0;
-		~mdActLine7ButB7.free;
-		~mdActLine7ButB7=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine7ButB7 = ~cntActLine7ButB7 + 1;
-				~cntActLine7ButB7.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine7ButB7(1);
-					},
-					2,{
-						IFAPCMn.actLine7ButB7(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB7);
-
-		//Act ButC
-		//Static Mopho Activate
-		~cntActLine7ButC7=0;
-		~mdActLine7ButC7.free;
-		~mdActLine7ButC7=MIDIFunc.noteOn({
-			arg vel;
-			if ( vel==127, {
-				~cntActLine7ButC7 = ~cntActLine7ButC7 + 1;
-				~cntActLine7ButC7.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine7ButC7(1);
-					},
-					2,{
-						IFAPCMn.actLine7ButC7(0);
-					}
-			)}
-			);
-		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC7);*/
-	}//*apc40
 
 	*osc{
 
@@ -296,7 +224,7 @@ IFMopho {
 			vel=msg[1]*127;
 			~tOSCAdrr.sendMsg('volMopho', msg[1]);
 			~volMopho.source = val;
-			//Mopho.cc(\voiVol, vel);
+			Mopho.cc(\voiVol, vel);
 		},
 		'/volMopho'
 		);
@@ -315,7 +243,6 @@ IFMopho {
 		~sendMophoFader.free;
 		~sendMophoFader= OSCFunc({
 			arg msg,vel1,vel2;
-
 			vel1=msg[1]*127;
 			vel2=msg[2]*127;
 			~tOSCAdrr.sendMsg('sendMopho', msg[1], msg[2]);
@@ -328,41 +255,22 @@ IFMopho {
 		~xy1Mopho.free;
 		~xy1Mopho= OSCFunc({
 			arg msg,vel1,vel2;
-
 			vel1=msg[1]*127;
 			vel2=msg[2]*127;
 			Mopho.cc(\osc1Glide,vel2);
 			Mopho.cc(\osc2Glide,vel1);
-			~tOSCAdrr.sendMsg('xy1Samp', msg[1], msg[2]);
-
+			~tOSCAdrr.sendMsg('xy1Mopho', msg[1], msg[2]);
 		},
 		'xy1Mopho'
 		);
-
-		~xy1Mopho.free;
-		~xy1Mopho= OSCFunc({
-			arg msg,vel1,vel2;
-
-			vel1=msg[1]*127;
-			vel2=msg[2]*127;
-			Mopho.cc(\osc1Glide,vel2);
-			Mopho.cc(\osc2Glide,vel1);
-			~tOSCAdrr.sendMsg('xy1Samp', msg[1], msg[2]);
-
-		},
-		'xy1Mopho'
-		);
-
 		~xy2Mopho.free;
 		~xy2Mopho= OSCFunc({
 			arg msg,vel1,vel2;
-
 			vel1=msg[1]*127;
 			vel2=msg[2]*127;
 			Mopho.cc('lfo3Amnt', vel2);
 			Mopho.cc('lfo4Amnt', vel1);
-			~tOSCAdrr.sendMsg('xy1Samp', msg[1], msg[2]);
-
+			~tOSCAdrr.sendMsg('xy2Mopho', msg[1], msg[2]);
 		},
 		'xy2Mopho'
 		);

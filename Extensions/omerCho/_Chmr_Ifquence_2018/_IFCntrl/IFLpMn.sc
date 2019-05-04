@@ -18,8 +18,6 @@ IFLpMn{
 
 	}
 	*globals{
-
-
 		~lpMnCh=0;
 
 		~lpMnButV1=8;~lpMnButV2=24;~lpMnButV3=40;~lpMnButV4=56;
@@ -75,7 +73,50 @@ IFLpMn{
 		//~lpMn.noteOn(0, 98, 127); //SHIFT
 		~trackCase=0;
 		~partCase=0;
-		~lpMnShiftBut.free;
+		~lpMnShiftBu.free;
+		~lpMnShiftBu=MIDIFunc.cc( {
+			arg vel;
+			if ( vel==127, {
+				IFLpMn.tracks;
+				~trackCase.switch(
+					0,{
+						//IFLpMn.tsLeds(0,0,0,0,0,0,0,0);
+					},
+					1, {
+						//IFTrack01.apcParts;
+						IFLpMn.tsLeds(1,0,0,0,0,0,0,0);
+					},
+					2,{
+						//IFTrack02.apcParts;
+						IFLpMn.tsLeds(0,1,0,0,0,0,0,0);
+					},
+					3,{
+						//IFTrack03.apcParts;
+						IFLpMn.tsLeds(0,0,1,0,0,0,0,0);
+					}
+				);
+			},{
+				IFLpMn.tracks;
+				~partCase.switch(
+					0,{IFLpMn.tsLeds(0,0,0,0,0,0,0,0);},
+					1,{IFLpMn.tsLeds(1,0,0,0,0,0,0,0);},
+					2,{IFLpMn.tsLeds(0,1,0,0,0,0,0,0);},
+					3,{IFLpMn.tsLeds(0,0,1,0,0,0,0,0);},
+					4,{IFLpMn.tsLeds(0,0,0,1,0,0,0,0);},
+					5,{IFLpMn.tsLeds(0,0,0,0,1,0,0,0);},
+					6,{IFLpMn.tsLeds(0,0,0,0,0,1,0,0);},
+					7,{IFLpMn.tsLeds(0,0,0,0,0,0,1,0);},
+					8,{IFLpMn.tsLeds(0,0,0,0,0,0,0,1);}
+				);
+				~trackCase.switch(
+					0,{IFLpMn.tsLeds(0,0,0,0,0,0,0,0);},
+					1,{IFLpMn.parts;},
+					2,{IFLpMn.parts;},
+					3,{IFLpMn.parts;}
+				);
+			});
+		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);
+		/*~lpMnShiftBut.free;
 		~lpMnShiftBut=MIDIFunc.noteOn({
 			arg vel;
 			if ( vel==127, {
@@ -123,7 +164,7 @@ IFLpMn{
 					3,{IFLpMn.parts;}
 				);
 			});
-		},srcID:~lpMnInID, chan:~lpMnCh, noteNum:~lpMnButV1);
+		},srcID:~lpMnInID, chan:~lpMnCh, noteNum:~lpMnButV1);*/
 
 	}//shiftButtons
 	*tracks{
@@ -173,16 +214,16 @@ IFLpMn{
 		~lpMn_TS07=MIDIFunc.cc( {
 			arg vel;
 			if ( vel==127, {
-
+				IFTxt.trckDflt;
 			});
 		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH7);
-		~lpMn_TS08.free;
+		/*~lpMn_TS08.free;
 		~lpMn_TS08=MIDIFunc.cc( {
 			arg vel;
 			if ( vel==127, {
-				IFTxt.trckDflt;
+
 			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);
+		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);*/
 	}//tracks
 
 	*parts {//Parts 1-8 //Presets 9-16
@@ -245,22 +286,55 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=7;
-				IFTrack01.part07;
+				IFTxt.readInst(\01,\01);
 				IFLpMn.tsLeds(0,0,0,0,0,0,1,0);
 			});
 		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH7);
-		~lpMn_TS08.free;
+
+		//TRACK SHIFT BUTTON
+		/*~lpMn_TS08.free;
 		~lpMn_TS08=MIDIFunc.cc( {
 			arg vel;
 			if ( vel==127, {
-				~partCase=8;
-				//IFTxt.storeInst(\00);
-				IFTxt.readInst(\01,\01);
+				IFLpMn.tracks;
+				~trackCase.switch(
+					0,{
+						//IFLpMn.tsLeds(0,0,0,0,0,0,0,0);
+					},
+					1, {
+						//IFTrack01.apcParts;
+						IFLpMn.tsLeds(1,0,0,0,0,0,0,0);
+					},
+					2,{
+						//IFTrack02.apcParts;
+						IFLpMn.tsLeds(0,1,0,0,0,0,0,0);
+					},
+					3,{
+						//IFTrack03.apcParts;
+						IFLpMn.tsLeds(0,0,1,0,0,0,0,0);
+					}
+				);
 			},{
-				IFTrack01.part08;
-				IFLpMn.tsLeds(0,0,0,0,0,0,0,1);
+				IFLpMn.tracks;
+				~partCase.switch(
+					0,{IFLpMn.tsLeds(0,0,0,0,0,0,0,0);},
+					1,{IFLpMn.tsLeds(1,0,0,0,0,0,0,0);},
+					2,{IFLpMn.tsLeds(0,1,0,0,0,0,0,0);},
+					3,{IFLpMn.tsLeds(0,0,1,0,0,0,0,0);},
+					4,{IFLpMn.tsLeds(0,0,0,1,0,0,0,0);},
+					5,{IFLpMn.tsLeds(0,0,0,0,1,0,0,0);},
+					6,{IFLpMn.tsLeds(0,0,0,0,0,1,0,0);},
+					7,{IFLpMn.tsLeds(0,0,0,0,0,0,1,0);},
+					8,{IFLpMn.tsLeds(0,0,0,0,0,0,0,1);}
+				);
+				~trackCase.switch(
+					0,{IFLpMn.tsLeds(0,0,0,0,0,0,0,0);},
+					1,{IFLpMn.parts;},
+					2,{IFLpMn.parts;},
+					3,{IFLpMn.parts;}
+				);
 			});
-		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);
+		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH8);*/
 
 	}//lpMnParts
 
@@ -280,32 +354,32 @@ IFLpMn{
 	*resetLeds{
 
 		//Track Selection Only One Function
-		~lpMn.control(0, 104, 0); //But 1
-		~lpMn.control(0, 105, 0); //But 2
-		~lpMn.control(0, 106, 0); //But 3
-		~lpMn.control(0, 107, 0); //But 4
-		~lpMn.control(0, 108, 0); //But 5
-		~lpMn.control(0, 109, 0); //But 6
-		~lpMn.control(0, 110, 0); //But 7
-		~lpMn.control(0, 111, 0); //But 8
+		~lpMn.control(0, 104, 0); //Track Selection But 1
+		~lpMn.control(0, 105, 0); //Track Selection But 2
+		~lpMn.control(0, 106, 0); //Track Selection But 3
+		~lpMn.control(0, 107, 0); //Track Selection But 4
+		~lpMn.control(0, 108, 0); //Track Selection But 5
+		~lpMn.control(0, 109, 0); //Track Selection But 6
+		~lpMn.control(0, 110, 0); //Track Selection But 7
+		~lpMn.control(0, 111, 0); //Track Selection But 8
 		//Shifts
-		~lpMn.noteOff(0, 8, 0); //But 1
-		~lpMn.noteOff(0, 24, 0); //But 2
-		~lpMn.noteOff(0, 40, 0); //But 3
-		~lpMn.noteOff(0, 56, 0); //But 4
-		~lpMn.noteOff(0, 72, 0); //But 5
-		~lpMn.noteOff(0, 88, 0); //But 6
-		~lpMn.noteOff(0, 104, 0); //But 7
-		~lpMn.noteOff(0, 120, 0); //But 8
+		~lpMn.noteOff(0, 8, 0); //Vertical Shift But 1
+		~lpMn.noteOff(0, 24, 0); //Vertical Shift But 2
+		~lpMn.noteOff(0, 40, 0); //Vertical Shift But 3
+		~lpMn.noteOff(0, 56, 0); //Vertical Shift But 4
+		~lpMn.noteOff(0, 72, 0); //Vertical Shift But 5
+		~lpMn.noteOff(0, 88, 0); //Vertical Shift But 6
+		~lpMn.noteOff(0, 104, 0); //Vertical Shift But 7
+		~lpMn.noteOff(0, 120, 0); //Vertical Shift But 8
 
 	}
 
-	*midiResp{|ntNum, respName|
-		~cntSeqMul=0;
+	*midiResp{|ntNum,respName|
+		~cntSeqMul1=0;
 		~cntSeqMul2=0;
 		~cntSeqMul3=0;
-
 		~cntSeqMul4=0;
+		~cntSeqDur1=0;
 		~cntSeqDur2=0;
 		~cntSeqDur3=0;
 		~cntSeqDur4=0;
@@ -313,97 +387,68 @@ IFLpMn{
 			arg chan,noteNum,vel;
 
 			ntNum.switch(
-				~lpMnButV2,{
-					~cntSeqMul = ~cntSeqMul + 1;
-					~cntSeqMul.switch(
+				~lpMnButV1,{
+					~cntSeqDur1 = ~cntSeqDur1 + 1;
+					~cntSeqDur1.switch(
 						0,{},
-						1,{~lpMn.noteOn(~lpMnCh,~lpMnButV2,1);~durMul.source=Pseq([1], inf);},
-						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV2,1);~durMul.source=Pseq([1/2], inf);~cntSeqMul=0},
+						1,{IFRoot.cc(\durPatSeq1,127);},
+						2,{IFRoot.cc(\durPatSeq1,0);~cntSeqDur1=0},
+					);
+				},
+				~lpMnButV2,{
+					~cntSeqMul1 = ~cntSeqMul1 + 1;
+					~cntSeqMul1.switch(
+						0,{},
+						1,{IFRoot.cc(\durMulSeq1,127);},
+						2,{IFRoot.cc(\durMulSeq1,0);~cntSeqMul1=0},
 					);
 				},
 				~lpMnButV3,{
-					~cntSeqDur3 = ~cntSeqDur3 + 1;
-					~cntSeqDur3.switch(
+					~cntSeqDur2 = ~cntSeqDur2 + 1;
+					~cntSeqDur2.switch(
 						0,{},
-						1,{
-							~lpMn.noteOn(~lpMnCh,~lpMnButV3,1);
-							~stepNum2.source  =  Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
-						},
-						2,{
-							~lpMn.noteOff(~lpMnCh,~lpMnButV3,1);
-							~stepNum2.source  =  Pseq([
-								1,2,3,4,5,6,7,8,
-								1,2,3,4,5,6,7,8,
-								1,2,3,4,5,6,7,8,
-								9,10,11,12,13,14,15,16
-
-							], inf);
-							~cntSeqDur3=0},
+						1,{IFRoot.cc(\durPatSeq2,127);},
+						2,{IFRoot.cc(\durPatSeq2,0);~cntSeqDu2=0},
 					);
 				},
 				~lpMnButV4,{
 					~cntSeqMul2 = ~cntSeqMul2 + 1;
 					~cntSeqMul2.switch(
 						0,{},
-						1,{~lpMn.noteOn(~lpMnCh,~lpMnButV4,1);~durMul2.source=Pseq([1/8], inf);},
-						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV4,1);~durMul2.source=Pseq([1/4], inf);~cntSeqMul2=0},
+						1,{IFRoot.cc(\durMulSeq2,127);},
+						2,{IFRoot.cc(\durMulSeq2,0);~cntSeqMul2=0},
 					);
 				},
 				~lpMnButV5,{
 					~cntSeqDur3 = ~cntSeqDur3 + 1;
 					~cntSeqDur3.switch(
 						0,{},
-						1,{
-							~lpMn.noteOn(~lpMnCh,~lpMnButV5,1);
-							~stepNum3.source  =  Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
-						},
-						2,{
-							~lpMn.noteOff(~lpMnCh,~lpMnButV5,1);
-							~stepNum3.source  =  Pseq([
-								1,2,3,4,5,6,7,8,
-								1,2,3,4,5,6,7,8,
-								1,2,3,4,5,6,7,8,
-								9,10,11,12,13,14,15,16
-
-							], inf);
-							~cntSeqDur3=0},
+						1,{IFRoot.cc(\durPatSeq3,127);},
+						2,{IFRoot.cc(\durPatSeq3,0);~cntSeqDur3=0},
 					);
 				},
 				~lpMnButV6,{
 					~cntSeqMul3 = ~cntSeqMul3 + 1;
 					~cntSeqMul3.switch(
 						0,{},
-						1,{~lpMn.noteOn(~lpMnCh,~lpMnButV6,1);~durMul3.source=Pseq([1/8], inf);},
-						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV6,1);~durMul3.source=Pseq([1/4], inf);~cntSeqMul3=0},
+						1,{IFRoot.cc(\durMulSeq3,127);},
+						2,{IFRoot.cc(\durMulSeq3,0);~cntSeqMul3=0},
 					);
 				},
 				~lpMnButV7,{
 					~cntSeqDur4 = ~cntSeqDur4 + 1;
 					~cntSeqDur4.switch(
 						0,{},
-						1,{
-							~lpMn.noteOn(~lpMnCh,~lpMnButV7,1);
-							~stepNum4.source  =  Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
-						},
-						2,{
-							~lpMn.noteOff(~lpMnCh,~lpMnButV7,1);
-							~stepNum4.source  =  Pseq([
-								1,2,3,4,5,6,7,8,
-								1,2,3,4,5,6,7,8,
-								1,2,3,4,5,6,7,8,
-								9,10,11,12,13,14,15,16
-
-							], inf);
-							~cntSeqDur4=0},
+						1,{IFRoot.cc(\durPatSeq4,127);},
+						2,{IFRoot.cc(\durPatSeq4,0);~cntSeqDur4=0},
 					);
 				},
 				~lpMnButV8,{
 					~cntSeqMul4 = ~cntSeqMul4 + 1;
 					~cntSeqMul4.switch(
 						0,{},
-						1,{~lpMn.noteOn(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/8], inf);},
-						2,{~lpMn.noteOff(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/4], inf);},
-						3,{~lpMn.noteOff(~lpMnCh,~lpMnButV8,1);~durMul4.source=Pseq([1/3], inf);~cntSeqMul4=0},
+						1,{IFRoot.cc(\durMulSeq4,127);},
+						2,{IFRoot.cc(\durMulSeq4,0);~cntSeqMul4=0},
 					);
 				},
 			);
@@ -411,13 +456,14 @@ IFLpMn{
 	}
 
 	*makeMIDIResp{
-		this.midiResp(~lpMnButV2, 'seqMulResp');
-		this.midiResp(~lpMnButV3, 'seqDur2Resp');
-		this.midiResp(~lpMnButV4, 'seqMul2Resp');
-		this.midiResp(~lpMnButV5, 'seqDur3Resp');
-		this.midiResp(~lpMnButV6, 'seqMul3Resp');
-		this.midiResp(~lpMnButV7, 'seqDur4Resp');
-		this.midiResp(~lpMnButV8, 'seqMul4Resp');
+		this.midiResp(ntNum:~lpMnButV1, respName:'seqDur1Resp');
+		this.midiResp(ntNum:~lpMnButV2, respName:'seqMul1Resp');
+		this.midiResp(ntNum:~lpMnButV3, respName:'seqDur2Resp');
+		this.midiResp(ntNum:~lpMnButV4, respName:'seqMul2Resp');
+		this.midiResp(ntNum:~lpMnButV5, respName:'seqDur3Resp');
+		this.midiResp(ntNum:~lpMnButV6, respName:'seqMul3Resp');
+		this.midiResp(ntNum:~lpMnButV7, respName:'seqDur4Resp');
+		this.midiResp(ntNum:~lpMnButV8, respName:'seqMul4Resp');
 	}
 }
 /*

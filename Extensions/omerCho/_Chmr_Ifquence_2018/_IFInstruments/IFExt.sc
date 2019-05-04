@@ -113,7 +113,7 @@ IFExt{
 			\ctranspose, Pseq([~rootLngExtP.next],inf),
 			\octave, Pseq([~octExtP.next], inf)+~octMulExt,
 			\harmonic, Pseq([~hrmExtP.next], inf)+~harmExt
-		).play(TempoClock.default, quant: 0);
+		).play(~clkSamp, quant: 0);
 	}
 
 	*oscMIDI{

@@ -1,5 +1,15 @@
 /*
-
+/*
+Mopho.masterTranspose(12);
+Mopho.masterTune(1);
+Mopho.midiClock(0);
+Mopho.parameterSend(1);
+Mopho.parameterReceive(0);
+Mopho.controllerSendReceive(1);
+Mopho.sysexSendReceive(1);
+Mopho.audioOut(0);
+Mopho.midiOut(1);
+*/
 */
 Mopho{
 	//var <>currentBpm;
@@ -52,8 +62,14 @@ Mopho{
 			/////////////////////
 			//Program Parameters
 			\voiVol, {this.nrp( 0,29,0, vel);this.lbl(\MPHvoiVol,val);},/*0->127  Voice Volume*/
-			\tempoBpmA, {this.nrp( 0,91,0, vel);},/*30->127  tempo 30-127*/
-			\tempoBpmB, {this.nrp( 0,91,1, vel);},/*0->122  tempo 128-250*/
+			/*\tempoBpmA, {this.nrp( 0,91,0, vel);},/*30->127  tempo 30-127*/
+			\tempoBpmB, {this.nrp( 0,91,1, vel);},/*0->122  tempo 128-250*/*/
+			\tempo,{
+				this.lbl(\MPHtempo, vel);
+				case
+				{vel<=127} {this.nrp( 0,91,0, vel);/*30->127  tempo 30-127*/}
+				{vel>=128} {this.nrp( 0,91,1, (vel-127)-1);/*0->122  tempo 128-250*/};
+			},
 			\tempoDiv, {this.nrp( 0,92,0, vel);this.lbl(\tempoDivLbl,1+~tempoDivLst[vel]);},/*0->12* ~currentBpmDiv=vel;*/
 			\tempoDivPls, {this.nrp( 0,92,0, vel);},/*0->12  tempo 30-250*/
 			\tempoDivMin, {this.nrp( 0,92,0, vel);},/*0->12  tempo 30-250*/
@@ -67,7 +83,6 @@ Mopho{
 				this.nrp( 0,2,0, vel); this.lbl(\osc1ShButLbl,1+~oscShapeLst[vel]);~osc1ShButCnt=vel+1;
 			},//Osc_1 Shape Button
 			\osc1Glide, {this.nrp( 0, 3, 0, vel);this.lbl(\MPHosc1Glide,val);}, //Osc_1 Glide
-			//\osc1Kybrd, {this.nrp( 0, 4, 0, vel); this.lbl(\MPHosc1Kybrd,val);}, //Osc_1 Kybrd OnOff 0-1
 			\osc1Kybrd,{this.nrp(0,4,0, vel-1);  this.lbl(\MPHosc1Kybrd,vel-1);}, /*0->1 Osc_1 Kybrd OnOff 0-1*/
 			\osc1Sub, {this.nrp( 0, 114, 0, vel);this.lbl(\MPHosc1Sub,val);}, //Osc_1 Sub
 
@@ -80,7 +95,6 @@ Mopho{
 				~osc2ShButCnt=vel+1;
 			},
 			\osc2Glide, {this.nrp( 0, 8, 0, vel);this.lbl(\MPHosc2Glide,val);}, //Osc_2 Glide
-			//\osc2Kybrd, {this.nrp( 0, 9, 0, vel);this.lbl(\MPHosc2Kybrd,val);}, //Osc_2 Kybrd OnOff 0-1
 			\osc2Kybrd,{this.nrp(0,9,0, vel-1);  this.lbl(\MPHosc2Kybrd,vel-1);}, /*0->1 Osc_2 Kybrd OnOff 0-1*/
 			\osc2Sub, {this.nrp( 0, 115, 0, vel);this.lbl(\MPHosc2Sub,val);}, //Osc_2 Sub
 
@@ -276,14 +290,15 @@ Mopho{
 				'voiVolT',{ Mopho.cc(\voiVol,vel);},
 				'tempoBpmMinT',{if( val==1,{~currentBpm=~currentBpm-1;~local.sendMsg(\MPHtempoBpm,~currentBpm);});},
 				'tempoBpmPlsT',{if( val==1,{~currentBpm=~currentBpm+1;~local.sendMsg(\MPHtempoBpm,~currentBpm);});},
-				'tempoBpmT',{
+				/*'tempoBpmT',{
 					case
 					{msg[1]<=127} {"Tempo A".postln; Mopho.cc(\tempoBpmA, val);}
 					{msg[1]>=128} {"Tempo B".postln; Mopho.cc(\tempoBpmB, val-128);};
 					~tOSCAdrr.sendMsg('MPHtempoBpmLbl', val);
 					~tOSCAdrr.sendMsg('MPHtempoBpm', val);
 					~currentBpm=val;
-				},
+				},*/
+				'tempoT',{ Mopho.cc(\tempo,val);},
 				'tempoDivT',{
 					~tempoDivTag=val;
 					~tempoDivTag.postln;
@@ -729,6 +744,7 @@ Mopho{
 		},path:oscName);
 	}
 	*makeOSCResponders{
+		this.oscResp(respName:'tempoResp', oscName:'MPHtempo', playDir:'tempoT');
 		this.oscResp(respName:'tempoBpmResp', oscName:'MPHtempoBpm', playDir:'tempoBpmT');
 		this.oscResp(respName:'tempoBpmMinResp', oscName:'MPHtempoBpmMin', playDir:'tempoBpmMinT');
 		this.oscResp(respName:'tempoBpmPlsResp', oscName:'MPHtempoBpmPls', playDir:'tempoBpmPlsT');

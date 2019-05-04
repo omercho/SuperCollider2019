@@ -1,5 +1,5 @@
 /*
- IFPitchBass.loadAll;
+IFPitchBass.loadAll;
 */
 
 IFPitchBass {
@@ -7,8 +7,8 @@ IFPitchBass {
 	*initClass {
 		StartUp add: {
 			/*Server.default.doWhenBooted({
-				1.0.wait;
-				this.noteBass;
+			1.0.wait;
+			this.noteBass;
 
 			});*/
 		}
@@ -38,31 +38,20 @@ IFPitchBass {
 						"PITCHBass SWITCH 0".postln;
 					},
 					1, {
-
 						"PITCHBass SWITCH ON".postln;
 						~tOSCAdrr.sendMsg('pitchBass', 1);
 						IFPitchBass.noteBassOn;
 						~apcMn.noteOn(~apcMnCh, ~actButD4, 4); //But 5
-
-
 					},
 					2,{
-
 						"PITCHBass SWITCH OFF".postln;
 						~tOSCAdrr.sendMsg('pitchBass', 0);
 						~countPBass=0;
 						IFPitchBass.noteBassOff;
 						~apcMn.noteOn(~apcMnCh, ~actButD4, 3); //But 5
 					}
-				)
-				},{
-					// else
-
-				}
-			);
-			},
-			'/pitchBass'
-		);
+			)});
+		},'/pitchBass');
 
 		//APC Pitch Bass Button
 		~countPBassApc=0;
@@ -78,7 +67,7 @@ IFPitchBass {
 						~local.sendMsg('pitchBass', 1);
 						~countPBassApc=0;
 					}
-				)}
+			)}
 			);
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButD4);
 	}
@@ -96,8 +85,8 @@ IFPitchBass {
 				~transBass.source=0;
 				~tOSCAdrr.sendMsg('noteBassLabel', '0');
 			});
-			},
-			'/nt_0'
+		},
+		'/nt_0'
 		);
 
 		~noteBass_1.free;
@@ -109,8 +98,8 @@ IFPitchBass {
 				~transBass.source=1;
 				~tOSCAdrr.sendMsg('noteBassLabel', '1');
 			});
-			},
-			'/nt_1'
+		},
+		'/nt_1'
 		);
 
 
@@ -123,8 +112,8 @@ IFPitchBass {
 				~transBass.source=2;
 				~tOSCAdrr.sendMsg('noteBassLabel', '2');
 			});
-			},
-			'/nt_2'
+		},
+		'/nt_2'
 		);
 
 		~noteBass_3.free;
@@ -136,8 +125,8 @@ IFPitchBass {
 				~transBass.source=3;
 				~tOSCAdrr.sendMsg('noteBassLabel', '3');
 			});
-			},
-			'/nt_3'
+		},
+		'/nt_3'
 		);
 
 		~noteBass_4.free;
@@ -149,8 +138,8 @@ IFPitchBass {
 				~transBass.source=4;
 				~tOSCAdrr.sendMsg('noteBassLabel', '4');
 			});
-			},
-			'/nt_4'
+		},
+		'/nt_4'
 		);
 
 		~noteBass_5.free;
@@ -162,8 +151,8 @@ IFPitchBass {
 				~transBass.source=5;
 				~tOSCAdrr.sendMsg('noteBassLabel', '5');
 			});
-			},
-			'/nt_5'
+		},
+		'/nt_5'
 		);
 
 		~noteBass_6.free;
@@ -175,8 +164,8 @@ IFPitchBass {
 				~transBass.source=6;
 				~tOSCAdrr.sendMsg('noteBassLabel', '6');
 			});
-			},
-			'/nt_6'
+		},
+		'/nt_6'
 		);
 
 		~noteBass_7.free;
@@ -188,8 +177,8 @@ IFPitchBass {
 				~transBass.source=7;
 				~tOSCAdrr.sendMsg('noteBassLabel', '7');
 			});
-			},
-			'/nt_7'
+		},
+		'/nt_7'
 		);
 
 		~noteBass_8.free;
@@ -201,8 +190,8 @@ IFPitchBass {
 				~transBass.source=8;
 				~tOSCAdrr.sendMsg('noteBassLabel', '8');
 			});
-			},
-			'/nt_8'
+		},
+		'/nt_8'
 		);
 
 		~noteBass_9.free;
@@ -214,8 +203,8 @@ IFPitchBass {
 				~transBass.source=9;
 				~tOSCAdrr.sendMsg('noteBassLabel', '9');
 			});
-			},
-			'/nt_9'
+		},
+		'/nt_9'
 		);
 
 		~noteBass_10.free;
@@ -227,8 +216,8 @@ IFPitchBass {
 				~transBass.source=10;
 				~tOSCAdrr.sendMsg('noteBassLabel', '10');
 			});
-			},
-			'/nt_10'
+		},
+		'/nt_10'
 		);
 
 		~noteBass_11.free;
@@ -240,8 +229,8 @@ IFPitchBass {
 				~transBass.source=11;
 				~tOSCAdrr.sendMsg('noteBassLabel', '11');
 			});
-			},
-			'/nt_11'
+		},
+		'/nt_11'
 		);
 
 		~noteBass_12.free;
@@ -253,8 +242,8 @@ IFPitchBass {
 				~transBass.source=12;
 				~tOSCAdrr.sendMsg('noteBassLabel', '12');
 			});
-			},
-			'/nt_12'
+		},
+		'/nt_12'
 		);
 
 		~noteBass_13.free;
@@ -266,8 +255,8 @@ IFPitchBass {
 				~transBass.source=13;
 				~tOSCAdrr.sendMsg('noteBassLabel', '13');
 			});
-			},
-			'/nt_13'
+		},
+		'/nt_13'
 		);
 
 		~noteBass_14.free;
@@ -279,8 +268,8 @@ IFPitchBass {
 				~transBass.source=14;
 				~tOSCAdrr.sendMsg('noteBassLabel', '14');
 			});
-			},
-			'/nt_14'
+		},
+		'/nt_14'
 		);
 
 		//////////////////////////// NEGATIVE
@@ -293,8 +282,8 @@ IFPitchBass {
 				~transBass.source=(-1);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-1');
 			});
-			},
-			'/nt-1'
+		},
+		'/nt-1'
 		);
 
 
@@ -307,8 +296,8 @@ IFPitchBass {
 				~transBass.source=(-2);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-2');
 			});
-			},
-			'/nt-2'
+		},
+		'/nt-2'
 		);
 
 		~noteBass3.free;
@@ -320,8 +309,8 @@ IFPitchBass {
 				~transBass.source=(-3);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-3');
 			});
-			},
-			'/nt-3'
+		},
+		'/nt-3'
 		);
 
 		~noteBass4.free;
@@ -333,8 +322,8 @@ IFPitchBass {
 				~transBass.source=(-4);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-4');
 			});
-			},
-			'/nt-4'
+		},
+		'/nt-4'
 		);
 
 		~noteBass5.free;
@@ -346,8 +335,8 @@ IFPitchBass {
 				~transBass.source=(-5);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-5');
 			});
-			},
-			'/nt-5'
+		},
+		'/nt-5'
 		);
 
 		~noteBass6.free;
@@ -359,8 +348,8 @@ IFPitchBass {
 				~transBass.source=(-6);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-6');
 			});
-			},
-			'/nt-6'
+		},
+		'/nt-6'
 		);
 
 		~noteBass7.free;
@@ -372,8 +361,8 @@ IFPitchBass {
 				~transBass.source=(-7);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-7');
 			});
-			},
-			'/nt-7'
+		},
+		'/nt-7'
 		);
 
 		~noteBass8.free;
@@ -385,8 +374,8 @@ IFPitchBass {
 				~transBass.source=(-8);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-8');
 			});
-			},
-			'/nt-8'
+		},
+		'/nt-8'
 		);
 
 		~noteBass9.free;
@@ -398,8 +387,8 @@ IFPitchBass {
 				~transBass.source=(-9);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-9');
 			});
-			},
-			'/nt-9'
+		},
+		'/nt-9'
 		);
 
 		~noteBass10.free;
@@ -411,8 +400,8 @@ IFPitchBass {
 				~transBass.source=(-10);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-10');
 			});
-			},
-			'/nt-10'
+		},
+		'/nt-10'
 		);
 
 		~noteBass11.free;
@@ -424,8 +413,8 @@ IFPitchBass {
 				~transBass.source=(-11);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-11');
 			});
-			},
-			'/nt-11'
+		},
+		'/nt-11'
 		);
 
 		~noteBass12.free;
@@ -437,8 +426,8 @@ IFPitchBass {
 				~transBass.source=(-12);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-12');
 			});
-			},
-			'/nt-12'
+		},
+		'/nt-12'
 		);
 
 		~noteBass13.free;
@@ -450,8 +439,8 @@ IFPitchBass {
 				~transBass.source=(-13);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-13');
 			});
-			},
-			'/nt-13'
+		},
+		'/nt-13'
 		);
 
 		~noteBass14.free;
@@ -463,8 +452,8 @@ IFPitchBass {
 				~transBass.source=(-14);
 				~tOSCAdrr.sendMsg('noteBassLabel', '-14');
 			});
-			},
-			'/nt-14'
+		},
+		'/nt-14'
 		);
 
 

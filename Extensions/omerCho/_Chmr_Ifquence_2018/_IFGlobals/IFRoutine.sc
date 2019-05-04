@@ -9,7 +9,6 @@ IFRoutine{
 				this.load;
 			});
 		}
-
 	}
 	*load{
 		//this.loadRoutPacks;
@@ -19,8 +18,6 @@ IFRoutine{
 		this.midi;
 	}
 	*cntDwn{|min,max,tms=10,speed=0.5|
-
-
 		~fadee = Pseries(min,max, inf);
 		~fadeUp=~fadee.asStream;
 		~tmsLab=tms;
@@ -39,9 +36,7 @@ IFRoutine{
 				speed.asFloat.yield;
 			};
 		}).play;
-
 	}
-
 	*sprd{
 		~rtt01.stop;
 		~rtt01 = Routine({
@@ -78,10 +73,7 @@ IFRoutine{
 
 	}
 
-
-
 	//OLDS
-
 	*loadRoutPacks{
 
 		~blackFade={
@@ -121,7 +113,7 @@ IFRoutine{
 			cnt = cnt + 1;
 			counter2.switch(
 				2, {
-					("            KickCnt"+counter2).postln;
+					("KickCnt"+counter2).postln;
 					this.ctl_2;
 					counter2 = 0;
 

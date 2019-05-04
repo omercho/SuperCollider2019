@@ -111,15 +111,14 @@ IDE:
       documents-dock: ""
       help-dock: ""
       post-dock: ""
-    geometry: AdnQywACAAAAAABNAAAAFgAACf8AAATAAAAATQAAACwAAAn/AAAEwAAAAAAAAAAACgA=
-    state: AAAA/wAAAAD9AAAAAgAAAAAAAACKAAAEevwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAEegAAAGcA////AAAAAQAAAYMAAAR6/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAcwAAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAc0AAAKtAAAATAD///8AAAekAAAEegAAAAEAAAACAAAAAQAAAAL8AAAAAA==
+    geometry: AdnQywACAAAAAAAAAAAAFgAACf0AAAStAAAAAAAAACwAAAn9AAAErQAAAAAAAAAACgA=
+    state: AAAA/wAAAAD9AAAAAgAAAAAAAACKAAAEZ/wCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAEZwAAAGcA////AAAAAQAAAfUAAARn/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAcMAAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAcQAAAKjAAAATAD///8AAAd9AAAEZwAAAAEAAAACAAAAAQAAAAL8AAAAAA==
   postWindow:
     lineWrap: false
     scrollback: 1000
   recentDocuments: !QVariantList
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFProjectGlobals.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFRoot.sc
-    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTracks/IFTracks.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTracks/IFTrack01.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFPreset.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFCounter.sc
@@ -127,6 +126,7 @@ IDE:
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFCntrl/IFCntrl.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTextFiles/IFTxst.sc
     - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/-iConnectMIDI/IFiConnectMIDI4.sc
+    - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFCntrl/IFAllMidiRef.scd
   shortcuts:
     editor-indent-auto: Ctrl+;
   startWithSession: last

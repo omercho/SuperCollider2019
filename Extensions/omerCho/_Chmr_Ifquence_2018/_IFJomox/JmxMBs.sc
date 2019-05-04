@@ -86,6 +86,23 @@ JmxMBs{
 		//~osc1KybrdCnt=0;
 	}
 
+	*set01{
+		JmxMBs.cc(\tuneJmx,64);
+		JmxMBs.cc(\pitchJmx,64);
+		JmxMBs.cc(\volJmx,125);
+		JmxMBs.cc(\attJmx,20);
+		JmxMBs.cc(\decJmx,32);
+		JmxMBs.cc(\gateTmJmx,64);
+		JmxMBs.cc(\harmJmx,10);
+		JmxMBs.cc(\pulseJmx,50);
+		JmxMBs.cc(\eqJmx,0);
+		JmxMBs.cc(\noiseJmx,90);
+		JmxMBs.cc(\mtlNoiseJmx,0);
+		JmxMBs.cc(\compJmx,62);
+		JmxMBs.cc(\lfoIntJmx,64);
+		JmxMBs.cc(\lfoRtJmx,64);
+	}
+
 	*globals{
 		~tuneJmx=100;
 		~pitchJmx=101;
@@ -96,7 +113,7 @@ JmxMBs{
 		~attJmx=106;
 		~eqJmx=107;
 		~compJmx=113;
-		~gateJmx=114;
+		~gateTmJmx=114;
 		~mtlNoiseJmx=115;
 		~volJmx=117;
 		~lfoSyncJmx=120;

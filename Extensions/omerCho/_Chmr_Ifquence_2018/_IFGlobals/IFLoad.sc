@@ -21,7 +21,12 @@ IFLoad{
 			~volcaBoolean=0;
 			Mopho.load;
 			JmxMBs.load;
+			0.1.wait;
+			IFRoot.load;
+			0.1.wait;
 			IFProjectGlobals.load;
+			0.1.wait;
+			IFPitch.loadAll;
 			0.1.wait;
 			IFiConnectMIDI4.load;
 			0.1.wait;
@@ -30,8 +35,6 @@ IFLoad{
 			IFCounter.zero;IFCounter.loadProxy;
 			0.1.wait;
 			IFCntrl.loadAll;
-			0.1.wait;
-			IFPitch.loadAll;
 			0.1.wait;
 			IFTracks.loadButtons;
 			0.1.wait;
@@ -50,12 +53,12 @@ IFLoad{
 			"Loading Pitches: Ext".postln;
 			IFPitchExt.loadAll;
 			0.1.wait;
-			"Loading Pitches: VChord".postln;
-			IFPitchVChord.loadAll;
+			"Loading IFShuf".postln;
 			IFShuf.load;
 			0.1.wait;
+			"Loading VBass and VKeys".postln;
 			VBass.globals; VBass.preSet01;
-			VKeys.globals; VKeys.preSet01;
+			VKeys.load;
 			0.1.wait;
 			"Loading Instruments".postln;
 			IFStat.load;
@@ -71,19 +74,18 @@ IFLoad{
 			IFKeys.load;
 			0.1.wait;
 			IFSamp.load;
+			0.1.wait;
+			"Loading IFMopho".postln;
 			IFMopho.load;
-			IFMophoResp.load;
+			//IFMophoResp.load;
 			0.1.wait;
 			//IFRes.load;
 			//IFMast.load;
 			0.1.wait;
 			IFExt.load;
 			0.1.wait;
-			IFRoot.load;
-			0.1.wait;
+			"Loading IFSeqSteps".postln;
 			IFSeqSteps.load;
-			0.1.wait;
-			//IFSC.load;
 			0.5.wait;
 			"Track: Not loaded".postln;
 			~tOSCAdrr.sendMsg('trackLabel', 'Track: Not loaded');
@@ -101,7 +103,7 @@ IFLoad{
 
 /*
 
-manualLoad
+//manualLoad
 
 IFProjectGlobals.setAddr;
 IFProjectGlobals.shiftButtons;

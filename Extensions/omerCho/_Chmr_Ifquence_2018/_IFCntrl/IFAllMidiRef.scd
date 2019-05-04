@@ -63,7 +63,7 @@ NoteOnResponder.removeAll
 ~mdOut.control(1, 4, ~midiVel); //AllMaster / Send A
 ~mdOut.control(1, 5, ~midiVel); //AllMaster / Send B
 ~mdOut.control(1, 6, ~midiVel); //AllMasterFX / Comp
-~mdOut.control(1, 7, ~midiVel); //AllMasterFX / FX DECAY
+//~mdOut.control(1, 7, 127); //AllMasterFX / FX DECAY
 ~mdOut.control(1, 8, ~midiVel); //AllMasterFX / FX Fad
 ~mdOut.control(1, 9, ~midiVel); //AllMasterFX / Y1
 ~mdOut.control(1, 10, ~midiVel); //AllMasterFX / X1
@@ -75,6 +75,7 @@ NoteOnResponder.removeAll
 ~mdOut.control(1, 17, ~midiVel); //Cln Samp Vol
 ~mdOut.control(1, 18, ~midiVel); //Cln Mopho Vol
 ~mdOut.control(1, 19, ~midiVel); //Cln Keys Vol
+~mdOut.control(1, 20, ~midiVel); //AllMasterFX / FX DECAY
 ~mdOut.control(1, 127, ~midiVel); //AllMasterFX / Track Vol
 
 

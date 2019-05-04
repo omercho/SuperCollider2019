@@ -71,6 +71,7 @@ IFiConnectMIDI4{
 		~vKeysOutID=(177010293);
 		//~vSamplerInID=~hstPort1;
 
+		~chMopho=9;
 		~vMopho = MIDIOut.newByName("iConnectMIDI4+", "USB3 DIN3");
 		~vMophoOutID=(-1799991722);
 		//~vMophoInID=~hstPort1;

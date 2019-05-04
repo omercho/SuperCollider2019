@@ -1,5 +1,4 @@
 IFTracks{
-
 	*loadButtons{
 		~trackOSC_1.free;
 		~trackOSC_1= OSCFunc({
@@ -46,15 +45,11 @@ IFTracks{
 		},
 		'/track4'
 		);
-
-
 	}
 
 	*track1 {
 		IFTrack01.loadAtStart;
-		IFMainTrack1.load;
-
-
+		//IFMainTrack1.load;
 
 		//--------------  RootPlayerVariations
 		~root00But.free;
@@ -428,67 +423,6 @@ IFTracks{
 		'/durMul1'
 		);
 
-		//SCALES
-		~scale_1.free;
-		~scale_1= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				~scl1= Scale.phrygian;~scl2= Scale.phrygian;
-				~tOSCAdrr.sendMsg('scaleLabel', 'Phrygian');
-			});
-		},
-		'/scale1'
-		);
-		~scale_2.free;
-		~scale_2= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				~scl1= Scale.major;~scl2= Scale.major;
-				~tOSCAdrr.sendMsg('scaleLabel', 'major');
-			});
-		},
-		'/scale2'
-		);
-		~scale_3.free;
-		~scale_3= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				~scl1= Scale.zhi;~scl2= Scale.zhi;
-				~tOSCAdrr.sendMsg('scaleLabel', 'zhi');
-			});
-		},
-		'/scale3'
-		);
-		~scale_4.free;
-		~scale_4= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				~scl1= Scale.chinese;~scl2= Scale.chinese;
-				~tOSCAdrr.sendMsg('scaleLabel', 'chinese');
-			});
-		},
-		'/scale4'
-		);
-		~scale_5.free;
-		~scale_5= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				~scl1= Scale.minor;~scl2= Scale.minor;
-				~tOSCAdrr.sendMsg('scaleLabel', 'minor');
-			});
-		},
-		'/scale5'
-		);
-		~scale_6.free;
-		~scale_6= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-				~scl1= Scale.majorPentatonic;~scl2= Scale.majorPentatonic;
-				~tOSCAdrr.sendMsg('scaleLabel', 'majorPentatonic');
-			});
-		},
-		'/scale6'
-		);
 
 		//PRESETS
 
@@ -604,21 +538,17 @@ IFTracks{
 		);
 
 		//---------------- DUR Buttons ---------------//
-
 		~dur1But.free;
 		~dur1But = OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
 				"------------dur1".postln;
 				~tOSCAdrr.sendMsg('durLabel', '1');
-
 				~dur.source = Pseq([1], inf)*~durMulP;
-
 			});
 		},
 		'/dur1'
 		);
-
 		~dur2But.free;
 		~dur2But = OSCFunc({
 			arg msg;
@@ -632,12 +562,10 @@ IFTracks{
 					Pseq([0.25], 4),
 					Pseq([1], 3),
 				], inf)*2*~durMulP;
-
 			});
 		},
 		'/dur2'
 		);
-
 		~dur3But.free;
 		~dur3But = OSCFunc({
 			arg msg;
@@ -650,12 +578,10 @@ IFTracks{
 					Pseq([1], 3),
 					Pseq([0.5], 2)
 				], inf)*~durMulP;
-
 			});
 		},
 		'/dur3'
 		);
-
 		~dur4But.free;
 		~dur4But = OSCFunc({
 			arg msg;
@@ -668,13 +594,10 @@ IFTracks{
 					Pseq([0.5], 2),
 					Pseq([1], 3)
 				], inf)*~durMulP;
-
-
 			});
 		},
 		'/dur4'
 		);
-
 		~durAks1But.free;
 		~durAks1But = OSCFunc({
 			arg msg;
@@ -687,12 +610,10 @@ IFTracks{
 					Pseq([0.5,0.5,0.75,], 1),
 					Pseq([0.5,0.75], 2)
 				], inf)*2*~durMulP;
-
 			});
 		},
 		'/durAks1'
 		);
-
 		~durShuf1But.free;
 		~durShuf1But = OSCFunc({
 			arg msg;
@@ -705,14 +626,10 @@ IFTracks{
 					Pshuf([0.5,0.25,0.25], 1),
 					Pshuf([0.5,0.75], 2)
 				], inf)*~durMulP;
-
 			});
 		},
 		'/durShuf1'
 		);
-
-
-
 		~durRand1But.free;
 		~durRand1But = OSCFunc({
 			arg msg;
@@ -725,42 +642,33 @@ IFTracks{
 					Pxrand([0.5,0.25,0.25], 1),
 					Pxrand([0.5,0.75], 2)
 				], inf)*~durMulP;
-
 			});
 		},
 		'/durRand1'
 		);
-
 		//durMul
-
 		~durMul1_4But.free;
 		~durMul1_4But = OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
 				"------------dur1".postln;
 				~tOSCAdrr.sendMsg('durMulLabel', '1/4');
-
 				~durMul.source = Pseq([1/4], inf);
-
 			});
 		},
 		'/durMul1_4'
 		);
-
 		~durMul1_2But.free;
 		~durMul1_2But = OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
 				"------------dur1".postln;
 				~tOSCAdrr.sendMsg('durMulLabel', '1/2');
-
 				~durMul.source = Pseq([1/2], inf);
-
 			});
 		},
 		'/durMul1_2'
 		);
-
 		~durMul1But.free;
 		~durMul1But = OSCFunc({
 			arg msg;
@@ -769,7 +677,6 @@ IFTracks{
 				~tOSCAdrr.sendMsg('durMulLabel', '1');
 
 				~durMul.source = Pseq([1], inf);
-
 			});
 		},
 		'/durMul1'
@@ -836,9 +743,7 @@ IFTracks{
 		},
 		'/scale6'
 		);
-
 		//PRESETS
-
 		~setAllBut.free;
 		~setAllBut = OSCFunc({
 			arg msg;
@@ -850,7 +755,6 @@ IFTracks{
 		},
 		'/setAll'
 		);
-
 		~set1But.free;
 		~set1But = OSCFunc({
 			arg msg;
@@ -873,9 +777,7 @@ IFTracks{
 		},
 		'/set2'
 		);
-
 	}//TRACK 2 END
-
 }
 /*
 ~track1.fork;

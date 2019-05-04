@@ -2,6 +2,8 @@
 PostAllMIDI.on;
 PostAllMIDI.off;
 
+~mdOut.control(1, 7, 0); //FX Rev Decay
+
 IFLoad.load;
 IFLoad.loadVolca;
 */
@@ -103,8 +105,6 @@ IFCntrl {
 			});
 		},'/tempoClock');
 
-
-
 		~snrXPoseFad.free;
 		~snrXPoseFad= OSCFunc({
 			arg msg;
@@ -121,20 +121,16 @@ IFCntrl {
 			~mdOut.control(3, 15, msg[1]*127); //Snr X-Transpose
 			~tOSCAdrr.sendMsg('noteLabelDrum', msg[1]);
 		},'freqShiftDry');
-
-		~melFad.free;
-		~melFad= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('melFader',msg[1]);
-			~mdOut.control(5, 8, msg[1]*127); //Samp Chain
-			~mdOut.control(6, 8, msg[1]*127); //Samp Chain
-			~mdOut.control(7, 8, msg[1]*127); //Samp Chain
-			//VKeys.cc(\vcfEgVK,msg[1]*127);
-			//VBass.cc(\gateTmVB,msg[1]*127);
-			Mopho.cc(\oscMix, msg[1]*127);
-
-		},'melFader');
-
+		~susDrumLedVal;
+		~susDrumMulFader.free;
+		~susDrumMulFader= OSCFunc({
+			arg msg,val,vel;
+			val=msg[1];
+			vel=msg[1]*127;
+			~tOSCAdrr.sendMsg('/susDrum',~susDrumLedVal=val);
+			~susMulKick=val+0.15;~susMulSnr=val+0.2;~susMulHat=val+0.15;
+		},
+		'/susDrum');
 		~cutDrumXY.free;
 		~cutDrumXY= OSCFunc({
 			arg msg,vel1, vel2,val1,val2;
@@ -143,40 +139,34 @@ IFCntrl {
 			val1=msg[1];
 			val2=msg[2];
 			~tOSCAdrr.sendMsg('/cutDrum',msg[1], msg[2]);
-			~mdOut.control(2, 14, vel1);
-			~mdOut.control(2, 15, vel2);
-			~mdOut.control(10, 30, vel1);
-			~mdOut.control(10, 31, vel2);
-			~mdOut.control(10, 32, vel1);
-
+			~mdOut.control(2, 14, vel1);//Kick / Act Delay-Filter LFO
+			~mdOut.control(2, 15, vel2);//Kick / FreqShift DryWet
+			~mdOut.control(10, 30, vel1);//Drum / Filt Morph - Feedback Hat Delay
+			~mdOut.control(10, 31, vel2);//Drum / Delay Feedback
+			~mdOut.control(10, 32, vel1);//Drum / Delay DryWet
 		},
 		'cutDrum'
 		);
-
-		~xySendsAllMain.free;
-		~xySendsAllMain= OSCFunc({
+		~xySendsDrumMel.free;
+		~xySendsDrumMel= OSCFunc({
 			arg msg,vel1,vel2;
 			vel1=msg[1];
 			vel2=msg[2];
 			~tOSCAdrr.sendMsg('/sendDrumMelC',msg[1], msg[2]);
-			~mdOut.control(10, 25, msg[1]*127);
-			~mdOut.control(10, 75, msg[2]*127);
+			~mdOut.control(10, 25, msg[1]*127);//Drum SendC
+			~mdOut.control(10, 25, ~midiVel); //Drum SendC
+			~mdOut.control(10, 75, msg[2]*127);//Mel SendC
 		},'sendDrumMelC');
-
 		~xySendsDrum.free;
 		~xySendsDrum= OSCFunc({
 			arg msg,vel1,vel2;
-
 			vel1=msg[1];
 			vel2=msg[2];
-
 			~tOSCAdrr.sendMsg('/drumSends',msg[1], msg[2]);
-			~mdOut.control(10, 23, msg[1]*127);
-			~mdOut.control(10, 24, msg[2]*127);
-			//~mdOut.control(10, 25, msg[2]*127);
-
+			~mdOut.control(10, 23, msg[1]*127);//Drum / Send A
+			~mdOut.control(10, 24, msg[2]*127);//Drum / Send B
+			//~mdOut.control(10, 25, msg[2]*127);//Drum / Send C
 		},'/drumSends');
-
 		~xySendsMel.free;
 		~xySendsMel= OSCFunc({
 			arg msg,vel1,vel2;
@@ -185,9 +175,9 @@ IFCntrl {
 			vel2=msg[2];
 
 			~tOSCAdrr.sendMsg('/melSends',msg[1], msg[2]);
-			~mdOut.control(10, 73, msg[1]*127);
-			~mdOut.control(10, 74, msg[2]*127);
-			//~mdOut.control(10, 75, msg[2]*127);
+			~mdOut.control(10, 73, msg[1]*127);//Mel / Send A
+			~mdOut.control(10, 74, msg[2]*127);//Mel / Send B
+			//~mdOut.control(10, 75, msg[2]*127);//Mel / Send C
 
 		},'/melSends');
 
@@ -222,6 +212,7 @@ IFCntrl {
 				~octMulBass = [0,1,2,3].choose;
 				~octMulKeys = [0,1,2,3].choose;
 				~octMulSamp = [0,1,2,3].choose;
+				~octMulMopho = [0,1,2,3].choose;
 				//~octMulExt= [0,1,2,3].choose;
 			},
 			{
@@ -232,6 +223,7 @@ IFCntrl {
 				~local.sendMsg('octBassZero',1);
 				~local.sendMsg('octKeysZero',1);
 				~local.sendMsg('octSampZero',1);
+				~local.sendMsg('octMophoZero',1);
 				//~local.sendMsg('octExtZero',1);
 
 			});
@@ -250,6 +242,7 @@ IFCntrl {
 				~local.sendMsg('sendHat', 0.5, 0.5);
 				~local.sendMsg('sendBass', 0.5, 0.5);
 				~local.sendMsg('sendKeys', 0.5, 0.5);
+				~local.sendMsg('sendMopho', 0.5, 0.5);
 				~local.sendMsg('sendSamp', 0.5, 0.5);
 				~local.sendMsg('extSends',0.2,0.3);
 
@@ -259,12 +252,9 @@ IFCntrl {
 		~xyAllMasterFx.free;
 		~xyAllMasterFx= OSCFunc({
 			arg msg,vel1,vel2;
-
 			vel1=msg[1];
 			vel2=msg[2];
-
 			~tOSCAdrr.sendMsg('AllMasterFXxy1',msg[1], msg[2]);
-
 			~mdOut.control(1, 9, msg[1]*127);//AllMasterFX / Y1
 			~mdOut.control(1, 10, msg[2]*127);//AllMasterFX / X1
 		},'AllMasterFXxy1');
@@ -275,50 +265,43 @@ IFCntrl {
 			~tOSCAdrr.sendMsg('/fxFader', msg[1]);
 			~mdOut.control(1, 8, msg[1]*127); //FX Rev Chain
 		},'/fxFader');
-
 		~fxDecay.free;
 		~fxDecay= OSCFunc({
 			arg msg;
 			~tOSCAdrr.sendMsg('/fxDecay', msg[1]);
-			~mdOut.control(1, 7, msg[1]*127); //FX Rev Decay
+			~mdOut.control(1, 20, msg[1]*127); //FX Rev Decay
 
 		},'/fxDecay');
-
 		~fxComp.free;
 		~fxComp= OSCFunc({
 			arg msg;
 			~tOSCAdrr.sendMsg('/fxComp', msg[1]);
 			~mdOut.control(1, 6, msg[1]*127); //FX Rev Comp
 		},'/fxComp');
-
-		~cutAllXY.free;
-		~cutAllXY= OSCFunc({
+		~cutMel1XY.free;
+		~cutMel1XY= OSCFunc({
 			arg msg,vel1, vel2,val1,val2;
 			vel1=msg[1]*127;
 			vel2=msg[2]*127;
 			val1=msg[1];
 			val2=msg[2];
-			if ( ~volcaBoolean==1, {
-				~mdOut.control(7, 13, vel1); // IFSamp CutX
-				VKeys.cc(\vcfCutVK,5+vel1/1.8);
-				VBass.cc(\vcfCutVB,vel2);
-				Mopho.cc(\lpfAudMod, vel1);
-				~tOSCAdrr.sendMsg('/cutAll',msg[1], msg[2]);
-			},
-			{
-				VKeys.cc(\vcfCutVK,5+vel1/1.8);
-				VBass.cc(\vcfCutVB,vel2);
-				~mdOut.control(5, 14, vel1); // IFVBass CutY
-				~mdOut.control(5, 13, vel2); // IFVBass CutX
-				~mdOut.control(6, 14, vel2); // IFVKeys CutY
-				~mdOut.control(7, 13, vel1); // IFSamp CutX
-				~mdOut.control(7, 14, vel2); // IFSamps CutY
-				Mopho.cc(\lpfAudMod, vel2);
-				~tOSCAdrr.sendMsg('/cutAll',msg[1], msg[2]);
-			}
-			);
-		},'/cutAll');
-
+			~mdOut.control(7, 13, vel1); // IFSamp CutX
+			//VKeys.cc(\vcfCutVK,5+vel1/1.8);
+			VBass.cc(\vcfCutVB,vel2);
+			Mopho.cc(\lpfAudMod, vel1);
+			~tOSCAdrr.sendMsg('/cutMel1',msg[1], msg[2]);
+		},'/cutMel1');
+		~mel1Fad.free;
+		~mel1Fad= OSCFunc({
+			arg msg;
+			~tOSCAdrr.sendMsg('mel1Fader',msg[1]);
+			~mdOut.control(5, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(6, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(7, 8, msg[1]*127); //Samp Chain
+			VKeys.cc(\vcfEgVK,msg[1]*127);
+			VBass.cc(\gateTmVB,msg[1]*127);
+			Mopho.cc(\oscMix, msg[1]*127);
+		},'mel1Fader');
 		~cutMel2XY.free;
 		~cutMel2XY= OSCFunc({
 			arg msg,vel1, vel2,val1,val2;
@@ -326,11 +309,22 @@ IFCntrl {
 			vel2=msg[2]*127;
 			val1=msg[1];
 			val2=msg[2];
-			Mopho.cc(\lpfKeyAmnt, vel1);
-			Mopho.cc(\env3Amnt, vel2);
+			VKeys.cc(\vcfCutVK,5+vel1/1.8);
+			Mopho.cc(\lpfEnvAtt, vel1/2);
+			Mopho.cc(\lpfEnvSus, vel2);
 			~tOSCAdrr.sendMsg('/cutMel2',msg[1], msg[2]);
 		},'/cutMel2');
-
+		~mel2Fad.free;
+		~mel2Fad= OSCFunc({
+			arg msg;
+			~tOSCAdrr.sendMsg('mel2Fader',msg[1]);
+			~mdOut.control(5, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(6, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(7, 8, msg[1]*127); //Samp Chain
+			VKeys.cc(\vcfEgVK,msg[1]*127);
+			VBass.cc(\gateTmVB,msg[1]*127);
+			Mopho.cc(\oscMix, msg[1]*127);
+		},'mel2Fader');
 		~cutMel3XY.free;
 		~cutMel3XY= OSCFunc({
 			arg msg,vel1, vel2,val1,val2;
@@ -338,23 +332,24 @@ IFCntrl {
 			vel2=msg[2]*127;
 			val1=msg[1];
 			val2=msg[2];
-			if ( ~volcaBoolean==1, {
-				//~vMopho.control(~chMopho, 104, vel1); //Filter Key Amnt
-				//Mopho.cc(\vcaVel, vel1);
-				//Mopho.cc('lfo1Amnt', vel2);
-				~mdOut.control(7, 14, vel2); // IFSamps CutY
-				~mdOut.control(7, 13, vel1); // IFSamp CutX
-				~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
-			},
-			{
-				~mdOut.control(7, 14, vel2); // IFSamps CutY
-				~mdOut.control(7, 13, vel1); // IFSamp CutX
-				~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
-				//~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
-			}
-			);
+			//~vMopho.control(~chMopho, 104, vel1); //Filter Key Amnt
+			//Mopho.cc(\vcaVel, vel1);
+			//Mopho.cc('lfo1Amnt', vel2);
+			Mopho.cc(\lpfKeyAmnt, vel1);
+			Mopho.cc(\env3Amnt, vel2);
+			~tOSCAdrr.sendMsg('/cutMel3',msg[1], msg[2]);
 		},'/cutMel3');
-
+		~mel3Fad.free;
+		~mel3Fad= OSCFunc({
+			arg msg;
+			~tOSCAdrr.sendMsg('mel3Fader',msg[1]);
+			~mdOut.control(5, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(6, 8, msg[1]*127); //Samp Chain
+			~mdOut.control(7, 8, msg[1]*127); //Samp Chain
+			VKeys.cc(\vcfEgVK,msg[1]*127);
+			VBass.cc(\gateTmVB,msg[1]*127);
+			Mopho.cc(\oscMix, msg[1]*127);
+		},'mel3Fader');
 		~susMelLedVal;
 		~susMelMulFader.free;
 		~susMelMulFader= OSCFunc({
@@ -377,54 +372,6 @@ IFCntrl {
 			});
 		},'/susMelSet');
 
-		~susDrumLedVal;
-		~susDrumMulFader.free;
-		~susDrumMulFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('/susDrum',~susDrumLedVal=val);
-			~susMulKick=val+0.15;~susMulSnr=val+0.2;~susMulHat=val+0.15;
-		},
-		'/susDrum'
-		);
-		~chainDrumFader.free;
-		~chainDrumFader= OSCFunc({
-			arg msg,val;
-			val=msg[1]*127;
-			~tOSCAdrr.sendMsg('/chainDrum', msg[1]);
-			~mdOut.control(2, 8, val);//~tOSCAdrr.sendMsg('chainKick', val);
-			~mdOut.control(3, 8, val);//~tOSCAdrr.sendMsg('chainSnr', val);
-			~mdOut.control(4, 8, val);//~tOSCAdrr.sendMsg('chainHat', val);
-		},
-		'/chainDrum'
-		);
-		~chainAllFader.free;
-		~chainAllFader= OSCFunc({
-			arg msg,val;
-			val=msg[1]*127;
-			~tOSCAdrr.sendMsg('/chainAll', msg[1]);
-			~mdOut.control(5, 8, val);//~tOSCAdrr.sendMsg('chainBass', val);
-			~mdOut.control(6, 8, val);//~tOSCAdrr.sendMsg('chainKeys', val);
-			~mdOut.control(7, 8, val);//~tOSCAdrr.sendMsg('chainSamp', val);
-
-		},
-		'/chainAll'
-		);
-
-		~attMelFader.free;
-		~attMelFader= OSCFunc({
-			arg msg,val;
-			val=msg[1]*127;
-			~tOSCAdrr.sendMsg('/attMel', msg[1]);
-			~mdOut.control(5, 5, val); ~tOSCAdrr.sendMsg('attBass', val);
-			~mdOut.control(6, 5, val); ~tOSCAdrr.sendMsg('attKeys', val);
-			~mdOut.control(7, 5, val); ~tOSCAdrr.sendMsg('attSamp', val);
-
-		},
-		'/attMel'
-		);
-
 		//TIME
 		~tmOneBut.free;
 		~tmOneBut= OSCFunc({
@@ -445,8 +392,7 @@ IFCntrl {
 				~tOSCAdrr.sendMsg('tmSampLabel', 1);
 			});
 		},
-		'/tmOne'
-		);
+		'/tmOne');
 		~tmTwoBut.free;
 		~tmTwoBut= OSCFunc({
 			arg msg;
@@ -466,8 +412,7 @@ IFCntrl {
 				~tOSCAdrr.sendMsg('tmSampLabel', 2);
 			});
 		},
-		'/tmTwo'
-		);
+		'/tmTwo');
 		~tmRandBut.free;
 		~tmRandBut= OSCFunc({
 			arg msg;
@@ -498,8 +443,7 @@ IFCntrl {
 				~tOSCAdrr.sendMsg('tmSampLabel', ~tmSampRand);
 			});
 		},
-		'/tmRand'
-		);
+		'/tmRand');
 		~tmMulDrumBut.free;
 		~tmMulDrumBut= OSCFunc({
 			arg msg;
@@ -508,8 +452,7 @@ IFCntrl {
 			~tmMulHat.source = msg[1];
 
 		},
-		'/tmMulDrum'
-		);
+		'/tmMulDrum');
 		~killAblBut.free;
 		~killAblBut= OSCFunc({
 			arg msg;
@@ -519,25 +462,18 @@ IFCntrl {
 			},{
 				{"FALSE".postln;
 				}.fork;
-
 			});
-
 		},
-		'/killAbl'
-		);
+		'/killAbl');
 		~tapAblBut.free;
 		~tapAblBut = OSCFunc({
 			arg msg;
 
 			if ( msg[1]==1, {
 				Ableton.tap4;
-			},{
-
-			}
-			);
+			});
 		},
-		'/tapAbl'
-		);
+		'/tapAbl');
 
 	}
 	*freeAll {

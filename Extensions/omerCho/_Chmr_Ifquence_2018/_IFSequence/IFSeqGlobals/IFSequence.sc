@@ -15,11 +15,11 @@ IFSequence {
 		this.loadProxy;
 		this.cntrl;
 		IFSeqKick.loadAll;
-		IFSeqKick2.loadAll;
+		//IFSeqKick2.loadAll;
 		IFSeqSnr.loadAll;
-		IFSeqSnr2.loadAll;
+		//IFSeqSnr2.loadAll;
 		IFSeqHat.loadAll;
-		IFSeqHat2.loadAll;
+		//IFSeqHat2.loadAll;
 		IFSeqBass.loadAll;
 		IFSeqKeys.loadAll;
 		IFSeqSamp.loadAll;
@@ -37,8 +37,8 @@ IFSequence {
 
 	}
 	*loadProxy {
-		~stepNum = PatternProxy( Pseq([0], inf));
-		~stepNumP= Pseq([~stepNum], inf).asStream;
+		~stepNum1 = PatternProxy( Pseq([0], inf));
+		~stepNum1P= Pseq([~stepNum1], inf).asStream;
 		~stepNum2 = PatternProxy( Pseq([0], inf));
 		~stepNum2P= Pseq([~stepNum2], inf).asStream;
 		~stepNum3 = PatternProxy( Pseq([0], inf));
@@ -85,11 +85,11 @@ IFSequence {
 		this.led2(i);
 		IFLpMnSteps.led2(i);
 		IFSeqKick.stepPack(i);
-		IFSeqKick2.stepPack(i);
+		//IFSeqKick2.stepPack(i);
 		IFSeqSnr.stepPack(i);
-		IFSeqSnr2.stepPack(i);
+		//IFSeqSnr2.stepPack(i);
 		IFSeqHat.stepPack(i);
-		IFSeqHat2.stepPack(i);
+		//IFSeqHat2.stepPack(i);
 	}
 	*st3{|i|
 		this.led3(i);

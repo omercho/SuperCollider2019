@@ -24,11 +24,12 @@ IFStat {
 	}
 
 	*globals{
+		~chJmx=0;
 		~chStatDrum=8;
 		~chStat=9;
 		~chVKick=9;
 		~chVBeats=9;
-		~octVKick=1;
+		~octVKick=3;
 		~octVSnr=0;
 		~octVHat=0;
 		~octVClap=0;
@@ -143,14 +144,14 @@ IFStat {
 		var val;
 		val=i;
 		~stVKickPat=Pbind(
-			\chan, ~chStat,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
+			\chan, ~chJmx,
+			\type, \midi, \midiout,~vJmxMBs, \scale, Pfunc({~scl2}, inf),
 			\octave,~octVKick,
 			\dur, Pseq([~durVKickP.next],~actVKickP.next),
 			\degree, Pseq([~ntVKickP.next], inf),
 			\amp, Pseq([~volVKickP.next*~ampVKickP.next], inf),
 			\sustain, Pseq([~susVKickP.next],inf)*~susMulKick
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln02 {|i=1|
 		var val;
@@ -163,7 +164,7 @@ IFStat {
 			\degree, Pseq([~ntVSnrP.next], inf),
 			\amp, Pseq([~volVSnrP.next*~ampVSnrP.next], inf),
 			\sustain, Pseq([~susVSnrP.next],inf)*~susMulSnr
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}
 	*ln03 {|i=1|
 		var val;
@@ -176,7 +177,7 @@ IFStat {
 			\degree, Pseq([~ntVHatP.next], inf),
 			\amp, Pseq([~volVHatP.next*~ampVHatP.next], inf),
 			\sustain, Pseq([~susVHatP.next],inf)*~susMulHat
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}
 	*ln04 {|i=1|
 		var val;
@@ -188,7 +189,7 @@ IFStat {
 			\dur, Pseq([~durVClapP.next],~actVClapP),
 			\degree, Pseq([~ntVClapP.next], inf),
 			\amp, Pseq([~ampVClapP.next*~ampVClapP.next], inf)
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 
 	}
 	*ln05 {|i=1|
@@ -201,7 +202,7 @@ IFStat {
 			\dur, Pseq([~durVTomLP.next],~actVTomLP.next),
 			\degree, Pseq([~ntVTomLP.next], inf),
 			\amp, Pseq([~ampVTomLP.next], inf)
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln06 {|i=1|
 		var val;
@@ -213,7 +214,7 @@ IFStat {
 			\dur, Pseq([~durVTomHP.next],~actVTomHP.next),
 			\degree, Pseq([~ntVTomHP.next], inf),
 			\amp, Pseq([~ampVTomHP.next], inf)
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln07 {|i=1|
 		var val;
@@ -225,7 +226,7 @@ IFStat {
 			\dur, Pseq([~durVCrshP.next],~actVCrshP.next),
 			\degree, Pseq([~ntVCrshP.next], inf),
 			\amp, Pseq([~ampVCrshP.next], inf)
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln08 {|i=1|
 		var val;
@@ -237,7 +238,7 @@ IFStat {
 			\dur, Pseq([~durVPcmP.next],~actVPcmP.next),
 			\degree, Pseq([~ntVPcmP.next], inf),
 			\amp, Pseq([~ampVPcmP.next], inf)
-		).play(TempoClock.default, quant: 0);
+		).play(~clkDrum, quant: 0);
 	}//stat01
 
 	*mdMix{
