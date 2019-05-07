@@ -1,5 +1,5 @@
 /*
-IFTxt.make(\00,\ifKick,11);
+IFTxt.make(\00,\00, \ifKick,1);
 IFTxt.make(\00,\ifSnr,11);
 IFTxt.make(\00,\ifHat,11);
 IFTxt.make(\00,\ifBass,6);
@@ -9,7 +9,7 @@ IFTxt.make(\00,\ifMopho,6);
 
 IFTxt.trckDflt;
 
-IFTxt.readFile(\00,\ifKick);
+IFTxt.readIfTrack(\00,\ifKick);
 ~tKcAmp=IFTxt.line(1);
 ~tKcNt=IFTxt.line(2);
 ~tKcVel=IFTxt.line(3);
@@ -22,7 +22,7 @@ IFTxt.readFile(\00,\ifKick);
 ~tKc2Sus=IFTxt.line(10);
 ~tKcOct=IFTxt.line(11);
 
-IFTxt.readFile(\00,\ifSnr);
+IFTxt.readIfTrack(\00,\ifSnr);
 ~tSrAmp=IFTxt.line(1);
 ~tSrNt=IFTxt.line(2);
 ~tSrVel=IFTxt.line(3);
@@ -35,7 +35,7 @@ IFTxt.readFile(\00,\ifSnr);
 ~tSr2Sus=IFTxt.line(10);
 ~tSrOct=IFTxt.line(11);
 
-IFTxt.readFile(\00,\ifHat);
+IFTxt.readIfTrack(\00,\ifHat);
 ~tHtAmp=IFTxt.line(1);
 ~tHtNt=IFTxt.line(2);
 ~tHtVel=IFTxt.line(3);
@@ -48,7 +48,7 @@ IFTxt.readFile(\00,\ifHat);
 ~tHt2Sus=IFTxt.line(10);
 ~tHtOct=IFTxt.line(11);
 
-IFTxt.readFile(\00,\ifBass);
+IFTxt.readIfTrack(\00,\ifBass);
 ~tBsAmp=IFTxt.line(1);
 ~tBsNt=IFTxt.line(2);
 ~tBsVel=IFTxt.line(3);
@@ -56,7 +56,7 @@ IFTxt.readFile(\00,\ifBass);
 ~tBsTm=IFTxt.line(5);
 ~tBsDur=IFTxt.line(6);
 
-IFTxt.readFile(\00,\ifKeys);
+IFTxt.readIfTrack(\00,\ifKeys);
 ~tKyAmp=IFTxt.line(1);
 ~tKyNt=IFTxt.line(2);
 ~tKyVel=IFTxt.line(3);
@@ -64,7 +64,7 @@ IFTxt.readFile(\00,\ifKeys);
 ~tKyTm=IFTxt.line(5);
 ~tKyDur=IFTxt.line(6);
 
-IFTxt.readFile(\00,\ifSamp);
+IFTxt.readIfTrack(\00,\ifSamp);
 ~tSmAmp=IFTxt.line(1);
 ~tSmNt=IFTxt.line(2);
 ~tSmVel=IFTxt.line(3);
@@ -72,7 +72,7 @@ IFTxt.readFile(\00,\ifSamp);
 ~tSmTm=IFTxt.line(5);
 ~tSmDur=IFTxt.line(6);
 
-IFTxt.readFile(\00,\ifMopho);
+IFTxt.readIfTrack(\00,\ifMopho);
 ~tMpAmp=IFTxt.line(1);
 ~tMpNt=IFTxt.line(2);
 ~tMpVel=IFTxt.line(3);
@@ -80,198 +80,171 @@ IFTxt.readFile(\00,\ifMopho);
 ~tMpTm=IFTxt.line(5);
 ~tMpDur=IFTxt.line(6);
 
+IFTxt.ifPath(\00,\00,\ifKick);
+
 */
 
 IFTxt{
-	classvar <>file, <>path, <>trckPath, <>lineOut,<>rdFile;
+	classvar <>file, <>path, <>trckPath,<>ifTrckPath, <>lineOut,<>rdFile;
 	*initClass {
 		StartUp add: {
 			//Server.default.doWhenBooted({this.paths; });
 		}
 	}
-	*makePath{|dirIndex=00,fileName|
-		^path="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/"++dirIndex++"/"++fileName++".txt"
+
+	*ifPath{|trck,prt,inst|
+		^ifTrckPath="~/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTrackPatterns/"++trck++"/"++prt++"/"++inst++".txt"
 	}
-	*trackPath{|trck=01,prt=01,inst|
-		^trckPath="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/IFTracks/"++trck++"/"++prt++"/"++inst++".txt"
-	}
-	*readFile{|dir,fileName|
-		this.makePath(dir,fileName);
-		rdFile = CSVFileReader.readInterpret(path.standardizePath, true, true);
-	}
-	*readTrack{|trck,prt,inst|
-		this.trackPath(trck,prt,inst);
-		rdFile = CSVFileReader.readInterpret(trckPath.standardizePath, true, true);
+	*readIfTrack{|trck,prt,inst|
+		this.ifPath(trck,prt,inst);
+		rdFile = CSVFileReader.readInterpret(ifTrckPath.standardizePath, true, true);
 	}
 	*line{|i|
 		i.switch(i,{lineOut=rdFile[i-1];});
 		^lineOut;
 	}
-	*storeInst{|track|
-		IFTxt.readFile(track,\ifKick);
-		~tKcAmp=IFTxt.line(1);
-		~tKcNt=IFTxt.line(2);
-		~tKcVel=IFTxt.line(3);
-		~tKcSus=IFTxt.line(4);
-		~tKcTm=IFTxt.line(5);
-		~tKcDur=IFTxt.line(6);
-		~tKc2Amp=IFTxt.line(7);
-		~tKc2Nt=IFTxt.line(8);
-		~tKc2Vel=IFTxt.line(9);
-		~tKc2Sus=IFTxt.line(10);
-		~tKcOct=IFTxt.line(11);
-
-		IFTxt.readFile(track,\ifSnr);
-		~tSrAmp=IFTxt.line(1);
-		~tSrNt=IFTxt.line(2);
-		~tSrVel=IFTxt.line(3);
-		~tSrSus=IFTxt.line(4);
-		~tSrTm=IFTxt.line(5);
-		~tSrDur=IFTxt.line(6);
-		~tSr2Amp=IFTxt.line(7);
-		~tSr2Nt=IFTxt.line(8);
-		~tSr2Vel=IFTxt.line(9);
-		~tSr2Sus=IFTxt.line(10);
-		~tSrOct=IFTxt.line(11);
-
-		IFTxt.readFile(track,\ifHat);
-		~tHtAmp=IFTxt.line(1);
-		~tHtNt=IFTxt.line(2);
-		~tHtVel=IFTxt.line(3);
-		~tHtSus=IFTxt.line(4);
-		~tHtTm=IFTxt.line(5);
-		~tHtDur=IFTxt.line(6);
-		~tHt2Amp=IFTxt.line(7);
-		~tHt2Nt=IFTxt.line(8);
-		~tHt2Vel=IFTxt.line(9);
-		~tHt2Sus=IFTxt.line(10);
-		~tHtOct=IFTxt.line(11);
-
-		IFTxt.readFile(track,\ifBass);
-		~tBsAmp=IFTxt.line(1);
-		~tBsNt=IFTxt.line(2);
-		~tBsVel=IFTxt.line(3);
-		~tBsSus=IFTxt.line(4);
-		~tBsTm=IFTxt.line(5);
-		~tBsDur=IFTxt.line(6);
-
-		IFTxt.readFile(track,\ifKeys);
-		~tKyAmp=IFTxt.line(1);
-		~tKyNt=IFTxt.line(2);
-		~tKyVel=IFTxt.line(3);
-		~tKySus=IFTxt.line(4);
-		~tKyTm=IFTxt.line(5);
-		~tKyDur=IFTxt.line(6);
-
-		IFTxt.readFile(track,\ifSamp);
-		~tSmAmp=IFTxt.line(1);
-		~tSmNt=IFTxt.line(2);
-		~tSmVel=IFTxt.line(3);
-		~tSmSus=IFTxt.line(4);
-		~tSmTm=IFTxt.line(5);
-		~tSmDur=IFTxt.line(6);
-
-		IFTxt.readFile(track,\ifMopho);
-		~tMpAmp=IFTxt.line(1);
-		~tMpNt=IFTxt.line(2);
-		~tMpVel=IFTxt.line(3);
-		~tMpSus=IFTxt.line(4);
-		~tMpTm=IFTxt.line(5);
-		~tMpDur=IFTxt.line(6);
-	}
 	*readInst{|trck,prt|
-		IFTxt.readTrack(trck,prt,\ifKick);
+		IFTxt.readIfTrack(trck,prt,\ifStat);
+		~tStKc=IFTxt.line(1);
+		~tStKcN=IFTxt.line(2);
+		~tStSn=IFTxt.line(3);
+		~tStSnN=IFTxt.line(4);
+		~tStHt=IFTxt.line(5);
+		~tStHtN=IFTxt.line(6);
+		~tStClp=IFTxt.line(7);
+		~tStClpN=IFTxt.line(8);
+		~tStTom1=IFTxt.line(9);
+		~tStTom1N=IFTxt.line(10);
+		~tStTom2=IFTxt.line(11);
+		~tStTom2N=IFTxt.line(12);
+
+		IFTxt.readIfTrack(trck,prt,\ifKick);
 		~tKcAmp=IFTxt.line(1);
-		~tKcNt=IFTxt.line(2);
-		~tKcVel=IFTxt.line(3);
-		~tKcSus=IFTxt.line(4);
-		~tKcTm=IFTxt.line(5);
-		~tKcDur=IFTxt.line(6);
-		~tKc2Amp=IFTxt.line(7);
-		~tKc2Nt=IFTxt.line(8);
-		~tKc2Vel=IFTxt.line(9);
-		~tKc2Sus=IFTxt.line(10);
-		~tKcOct=IFTxt.line(11);
+		~tKcOct=IFTxt.line(2);
+		~tKcNt=IFTxt.line(3);
+		~tKcVel=IFTxt.line(4);
+		~tKcSus=IFTxt.line(5);
+		~tKcTm=IFTxt.line(6);
+		~tKcDur=IFTxt.line(7);
+		~tKcShuf=IFTxt.line(8);
+		~tKcGlob=IFTxt.line(9);
 
-		IFTxt.readTrack(trck,prt,\ifSnr);
-		~tSrAmp=IFTxt.line(1);
-		~tSrNt=IFTxt.line(2);
-		~tSrVel=IFTxt.line(3);
-		~tSrSus=IFTxt.line(4);
-		~tSrTm=IFTxt.line(5);
-		~tSrDur=IFTxt.line(6);
-		~tSr2Amp=IFTxt.line(7);
-		~tSr2Nt=IFTxt.line(8);
-		~tSr2Vel=IFTxt.line(9);
-		~tSr2Sus=IFTxt.line(10);
-		~tSrOct=IFTxt.line(11);
+		IFTxt.readIfTrack(trck,prt,\ifSnr);
+		~tSnAmp=IFTxt.line(1);
+		~tSnOct=IFTxt.line(2);
+		~tSnNt=IFTxt.line(3);
+		~tSnVel=IFTxt.line(4);
+		~tSnSus=IFTxt.line(5);
+		~tSnTm=IFTxt.line(6);
+		~tSnDur=IFTxt.line(7);
+		~tSnShuf=IFTxt.line(8);
+		~tSnGlob=IFTxt.line(9);
 
-		IFTxt.readTrack(trck,prt,\ifHat);
+		IFTxt.readIfTrack(trck,prt,\ifHat);
 		~tHtAmp=IFTxt.line(1);
-		~tHtNt=IFTxt.line(2);
-		~tHtVel=IFTxt.line(3);
-		~tHtSus=IFTxt.line(4);
-		~tHtTm=IFTxt.line(5);
-		~tHtDur=IFTxt.line(6);
-		~tHt2Amp=IFTxt.line(7);
-		~tHt2Nt=IFTxt.line(8);
-		~tHt2Vel=IFTxt.line(9);
-		~tHt2Sus=IFTxt.line(10);
-		~tHtOct=IFTxt.line(11);
+		~tHtOct=IFTxt.line(2);
+		~tHtNt=IFTxt.line(3);
+		~tHtVel=IFTxt.line(4);
+		~tHtSus=IFTxt.line(5);
+		~tHtTm=IFTxt.line(6);
+		~tHtDur=IFTxt.line(7);
+		~tHtShuf=IFTxt.line(8);
+		~tHtGlob=IFTxt.line(9);
 
-		IFTxt.readTrack(trck,prt,\ifBass);
+		IFTxt.readIfTrack(trck,prt,\ifBass);
 		~tBsAmp=IFTxt.line(1);
-		~tBsNt=IFTxt.line(2);
-		~tBsVel=IFTxt.line(3);
-		~tBsSus=IFTxt.line(4);
-		~tBsTm=IFTxt.line(5);
-		~tBsDur=IFTxt.line(6);
+		~tBsOct=IFTxt.line(2);
+		~tBsNt=IFTxt.line(3);
+		~tBsVel=IFTxt.line(4);
+		~tBsSus=IFTxt.line(5);
+		~tBsTm=IFTxt.line(6);
+		~tBsDur=IFTxt.line(7);
+		~tBsShuf=IFTxt.line(8);
+		~tBsLfo=IFTxt.line(9);
+		~tBsEnv=IFTxt.line(10);
+		~tBsMul=IFTxt.line(11);
 
-		IFTxt.readTrack(trck,prt,\ifKeys);
+		IFTxt.readIfTrack(trck,prt,\ifKeys);
 		~tKyAmp=IFTxt.line(1);
-		~tKyNt=IFTxt.line(2);
-		~tKyVel=IFTxt.line(3);
-		~tKySus=IFTxt.line(4);
-		~tKyTm=IFTxt.line(5);
-		~tKyDur=IFTxt.line(6);
+		~tKyOct=IFTxt.line(2);
+		~tKyNt=IFTxt.line(3);
+		~tKyVel=IFTxt.line(4);
+		~tKySus=IFTxt.line(5);
+		~tKyTm=IFTxt.line(6);
+		~tKyDur=IFTxt.line(7);
+		~tKyShuf=IFTxt.line(8);
+		~tKyLfo=IFTxt.line(9);
+		~tKyEnv=IFTxt.line(10);
+		~tKyMul=IFTxt.line(11);
 
-		IFTxt.readTrack(trck,prt,\ifSamp);
-		~tSmAmp=IFTxt.line(1);
-		~tSmNt=IFTxt.line(2);
-		~tSmVel=IFTxt.line(3);
-		~tSmSus=IFTxt.line(4);
-		~tSmTm=IFTxt.line(5);
-		~tSmDur=IFTxt.line(6);
-
-		IFTxt.readTrack(trck,prt,\ifMopho);
+		IFTxt.readIfTrack(trck,prt,\ifMopho);
 		~tMpAmp=IFTxt.line(1);
-		~tMpNt=IFTxt.line(2);
-		~tMpVel=IFTxt.line(3);
-		~tMpSus=IFTxt.line(4);
-		~tMpTm=IFTxt.line(5);
-		~tMpDur=IFTxt.line(6);
+		~tMpOct=IFTxt.line(2);
+		~tMpNt=IFTxt.line(3);
+		~tMpVel=IFTxt.line(4);
+		~tMpSus=IFTxt.line(5);
+		~tMpTm=IFTxt.line(6);
+		~tMpDur=IFTxt.line(7);
+		~tMpShuf=IFTxt.line(8);
+		~tMpLfo=IFTxt.line(9);
+		~tMpEnv=IFTxt.line(10);
+		~tMpMul=IFTxt.line(11);
+
+		IFTxt.readIfTrack(trck,prt,\ifSamp);
+		~tSmAmp=IFTxt.line(1);
+		~tSmOct=IFTxt.line(2);
+		~tSmNt=IFTxt.line(3);
+		~tSmVel=IFTxt.line(4);
+		~tSmSus=IFTxt.line(5);
+		~tSmTm=IFTxt.line(6);
+		~tSmDur=IFTxt.line(7);
+		~tSmShuf=IFTxt.line(8);
+		~tSmLfo=IFTxt.line(9);
+		~tSmEnv=IFTxt.line(10);
+		~tSmMul=IFTxt.line(11);
+
 	}
 
-	/**makePath{|dirIndex=00,fileName|
-		^path="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/Track_00/"++dirIndex++"/"++fileName++".txt"
-	}
-	*trackPath{|trck=01,prt=01,inst|
-		^trckPath="~/Library/Application Support/SuperCollider/Extensions/omerCho/CHMR_IFTxt_Patterns/"++trck++"/"++prt++"/"++inst++".txt"
-	}*/
-	*rnd4Line{|dir,fileName|
-		var cnt=1, min=0,max=1;
+	*writeRndSttDrmLines{|trck,prt,inst|
+		var cnt=1, min=0,max=1, seq;
+		var amp1,nt1,amp2,nt2,amp3,nt3,amp4,nt4,amp5,nt5,amp6,nt6;
+		amp1=Pseq([1,0],inf).asStream;
+		nt1=Pseq([0],inf).asStream;
+		amp2=Pseq([0,0,1,0],inf).asStream;
+		nt2=Prand((20..29),inf).asStream;
+		amp3=Pseq([0,1,0,1],inf).asStream;
+		nt3=Prand((124..125),inf).asStream;
+		amp4=Pseq([0,0,0,1],inf).asStream;
+		nt4=Prand((30..39),inf).asStream;
+		amp5=Prand([0,0,0,1],inf).asStream;
+		nt5=Prand((0..19),inf).asStream;
+		amp6=Pseq([0,0,0,1],inf).asStream;
+		nt6=Prand((30..39),inf).asStream;
 		fork{
-			this.makePath(dir,fileName);
-			file=File.new(path.standardizePath,"w");
+			this.ifPath(trck,prt,inst);
+			file=File.new(ifTrckPath.standardizePath,"w");
 			0.02.wait;
-			(1..64).do{|n|
+			(1..192).do{|n|
 				case
-				{cnt>0&&cnt<=16}{min=(0);max=(1);}
-				{cnt>16&&cnt<=32}{min=(-7);max=(7);}
-				{cnt>32&&cnt<=48}{min=(1);max=(3);}
-				{cnt>48}{min=(1);max=(5);};
+				{cnt>0&&cnt<=16}{seq=amp1.next}//ampVkick
+				{cnt>16&&cnt<=32}{seq=nt1.next}//ntVkick
+
+				{cnt>32&&cnt<=48}{seq=amp2.next}//ampVSnr
+				{cnt>48&&cnt<=64}{seq=nt2.next}//ntVSnr
+
+				{cnt>64&&cnt<=80}{seq=amp3.next}//ampVHat
+				{cnt>80&&cnt<=96}{seq=nt3.next}//ntVHat
+
+				{cnt>96&&cnt<=112}{seq=amp4.next}//ampVClap
+				{cnt>112&&cnt<=128}{seq=nt4.next}//ntVClap
+
+				{cnt>128&&cnt<=144}{seq=amp5.next}//ampVTomL
+				{cnt>144&&cnt<=160}{seq=nt5.next}//ntVTomL
+
+				{cnt>160&&cnt<=176}{seq=amp6.next}//ampVTomH
+				{cnt>176&&cnt<=192}{seq=nt6.next};//ntVTomH
 				file.write(
-					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+					seq.asString ++ if (n % 16 != 0, ",", Char.nl)
 				);
 				cnt=cnt+1;
 			};
@@ -279,43 +252,25 @@ IFTxt{
 			file.close;
 		}
 	}
-	*rnd6Line{|dir,fileName|
+	*writeRndDrmLines{|trck,prt,inst|
 		var cnt=1, min=0,max=1;
 		fork{
-			this.makePath(dir,fileName);
-			file=File.new(path.standardizePath,"w");
+			this.ifPath(trck,prt,inst);
+			file=File.new(ifTrckPath.standardizePath,"w");
 			0.02.wait;
-			(1..96).do{|n|
-				case
-				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
-				{cnt>16&&cnt<=32}{min=(-4);max=(7);}//nt
-				{cnt>32&&cnt<=48}{min=(1);max=(3);}//vel
-				{cnt>48&&cnt<=64}{min=(1);max=(5);}//sus
-				{cnt>64&&cnt<=80}{min=(1);max=(1);}//tm
-				{cnt>80&&cnt<=96}{min=(4);max=(4);};//dur
-				file.write(
-					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
-				);
-				cnt=cnt+1;
-			};
-			0.02.wait;
-			file.close;
-		}
-	}
-	*rndMel{|dir,fileName|
-		var cnt=1, min=0,max=1;
-		fork{
-			this.makePath(dir,fileName);
-			file=File.new(path.standardizePath,"w");
-			0.02.wait;
-			(1..96).do{|n|
+			(1..144).do{|n|
 				case
 				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
-				{cnt>16&&cnt<=32}{min=(-4);max=(7);}//nt
-				{cnt>32&&cnt<=48}{min=(1);max=(3);}//vel
-				{cnt>48&&cnt<=64}{min=(1);max=(5);}//sus
-				{cnt>64&&cnt<=80}{min=(1);max=(1);}//tm
-				{cnt>80&&cnt<=96}{min=(4);max=(4);};//dur
+				{cnt>16&&cnt<=32}{min=(0);max=(3);}//oct
+				{cnt>32&&cnt<=48}{min=(0);max=(7);}//nt
+				{cnt>48&&cnt<=64}{min=(1);max=(3);}//vel
+				{cnt>64&&cnt<=80}{min=(1);max=(5);}//sus
+				{cnt>80&&cnt<=96}{min=(1);max=(1);}//tm
+				{cnt>96&&cnt<=112}{min=(4);max=(4);}//dur
+				{cnt>112&&cnt<=128}{min=(-2);max=(4);}//Shuf
+				{cnt==129}{min=(0.8);max=(0.99);}//Vol
+				{cnt==130}{min=(0);max=(2);}//OctMul
+				{cnt>130&&cnt<=144}{min=(0);max=(127);};//globMul -- susMul-lfo2
 				file.write(
 					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
 				);
@@ -325,25 +280,27 @@ IFTxt{
 			file.close;
 		}
 	}
-	*rnd11Line{|dir,fileName|
+	*writeRndBassLines{|trck,prt,inst|
 		var cnt=1, min=0,max=1;
 		fork{
-			this.makePath(dir,fileName);
-			file=File.new(path.standardizePath,"w");
+			this.ifPath(trck,prt,inst);
+			file=File.new(ifTrckPath.standardizePath,"w");
 			0.02.wait;
 			(1..176).do{|n|
 				case
 				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
-				{cnt>16&&cnt<=32}{min=(0);max=(7);}//nt
-				{cnt>32&&cnt<=48}{min=(1);max=(3);}//vel
-				{cnt>48&&cnt<=64}{min=(1);max=(5);}//sus
-				{cnt>64&&cnt<=80}{min=(1);max=(1);}//tm
-				{cnt>80&&cnt<=96}{min=(4);max=(4);}//dur
-				{cnt>96&&cnt<=112}{min=(0);max=(1);}//amp2
-				{cnt>112&&cnt<=128}{min=(-7);max=(14);}//nt2
-				{cnt>128&&cnt<=144}{min=(1);max=(3);}//vel2
-				{cnt>144&&cnt<=160}{min=(1);max=(5);}//sus2
-				{cnt>160&&cnt<=176}{min=(1);max=(4);};//oct
+				{cnt>16&&cnt<=32}{min=(0);max=(1);}//oct
+				{cnt>32&&cnt<=48}{min=(0);max=(7);}//nt
+				{cnt>48&&cnt<=64}{min=(1);max=(3);}//vel
+				{cnt>64&&cnt<=80}{min=(1);max=(3);}//sus
+				{cnt>80&&cnt<=96}{min=(1);max=(1);}//tm
+				{cnt>96&&cnt<=112}{min=(4);max=(4);}//dur
+				{cnt>112&&cnt<=128}{min=(-2);max=(4);}//Shuf
+				{cnt>128&&cnt<=144}{min=(0);max=(110);}//lfo
+				{cnt==145}{min=(0.8);max=(0.99);}//Vol
+				{cnt>145&&cnt<=160}{min=(0.02);max=(0.7);}//globEnv -- att-sndY
+				{cnt==161}{min=(0);max=(2);}//OctMul
+				{cnt>161&&cnt<=176}{min=(0.02);max=(1.0);};//globMul -- susMul-lfo2
 				file.write(
 					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
 				);
@@ -353,54 +310,90 @@ IFTxt{
 			file.close;
 		}
 	}
-	*make{|dir,nm,lines|
+	*writeRndMelLines{|trck,prt,inst|
+		var cnt=1, min=0,max=1;
+		fork{
+			this.ifPath(trck,prt,inst);
+			file=File.new(ifTrckPath.standardizePath,"w");
+			0.02.wait;
+			(1..176).do{|n|
+				case
+				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
+				{cnt>16&&cnt<=32}{min=(0);max=(3);}//oct
+				{cnt>32&&cnt<=48}{min=(-4);max=(7);}//nt
+				{cnt>48&&cnt<=64}{min=(1);max=(3);}//vel
+				{cnt>64&&cnt<=80}{min=(1);max=(5);}//sus
+				{cnt>80&&cnt<=96}{min=(1);max=(1);}//tm
+				{cnt>96&&cnt<=112}{min=(4);max=(4);}//dur
+				{cnt>112&&cnt<=128}{min=(-2);max=(4);}//Shuf
+				{cnt>128&&cnt<=144}{min=(0);max=(127);}//lfo
+				{cnt==145}{min=(0.8);max=(0.99);}//Vol
+				{cnt>145&&cnt<=160}{min=(0.0);max=(0.9);}//globEnv -- att-sndY
+				{cnt==161}{min=(0);max=(2);}//OctMul
+				{cnt>161&&cnt<=176}{min=(0.2);max=(1.0);};//globMul -- susMul-lfo2
+				file.write(
+					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+				);
+				cnt=cnt+1;
+			};
+			0.02.wait;
+			file.close;
+		}
+	}
+	*make{|trck,prt,inst,lines|
 		lines.switch(
-			4,{
+			'rndSttDrmTag',{
 				fork{
-					this.rnd4Line(dir,nm);
+					this.writeRndSttDrmLines(trck,prt,inst);
 					0.1.wait;
-					this.readFile(dir,nm);
+					this.readIfTrack(trck,prt,inst);
 					0.1.wait;
-
 				};
 			},
-			6, {
+			'rndDrmTag',{
 				fork{
-					this.rnd6Line(dir,nm);
+					this.writeRndDrmLines(trck,prt,inst);
 					0.1.wait;
-					this.readFile(dir,nm);
+					this.readIfTrack(trck,prt,inst);
 					0.1.wait;
-
 				};
 			},
-			11, {
+			'rndBassTag', {
 				fork{
-					this.rnd11Line(dir,nm);
+					this.writeRndBassLines(trck,prt,inst);
 					0.1.wait;
-					this.readFile(dir,nm);
+					this.readIfTrack(trck,prt,inst);
 					0.1.wait;
-
+				};
+			},
+			'rndMelTag', {
+				fork{
+					this.writeRndMelLines(trck,prt,inst);
+					0.1.wait;
+					this.readIfTrack(trck,prt,inst);
+					0.1.wait;
 				};
 			};
 		)
 	}
 	*trckDflt{
 		fork{
-			IFTxt.make(\00,\ifKick,11);
+			IFTxt.make(\00,\00,\ifStat,'rndSttDrmTag');
 			0.1.wait;
-			IFTxt.make(\00,\ifSnr,11);
+			IFTxt.make(\00,\00,\ifKick,'rndDrmTag');
 			0.1.wait;
-			IFTxt.make(\00,\ifHat,11);
+			IFTxt.make(\00,\00,\ifSnr,'rndDrmTag');
 			0.1.wait;
-			IFTxt.make(\00,\ifBass,6);
+			IFTxt.make(\00,\00,\ifHat,'rndDrmTag');
 			0.1.wait;
-			IFTxt.make(\00,\ifKeys,6);
+			IFTxt.make(\00,\00,\ifBass,'rndBassTag');
 			0.1.wait;
-			IFTxt.make(\00,\ifSamp,6);
+			IFTxt.make(\00,\00,\ifKeys,'rndMelTag');
 			0.1.wait;
-			IFTxt.make(\00,\ifMopho,6);
+			IFTxt.make(\00,\00,\ifSamp,'rndMelTag');
 			0.1.wait;
-			//IFTxt.storeInst(\00);
+			IFTxt.make(\00,\00,\ifMopho,'rndMelTag');
+
 
 		}
 	}
@@ -435,7 +428,7 @@ IFTxst.wrtC(0,1);
 IFTxst.write(0,1);
 IFTxst.writeDo(0,1);
 IFTxst.writeArrDo(16,2);
-IFTxst.readFile;
+IFTxst.readIfTrack;
 
 //OKKKKK
 IFTxst.rnd6Line;
@@ -573,7 +566,7 @@ Post<<"~/IFTxst01.txt".pathMatch
 IFTxst.loadPath;
 IFTxst.writeArr(1,16);
 
-IFTxst.readFile;
+IFTxst.readIfTrack;
 
 IFTxst.writeSer(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
 IFTxst.writeFile(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
@@ -586,7 +579,7 @@ File.getcwd;
 ~seq=Pseq([~vl01,2,\vl03],inf).asStream;
 format("here I will send message % with args %", message, args).postln;
 
-~readFile= FileReader.readInterpret("~/IFTxst01.txt").postcs;
+~readIfTrack= FileReader.readInterpret("~/IFTxst01.txt").postcs;
 File.readAllString("~/IFTxst01.txt".standardizedPath);
 
 f.postcs

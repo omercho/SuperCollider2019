@@ -162,16 +162,16 @@ IFBass {
 
 	*lng{|deg=0,amp=1,sus=4|
 		Pbind(
-			\chan, ~chBass,
-			\type, \midi, \midiout,~vBass, \scale, Pfunc({~scl2}, inf),
-			\dur, Pseq([~dur1LngBassP.next],1)+sus/2,
+			\chan, ~chVBass,
+			\type, \midi, \midiout,~vBass, \scale, Pfunc({~scl2},inf),
+			\dur, Pseq([~dur1LngBassP.next],1)+sus,
 			\ctranspose, Pseq([~rootLngBassP.next],inf),
-			\degree, Pseq([~nt1LngBassP.next], inf)+deg,
-			\amp, Pseq([~volBassP.next*~amp1LngBassP.next], inf)+amp,
+			\degree, Pseq([~nt1LngBassP.next],inf)+deg,
+			\amp, Pseq([~volBassP.next*~amp1LngBassP.next],inf)+amp,
 			\sustain, Pseq([~sus1LngBassP.next],inf)+sus,
-			\mtranspose, Pseq([~transLngBassP.next], inf)+~transShufLngBassP.next+~transCntBassP.next,
-			\octave, Pseq([~octBassP.next], inf)+~octMulBass,
-			\harmonic, Pseq([~hrmBassP.next], inf)+~harmBass
+			\mtranspose, Pseq([~transLngBassP.next],inf)+~transShufLngBassP.next+~transCntBassP.next,
+			\octave, Pseq([~octBassP.next],inf)+~octMulBass,
+			\harmonic, Pseq([~hrmBassP.next],inf)+~harmBass
 		).play(~clkBass, quant: 0);
 	}
 

@@ -29,7 +29,8 @@ IFStat {
 		~chStat=9;
 		~chVKick=9;
 		~chVBeats=9;
-		~octVKick=3;
+
+		~octVKick=4;
 		~octVSnr=0;
 		~octVHat=0;
 		~octVClap=0;

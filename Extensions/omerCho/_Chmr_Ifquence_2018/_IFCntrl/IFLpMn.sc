@@ -286,7 +286,9 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=7;
-				IFTxt.readInst(\01,\01);
+				IFTxt.readInst(\00,\00);
+			},{
+				IFTrack01.part07;
 				IFLpMn.tsLeds(0,0,0,0,0,0,1,0);
 			});
 		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH7);

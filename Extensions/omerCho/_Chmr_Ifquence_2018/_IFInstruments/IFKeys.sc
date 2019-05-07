@@ -133,7 +133,6 @@ IFKeys {
 
 		~cntKeysLfo=0;
 		~cntKeys=0;
-
 	}
 
 	*new{|i=1|
@@ -163,7 +162,7 @@ IFKeys {
 			\dur, Pseq([~dur1KeysP.next],~actKeysP.next),
 			\degree, Pseq([~nt1KeysP.next], inf),
 			\amp, Pseq([~volKeysP.next*~amp1KeysP.next], inf),
-			\sustain, Pseq([2.0*~sus1KeysP.next],inf)*~susMulKeys,
+			\sustain, Pseq([3.0*~sus1KeysP.next],inf)*~susMulKeys,
 			\mtranspose, Pseq([~transKeysP.next], inf)+~transCntKeysP.next+~trKeys+~transShufKeysP.next,
 			\ctranspose, Pseq([~rootKeysP.next],inf),
 			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
@@ -171,29 +170,23 @@ IFKeys {
 		).play(~clkKeys, quant: 0);
 
 		~cntKeysLfo=~cntKeysLfo+1;
-		//~cntKeysLfo.postln;
 		~cntKeysLfo.switch(
 			0,{},
-			1,{
-				this.pLfo;
-			},
-			2,{
-				~cntKeysLfo=0;
-			}
+			1,{this.pLfo;},
+			2,{~cntKeysLfo=0;}
 		);
 	}//p1
 	*pLfo{
-
 		Pbind(//LFO CUT KEYS INT
 			\midicmd, \control, \type, \midi,
-			\midiout,~vKeys, \chan, 0, \ctlNum, Pseq([~vcfEg,~envAtt*0.6,~vcoPort],inf),
+			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~vcfEg,~envAtt*0.6,~vcoPort],inf),
 			\delta, Pseq([~delta1KeysP.next], ~actKeysP.next),
 			\control, ~lfoMulKeys1*Pexprand(0.5*~lfoCtKeysP.next,1*~lfoCtKeysP.next, inf).round,
 		).play(~clkKeys, quant: 0);
 
 		Pbind(//LFO RATE KEYS
 			\midicmd, \control, \type, \midi,
-			\midiout,~vKeys, \chan, 0, \ctlNum, Pseq([~envDec,~vcoDtn],inf),
+			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~envDec,~vcoDtn],inf),
 			\delta, Pseq([~delta2KeysP.next], ~actKeysP.next),
 			\control, ~lfoMulKeys2*Pexprand(0.8*~lfoRtKeysP.next,0.5*~lfoRtKeysP.next, inf).round,
 		).play(~clkKeys, quant: 0);
@@ -201,8 +194,8 @@ IFKeys {
 
 	*lng{|deg=0,amp=1,sus=4|
 		Pbind(
-			\chan, ~chKeys,
-			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
+			\chan, ~chVKeys,
+			\type, \midi, \midiout,~vKeys, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1LngKeysP.next],1),
 			\degree, Pseq([~nt1LngKeysP.next], inf)+deg,
 			\amp, Pseq([~volKeysP.next*~amp1LngKeysP.next], inf)*amp,
@@ -213,9 +206,7 @@ IFKeys {
 			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
 		).play(~clkKeys, quant: 0);
 	}
-
 	*osc{
-
 		~actKeysBut.free;
 		~actKeysBut = OSCFunc({
 			arg msg;
@@ -226,10 +217,7 @@ IFKeys {
 				~actKeys.source=0;
 				~apcMn.noteOff(~apcMnCh, ~actButA5, 127); //Trk5_But
 			});
-		},
-		'/activKeys'
-		);
-
+		},'/activKeys');
 		~time2KeysBut.free;
 		~countTime2Keys=0;
 		~time2KeysBut= OSCFunc({
@@ -326,13 +314,9 @@ IFKeys {
 			~tOSCAdrr.sendMsg('sendKeys', msg[1], msg[2]);
 			~mdOut.control(6, 4, vel1); // IFKeys
 			~mdOut.control(6, 3, vel2); // IFKeys
-
 		},
 		'/sendKeys'
 		);
-
-		/**/
-
 		~lfoMulKeysFad1.free;
 		~lfoMulKeysFad1= OSCFunc({
 			arg msg;
@@ -341,7 +325,6 @@ IFKeys {
 		},
 		'/lfoMulKeys1'
 		);
-
 		~lfoMulKeysFad2.free;
 		~lfoMulKeysFad2= OSCFunc({
 			arg msg;
@@ -350,19 +333,14 @@ IFKeys {
 		},
 		'/lfoMulKeys2'
 		);
-
 		//TIME
-
 		~tmMulKeysBut1.free;
 		~tmMulKeysBut1= OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
-
 				~tmMulKeys.source = Pseq([1], inf);
 				~tOSCAdrr.sendMsg('tmKeysLabel', 1);
-
 			});
-
 		},
 		'/tmMulKeys1'
 		);
@@ -370,12 +348,9 @@ IFKeys {
 		~tmMulKeysBut2= OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
-
 				~tmMulKeys.source = Pseq([2], inf);
 				~tOSCAdrr.sendMsg('tmKeysLabel', 2);
-
 			});
-
 		},
 		'/tmMulKeys2'
 		);
@@ -383,12 +358,9 @@ IFKeys {
 		~tmMulKeysBut3= OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
-
 				~tmMulKeys.source = Pseq([3], inf);
 				~tOSCAdrr.sendMsg('tmKeysLabel', 3);
-
 			});
-
 		},
 		'/tmMulKeys3'
 		);
@@ -400,9 +372,6 @@ IFKeys {
 		},
 		'/timesKeys'
 		);
-
-
-
 		~padKeys.free;
 		~padKeys = OSCFunc({
 			arg msg;
@@ -415,7 +384,6 @@ IFKeys {
 		'/padKeys'
 		);
 
-		//----Keys-------
 		~octKeysMulBut.free;
 		~octKeysMulBut= OSCFunc({
 			arg msg;
@@ -426,7 +394,6 @@ IFKeys {
 		},
 		'/octKeysMul'
 		);
-
 		~octKeysZeroBut.free;
 		~octKeysZeroBut= OSCFunc({
 			arg msg;
@@ -437,7 +404,6 @@ IFKeys {
 		},
 		'/octKeysZero'
 		);
-
 		~octKeysDivBut.free;
 		~octKeysDivBut= OSCFunc({
 			arg msg;
@@ -450,11 +416,6 @@ IFKeys {
 		);
 
 	}
-
-	/*
-	~vKeys.control(0, ~dlyTime, 127); //Delay Time
-
-	*/
 
 }
 

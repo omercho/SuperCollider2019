@@ -43,10 +43,10 @@ IFStatNote{
 /*
 
 IFStatNote(
-	\bass,
-	deg:0,
+	\keys,
+deg:[0,2,7],
 	vel:1,
-	sus:5
+	sus:8
 );
 
 ~rrt01.stop;
