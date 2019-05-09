@@ -32,8 +32,8 @@ IFSequence {
 		IFSeqVClap.loadAll;
 		IFSeqVTomL.loadAll;
 		IFSeqVTomH.loadAll;
-		IFSeqVCrsh.loadAll;
-		IFSeqVPcm.loadAll;
+		//IFSeqVCrsh.loadAll;
+		//IFSeqVPcm.loadAll;
 
 	}
 	*loadProxy {
@@ -63,7 +63,7 @@ IFSequence {
 		this.st4(i);
 	}
 	*stepCnt1{|i|
-		this.stCnt4(i);
+		this.stCnt1(i);
 	}
 
 	*st{|i|
@@ -78,8 +78,8 @@ IFSequence {
 		IFSeqVClap.stepPack(i);
 		IFSeqVTomL.stepPack(i);
 		IFSeqVTomH.stepPack(i);
-		IFSeqVCrsh.stepPack(i);
-		IFSeqVPcm.stepPack(i);
+		//IFSeqVCrsh.stepPack(i);
+		//IFSeqVPcm.stepPack(i);
 	}
 	*st2{|i|
 		this.led2(i);
@@ -105,9 +105,9 @@ IFSequence {
 	}
 	*stCnt1{|i|
 		this.ledCnt1(i);
-		IFLpMnSteps.led4(i);
-		IFSeqSamp.stepPack(i);
-		IFSeqMopho.stepPack(i);
+		//IFLpMnSteps.led4(i);
+		//IFSeqSamp.stepPack(i);
+		//IFSeqMopho.stepPack(i);
 	}
 	*led{|i|
 		i.switch(

@@ -162,7 +162,6 @@ IFTxt{
 		~tBsShuf=IFTxt.line(8);
 		~tBsLfo=IFTxt.line(9);
 		~tBsEnv=IFTxt.line(10);
-		~tBsMul=IFTxt.line(11);
 
 		IFTxt.readIfTrack(trck,prt,\ifKeys);
 		~tKyAmp=IFTxt.line(1);
@@ -175,7 +174,6 @@ IFTxt{
 		~tKyShuf=IFTxt.line(8);
 		~tKyLfo=IFTxt.line(9);
 		~tKyEnv=IFTxt.line(10);
-		~tKyMul=IFTxt.line(11);
 
 		IFTxt.readIfTrack(trck,prt,\ifMopho);
 		~tMpAmp=IFTxt.line(1);
@@ -188,7 +186,6 @@ IFTxt{
 		~tMpShuf=IFTxt.line(8);
 		~tMpLfo=IFTxt.line(9);
 		~tMpEnv=IFTxt.line(10);
-		~tMpMul=IFTxt.line(11);
 
 		IFTxt.readIfTrack(trck,prt,\ifSamp);
 		~tSmAmp=IFTxt.line(1);
@@ -201,8 +198,6 @@ IFTxt{
 		~tSmShuf=IFTxt.line(8);
 		~tSmLfo=IFTxt.line(9);
 		~tSmEnv=IFTxt.line(10);
-		~tSmMul=IFTxt.line(11);
-
 	}
 
 	*writeRndSttDrmLines{|trck,prt,inst|
@@ -211,15 +206,15 @@ IFTxt{
 		amp1=Pseq([1,0],inf).asStream;
 		nt1=Pseq([0],inf).asStream;
 		amp2=Pseq([0,0,1,0],inf).asStream;
-		nt2=Prand((20..29),inf).asStream;
+		nt2=Prand((20..20),inf).asStream;
 		amp3=Pseq([0,1,0,1],inf).asStream;
-		nt3=Prand((124..125),inf).asStream;
+		nt3=Prand((125..125),inf).asStream;
 		amp4=Pseq([0,0,0,1],inf).asStream;
 		nt4=Prand((30..39),inf).asStream;
 		amp5=Prand([0,0,0,1],inf).asStream;
 		nt5=Prand((0..19),inf).asStream;
-		amp6=Pseq([0,0,0,1],inf).asStream;
-		nt6=Prand((30..39),inf).asStream;
+		amp6=Prand([0,0,0,1],inf).asStream;
+		nt6=Prand((20..39),inf).asStream;
 		fork{
 			this.ifPath(trck,prt,inst);
 			file=File.new(ifTrckPath.standardizePath,"w");
@@ -252,7 +247,7 @@ IFTxt{
 			file.close;
 		}
 	}
-	*writeRndDrmLines{|trck,prt,inst|
+	/**writeRndDrmLines{|trck,prt,inst|
 		var cnt=1, min=0,max=1;
 		fork{
 			this.ifPath(trck,prt,inst);
@@ -261,7 +256,7 @@ IFTxt{
 			(1..144).do{|n|
 				case
 				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
-				{cnt>16&&cnt<=32}{min=(0);max=(3);}//oct
+				{cnt>16&&cnt<=32}{min=(0);max=(4);}//oct
 				{cnt>32&&cnt<=48}{min=(0);max=(7);}//nt
 				{cnt>48&&cnt<=64}{min=(1);max=(3);}//vel
 				{cnt>64&&cnt<=80}{min=(1);max=(5);}//sus
@@ -279,30 +274,51 @@ IFTxt{
 			0.02.wait;
 			file.close;
 		}
-	}
-	*writeRndBassLines{|trck,prt,inst|
-		var cnt=1, min=0,max=1;
+	}*/
+	*writeRndDrmLines{|trck,prt,inst|
+		var cnt=1, min=0,max=1,seq;
+		var amp,oct,nt,vel,susT,tm,dur,shuf;
+		var vol,octM,susM,dec,dly,pan,sndA,sndB;
+		amp=  Pwhite(0,   1,   inf).asStream;
+		oct=  Pwhite(0,   3,   inf).asStream;
+		nt=   Pwhite(0,   7,   inf).asStream;
+		vel=  Pwhite(1,   3,   inf).asStream;
+		susT= Pwhite(1,   5,   inf).asStream;
+		tm=   Pwhite(1,   2,   inf).asStream;
+		dur=  Pwhite(2,   4,   inf).asStream;
+		shuf= Pwhite(0,   14,   inf).asStream;
+		vol=  Pwhite(0.8, 0.99,inf).asStream;
+		octM= Pwhite(0,   5, inf).asStream;
+		susM= Pwhite(0.1, 0.9, inf).asStream;
+		dec=  Pwhite(0.2, 1.0, inf).asStream;
+		dly=  Pwhite(0.1, 0.9, inf).asStream;
+		pan=  Pwhite(0.1, 0.9, inf).asStream;
+		sndA= Pwhite(0.1, 0.9, inf).asStream;
+		sndB= Pwhite(0.1, 0.9, inf).asStream;
 		fork{
 			this.ifPath(trck,prt,inst);
 			file=File.new(ifTrckPath.standardizePath,"w");
 			0.02.wait;
-			(1..176).do{|n|
+			(1..136).do{|n|
 				case
-				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
-				{cnt>16&&cnt<=32}{min=(0);max=(1);}//oct
-				{cnt>32&&cnt<=48}{min=(0);max=(7);}//nt
-				{cnt>48&&cnt<=64}{min=(1);max=(3);}//vel
-				{cnt>64&&cnt<=80}{min=(1);max=(3);}//sus
-				{cnt>80&&cnt<=96}{min=(1);max=(1);}//tm
-				{cnt>96&&cnt<=112}{min=(4);max=(4);}//dur
-				{cnt>112&&cnt<=128}{min=(-2);max=(4);}//Shuf
-				{cnt>128&&cnt<=144}{min=(0);max=(110);}//lfo
-				{cnt==145}{min=(0.8);max=(0.99);}//Vol
-				{cnt>145&&cnt<=160}{min=(0.02);max=(0.7);}//globEnv -- att-sndY
-				{cnt==161}{min=(0);max=(2);}//OctMul
-				{cnt>161&&cnt<=176}{min=(0.02);max=(1.0);};//globMul -- susMul-lfo2
+				{cnt>0&&cnt<=16}   {seq=amp.next}//amp
+				{cnt>16&&cnt<=32}  {seq=oct.next}//oct
+				{cnt>32&&cnt<=48}  {seq=nt.next}//nt
+				{cnt>48&&cnt<=64}  {seq=vel.next}//vel
+				{cnt>64&&cnt<=80}  {seq=susT.next}//susT
+				{cnt>80&&cnt<=96}  {seq=tm.next}//tm
+				{cnt>96&&cnt<=112} {seq=dur.next}//dur
+				{cnt>112&&cnt<=128}{seq=shuf.next}//Shuf
+				{cnt==129}     {seq=vol.next}//Vol
+				{cnt==130}     {seq=octM.next}//OctMul
+				{cnt==131}     {seq=susM.next}//SusMul
+				{cnt==132}     {seq=dec.next}//dec
+				{cnt==133}     {seq=dly.next}//rls
+				{cnt==134}     {seq=pan.next}//pan
+				{cnt==135}     {seq=sndA.next}//sndX
+				{cnt==136}     {seq=sndB.next};//sndY
 				file.write(
-					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
+					seq.asString ++ if (n % 16 != 0, ",", Char.nl)
 				);
 				cnt=cnt+1;
 			};
@@ -310,7 +326,154 @@ IFTxt{
 			file.close;
 		}
 	}
+	*writeRndBassLines{|trck,prt,inst|
+		var cnt=1, min=0,max=1,seq;
+		var amp,oct,nt,vel,susT,tm,dur,shuf,lfoP;
+		var vol,att,dec,susV,rls,pan,sndA,sndB;
+		var octM,susM,xy1X,xy1Y,xy2X,xy2Y,lfoM1,lfoM2;
+		amp=  Pwhite(0,   1,   inf).asStream;
+		oct=  Pwhite(2,   3,   inf).asStream;
+		nt=   Pwhite(0,   7,   inf).asStream;
+		vel=  Pwhite(1,   3,   inf).asStream;
+		susT= Pwhite(1,   5,   inf).asStream;
+		tm=   Pwhite(1,   1,   inf).asStream;
+		dur=  Pwhite(4,   4,   inf).asStream;
+		shuf= Pwhite(-2,  4,   inf).asStream;
+		lfoP= Pwhite(0,   127, inf).asStream;
+		vol=  Pwhite(0.8, 0.99,inf).asStream;
+		att=  Pwhite(0.0, 0.5, inf).asStream;
+		dec=  Pwhite(0.2, 1.0, inf).asStream;
+		susV= Pwhite(0.1, 0.8, inf).asStream;
+		rls=  Pwhite(0.1, 0.9, inf).asStream;
+		pan=  Pwhite(0.1, 0.9, inf).asStream;
+		sndA= Pwhite(0.1, 0.9, inf).asStream;
+		sndB= Pwhite(0.1, 0.9, inf).asStream;
+		octM= Pwhite(-1,   1, inf).asStream;
+		susM= Pwhite(0.1, 0.9, inf).asStream;
+		xy1X= Pwhite(0.0, 0.9, inf).asStream;
+		xy1Y= Pwhite(0.0, 0.9, inf).asStream;
+		xy2X= Pwhite(0.0, 0.9, inf).asStream;
+		xy2Y= Pwhite(0.0, 0.9, inf).asStream;
+		lfoM1=Pwhite(0.0, 1.0, inf).asStream;
+		lfoM2=Pwhite(0.0, 1.0, inf).asStream;
+		fork{
+			this.ifPath(trck,prt,inst);
+			file=File.new(ifTrckPath.standardizePath,"w");
+			0.02.wait;
+			(1..160).do{|n|
+				case
+				{cnt>0&&cnt<=16}   {seq=amp.next}//amp
+				{cnt>16&&cnt<=32}  {seq=oct.next}//oct
+				{cnt>32&&cnt<=48}  {seq=nt.next}//nt
+				{cnt>48&&cnt<=64}  {seq=vel.next}//vel
+				{cnt>64&&cnt<=80}  {seq=susT.next}//susT
+				{cnt>80&&cnt<=96}  {seq=tm.next}//tm
+				{cnt>96&&cnt<=112} {seq=dur.next}//dur
+				{cnt>112&&cnt<=128}{seq=shuf.next}//Shuf
+				{cnt>128&&cnt<=144}{seq=lfoP.next}//lfo
+				{cnt==145}     {seq=vol.next}//Vol
+				{cnt==146}     {seq=att.next}//Att
+				{cnt==147}     {seq=dec.next}//dec
+				{cnt==148}     {seq=susV.next}//sus
+				{cnt==149}     {seq=rls.next}//rls
+				{cnt==150}     {seq=pan.next}//pan
+				{cnt==151}     {seq=sndA.next}//sndX
+				{cnt==152}     {seq=sndB.next}//sndY
+				{cnt==153}   {seq=octM.next}//OctMul
+				{cnt==154}   {seq=susM.next}//SusMul
+				{cnt==155}   {seq=xy1X.next}//xy1X
+				{cnt==156}   {seq=xy1Y.next}//xy1Y
+				{cnt==157}   {seq=xy2X.next}//xy2X
+				{cnt==158}   {seq=xy1Y.next}//xy2Y
+				{cnt==159}   {seq=lfoM1.next}//lfoMul1
+				{cnt==160}   {seq=lfoM2.next};//lfoMul2
+				file.write(
+					seq.asString ++ if (n % 16 != 0, ",", Char.nl)
+				);
+				cnt=cnt+1;
+			};
+			0.02.wait;
+			file.close;
+		}
+	}
+	/*
+	(0.1..0.9).asFloat.choose
+	~aatt=Pwhite(0.0, 1.0, inf).asStream;
+	127*~aatt.next
+	~sshuf= Pwhite(-2,  4,   inf).asStream;
+	~sshuf.next
+	*/
 	*writeRndMelLines{|trck,prt,inst|
+		var cnt=1, min=0,max=1,seq;
+		var amp,oct,nt,vel,susT,tm,dur,shuf,lfoP;
+		var vol,att,dec,susV,rls,pan,sndA,sndB;
+		var octM,susM,xy1X,xy1Y,xy2X,xy2Y,lfoM1,lfoM2;
+		amp=  Pwhite(0,   1,   inf).asStream;
+		oct=  Pwhite(2,   4,   inf).asStream;
+		nt=   Pwhite(-4,   7,   inf).asStream;
+		vel=  Pwhite(1,   3,   inf).asStream;
+		susT= Pwhite(1,   5,   inf).asStream;
+		tm=   Pwhite(1,   1,   inf).asStream;
+		dur=  Pwhite(4,   4,   inf).asStream;
+		shuf= Pwhite(-2,  4,   inf).asStream;
+		lfoP= Pwhite(0,   127, inf).asStream;
+		vol=  Pwhite(0.8, 0.99,inf).asStream;
+		att=  Pwhite(0.0, 0.5, inf).asStream;
+		dec=  Pwhite(0.2, 1.0, inf).asStream;
+		susV= Pwhite(0.1, 0.8, inf).asStream;
+		rls=  Pwhite(0.1, 0.9, inf).asStream;
+		pan=  Pwhite(0.1, 0.9, inf).asStream;
+		sndA= Pwhite(0.1, 0.9, inf).asStream;
+		sndB= Pwhite(0.1, 0.9, inf).asStream;
+		octM= Pwhite(-1,   2, inf).asStream;
+		susM= Pwhite(0.1, 0.9, inf).asStream;
+		xy1X= Pwhite(0.0, 0.9, inf).asStream;
+		xy1Y= Pwhite(0.0, 0.9, inf).asStream;
+		xy2X= Pwhite(0.0, 0.9, inf).asStream;
+		xy2Y= Pwhite(0.0, 0.9, inf).asStream;
+		lfoM1=Pwhite(0.0, 1.0, inf).asStream;
+		lfoM2=Pwhite(0.0, 1.0, inf).asStream;
+		fork{
+			this.ifPath(trck,prt,inst);
+			file=File.new(ifTrckPath.standardizePath,"w");
+			0.02.wait;
+			(1..160).do{|n|
+				case
+				{cnt>0&&cnt<=16}   {seq=amp.next}//amp
+				{cnt>16&&cnt<=32}  {seq=oct.next}//oct
+				{cnt>32&&cnt<=48}  {seq=nt.next}//nt
+				{cnt>48&&cnt<=64}  {seq=vel.next}//vel
+				{cnt>64&&cnt<=80}  {seq=susT.next}//susT
+				{cnt>80&&cnt<=96}  {seq=tm.next}//tm
+				{cnt>96&&cnt<=112} {seq=dur.next}//dur
+				{cnt>112&&cnt<=128}{seq=shuf.next}//Shuf
+				{cnt>128&&cnt<=144}{seq=lfoP.next}//lfo
+				{cnt==145}     {seq=vol.next}//Vol
+				{cnt==146}     {seq=att.next}//Att
+				{cnt==147}     {seq=dec.next}//dec
+				{cnt==148}     {seq=susV.next}//sus
+				{cnt==149}     {seq=rls.next}//rls
+				{cnt==150}     {seq=pan.next}//pan
+				{cnt==151}     {seq=sndA.next}//sndX
+				{cnt==152}     {seq=sndB.next}//sndY
+				{cnt==153}   {seq=octM.next}//OctMul
+				{cnt==154}   {seq=susM.next}//SusMul
+				{cnt==155}   {seq=xy1X.next}//xy1X
+				{cnt==156}   {seq=xy1Y.next}//xy1Y
+				{cnt==157}   {seq=xy2X.next}//xy2X
+				{cnt==158}   {seq=xy1Y.next}//xy2Y
+				{cnt==159}   {seq=lfoM1.next}//lfoMul1
+				{cnt==160}   {seq=lfoM2.next};//lfoMul2
+				file.write(
+					seq.asString ++ if (n % 16 != 0, ",", Char.nl)
+				);
+				cnt=cnt+1;
+			};
+			0.02.wait;
+			file.close;
+		}
+	}
+	/**writeRndMelLines{|trck,prt,inst|
 		var cnt=1, min=0,max=1;
 		fork{
 			this.ifPath(trck,prt,inst);
@@ -319,7 +482,7 @@ IFTxt{
 			(1..176).do{|n|
 				case
 				{cnt>0&&cnt<=16}{min=(0);max=(1);}//amp
-				{cnt>16&&cnt<=32}{min=(0);max=(3);}//oct
+				{cnt>16&&cnt<=32}{min=(3);max=(4);}//oct
 				{cnt>32&&cnt<=48}{min=(-4);max=(7);}//nt
 				{cnt>48&&cnt<=64}{min=(1);max=(3);}//vel
 				{cnt>64&&cnt<=80}{min=(1);max=(5);}//sus
@@ -328,9 +491,11 @@ IFTxt{
 				{cnt>112&&cnt<=128}{min=(-2);max=(4);}//Shuf
 				{cnt>128&&cnt<=144}{min=(0);max=(127);}//lfo
 				{cnt==145}{min=(0.8);max=(0.99);}//Vol
-				{cnt>145&&cnt<=160}{min=(0.0);max=(0.9);}//globEnv -- att-sndY
+				{cnt==146}{min=(0.01);max=(0.5);}//Att
+				{cnt>146&&cnt<=160}{min=(0.02);max=(0.7);}//globEnv -- dec-sus-rls-pan-sndY
 				{cnt==161}{min=(0);max=(2);}//OctMul
-				{cnt>161&&cnt<=176}{min=(0.2);max=(1.0);};//globMul -- susMul-lfo2
+				{cnt==162}{min=(0.1);max=(1.0);}//SusMul
+				{cnt>162&&cnt<=176}{min=(0.0);max=(0.9);};//globMul -- xy1-xy2-lfo2
 				file.write(
 					(min..max).choose.asString ++ if (n % 16 != 0, ",", Char.nl)
 				);
@@ -339,7 +504,7 @@ IFTxt{
 			0.02.wait;
 			file.close;
 		}
-	}
+	}*/
 	*make{|trck,prt,inst,lines|
 		lines.switch(
 			'rndSttDrmTag',{

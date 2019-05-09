@@ -46,22 +46,6 @@ IFKeys {
 		~octMulKeys = val;
 		~tOSCAdrr.sendMsg('octKeysLabel', val);
 	}
-	*loadSC{
-
-		~attKeys=0.05;
-		~decKeys=1.02;
-		~susLevKeys=1.1;
-		~relKeys = 0.5;
-		~lfoMulKeys=0.8;
-		~cutKeys=0.1;
-		~legatoKeys=0.08;
-		~sin1Keys=1.1;
-		~sin2Keys=0.9;
-		~rootFreqKeys=~c5; // 261=C4|523=C5
-
-
-
-	}
 	*proxy{
 		~rootKeys = PatternProxy( Pseq([0], inf));
 		~rootKeysP = Pseq([~rootKeys], inf).asStream;
@@ -179,16 +163,16 @@ IFKeys {
 	*pLfo{
 		Pbind(//LFO CUT KEYS INT
 			\midicmd, \control, \type, \midi,
-			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~vcfEg,~envAtt*0.6,~vcoPort],inf),
+			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~vcfEg],inf),
 			\delta, Pseq([~delta1KeysP.next], ~actKeysP.next),
-			\control, ~lfoMulKeys1*Pexprand(0.5*~lfoCtKeysP.next,1*~lfoCtKeysP.next, inf).round,
+			\control, ~lfoMulKeys1*Pexprand(0.5*~lfo1KeysP.next,1*~lfo1KeysP.next, inf).round,
 		).play(~clkKeys, quant: 0);
 
 		Pbind(//LFO RATE KEYS
 			\midicmd, \control, \type, \midi,
-			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~envDec,~vcoDtn],inf),
+			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~vcoPort],inf),
 			\delta, Pseq([~delta2KeysP.next], ~actKeysP.next),
-			\control, ~lfoMulKeys2*Pexprand(0.8*~lfoRtKeysP.next,0.5*~lfoRtKeysP.next, inf).round,
+			\control, ~lfoMulKeys2*Pexprand(0.8*~lfo2KeysP.next,0.5*~lfo2KeysP.next, inf).round,
 		).play(~clkKeys, quant: 0);
 	}//pLfo
 

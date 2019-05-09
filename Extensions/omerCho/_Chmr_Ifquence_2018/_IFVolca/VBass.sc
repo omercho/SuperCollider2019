@@ -89,7 +89,7 @@ VBass {
 		VBass.cc(\vcfCutVB,64);
 		VBass.cc(\lfoRateVB,5);
 		VBass.cc(\lfoIntVB,24);
-		VBass.cc(\envAttVB,0);
+		VBass.cc(\envAttVB,1);
 		VBass.cc(\envDecVB,12);
 		VBass.cc(\slideTmVB,10);
 		VBass.cc(\gateTmVB,24);

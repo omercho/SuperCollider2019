@@ -92,8 +92,9 @@ IFRoot {
 			inf.do{
 				1.do {
 					IFSequence.step(~stepNum1P.next);
-					IFStat.ln01;IFStat.ln02;IFStat.ln03;IFStat.ln04;
-					IFStat.ln05;IFStat.ln06;//IFStat.ln07;IFStat.ln08;
+					IFStat.ln01;IFStat.ln02;IFStat.ln03;
+					IFStat.ln04;IFStat.ln05;IFStat.ln06;
+					//IFStat.ln07;IFStat.ln08;
 					((~durP.next)*(~durMulP.next)).wait;
 				};
 			};

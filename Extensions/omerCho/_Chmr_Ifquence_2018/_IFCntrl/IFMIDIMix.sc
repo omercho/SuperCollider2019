@@ -120,9 +120,9 @@ IFMIDIMix{
 	}
 	*act1ButB{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~mtBut1, val); //But B
-		/*~tOSCAdrr.sendMsg('activVTomL', val);
-		~actVTomL.source=val;*/
-		JmxMBs.cc(\tuneJmx,val*127);
+		~tOSCAdrr.sendMsg('activVTomL', val);
+		~actVTomL.source=val;
+		//JmxMBs.cc(\tuneJmx,val*127);
 		~cntMixAct1ButB=val;
 	}
 	//actLine2
@@ -134,8 +134,10 @@ IFMIDIMix{
 	}
 	*act2ButB{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~mtBut2, val); //But B
-		~tOSCAdrr.sendMsg('activVTomH', val);
-		~actVTomH.source=val;
+		~tOSCAdrr.sendMsg('activVClap', val);
+		~actVClap.source=val;
+		/*~tOSCAdrr.sendMsg('activVTomH', val);
+		~actVTomH.source=val;*/
 		~cntMixAct2ButB=val;
 	}
 	//actLine3
@@ -147,28 +149,30 @@ IFMIDIMix{
 	}
 	*act3ButB{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~mtBut3, val); //But B
-		~tOSCAdrr.sendMsg('activVCrash', val);
-		~actVCrsh.source=val;
+		/*~tOSCAdrr.sendMsg('activVCrash', val);
+		~actVCrsh.source=val;*/
+		~tOSCAdrr.sendMsg('activVTomH', val);
+		~actVTomH.source=val;
 		~cntMixAct3ButB=val;
 	}
 	//actLine4
 	*act4ButA{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~recBut4, val); //But A
-		~tOSCAdrr.sendMsg('activVClap', val);
-		~actVClap.source=val;
+		/*~tOSCAdrr.sendMsg('activVClap', val);
+		~actVClap.source=val;*/
 		~cntMixAct4ButA=val;
 	}
 	*act4ButB{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~mtBut4, val); //But B
-		~tOSCAdrr.sendMsg('activVPcm', val);
-		~actVPcm.source=val;
+		/*~tOSCAdrr.sendMsg('activVPcm', val);
+		~actVPcm.source=val;*/
 		~cntMixAct4ButB=val;
 	}
 	//actLine5 -- VSamp01
 	*act5ButA{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~recBut5, val); //But A
-		~tOSCAdrr.sendMsg('activVTomL', val);
-		~actVTomL.source=val;
+		/*~tOSCAdrr.sendMsg('activVTomL', val);
+		~actVTomL.source=val;*/
 		~cntMixAct5ButA=val;
 	}
 	*act5ButB{|val|
@@ -180,8 +184,8 @@ IFMIDIMix{
 	//actLine6 --
 	*act6ButA{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~recBut6, val); //But A
-		~tOSCAdrr.sendMsg('activVTomH', val);
-		~actVTomH.source=val;
+		/*~tOSCAdrr.sendMsg('activVTomH', val);
+		~actVTomH.source=val;*/
 		~cntMixAct6ButA=val;
 	}
 	*act6ButB{|val|
@@ -262,16 +266,10 @@ IFMIDIMix{
 				~cntMixActBankButA = ~cntMixActBankButA + 1;
 				~cntMixActBankButA.switch(
 					0,{},
-					1, {
-						IFMIDIMix.actBankButA(1);
-					},
-					2,{
-						IFMIDIMix.actBankButA(0);
-					}
-				)}
-			);
+					1, {IFMIDIMix.actBankButA(1);},
+					2,{IFMIDIMix.actBankButA(0);}
+				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~bankRight);
-
 		~cntMixActBankButB=0;
 		~mdActBankButB.free;
 		~mdActBankButB=MIDIFunc.noteOn({
@@ -319,23 +317,24 @@ IFMIDIMix{
 			~tOSCAdrr.sendMsg('volVKick', vel/127);
 			JmxMBs.cc(\volJmx,vel);
 			~volVKick.source = vel;
-
 		},srcID:~mdMixInID, chan:~mdMixLn1, ccNum:30);
 		~mdMixNob1A.free;
 		~mdMixNob1A=MIDIFunc.cc( {
 			arg vel;
-			//~tOSCAdrr.sendMsg('susMulKick', vel/127);
-			JmxMBs.cc(\decJmx,vel);
+			~tOSCAdrr.sendMsg('volVTomL', vel/127);
+			~volVTomL.source = vel;
 		},srcID:~mdMixInID, chan:~mdMixLn1, ccNum:33);
 		~mdMixNob1B.free;
 		~mdMixNob1B=MIDIFunc.cc( {
 			arg vel;
-			JmxMBs.cc(\lfoRtJmx,vel);
+			JmxMBs.cc(\decJmx,vel);
 		},srcID:~mdMixInID, chan:~mdMixLn1, ccNum:32);
 		~mdMixNob1C.free;
 		~mdMixNob1C=MIDIFunc.cc( {
 			arg vel;
-			JmxMBs.cc(\lfoIntJmx,vel);
+			JmxMBs.cc(\lfoRtJmx,vel);
+			~susMulKick=(127/vel)+0.15;
+			//JmxMBs.cc(\lfoIntJmx,vel);
 		},srcID:~mdMixInID, chan:~mdMixLn1, ccNum:31);
 
 		//--------------------line2
@@ -347,10 +346,9 @@ IFMIDIMix{
 			if ( vel==127, {
 				~cntMixAct2ButA = ~cntMixAct2ButA + 1;
 				~cntMixAct2ButA.switch(
-					1, {this.act2ButA(1);},
+					1,{this.act2ButA(1);},
 					2,{this.act2ButA(0);}
-				)}
-			);
+				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~recBut2);
 		//Act2 ButB
 		~cntMixAct2ButB=0;
@@ -361,35 +359,33 @@ IFMIDIMix{
 				~cntMixAct2ButB = ~cntMixAct2ButB + 1;
 				~cntMixAct2ButB.switch(
 					0,{},
-					1, {this.act2ButB(1);},
+					1,{this.act2ButB(1);},
 					2,{this.act2ButB(0);}
 				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut2);
 		~mdMixFad2.free;
 		~mdMixFad2=MIDIFunc.cc( {
 			arg vel;
-
 			/*~tOSCAdrr.sendMsg('volSnr', vel/127);
 			~volSnr.source = vel/127;
 			~tOSCAdrr.sendMsg('volSnr2', vel/127);
 			~volSnr2.source = vel/127;*/
 			~tOSCAdrr.sendMsg('volVSnr', vel/127);
 			~volVSnr.source = vel;
-
 		},srcID:~mdMixInID, chan:~mdMixLn2, ccNum:30);
 		//Nobs
 		~mdMixNob2A.free;
 		~mdMixNob2A=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel*127;
-			~tOSCAdrr.sendMsg('/susDrum',~susDrumLedVal=val);
-			~susMulKick=val+0.15;~susMulSnr=val+0.2;~susMulHat=val+0.15;
-
+			/*~tOSCAdrr.sendMsg('/susDrum',~susDrumLedVal=val);
+			~susMulKick=val+0.15;~susMulSnr=val+0.2;~susMulHat=val+0.15;*/
+			~tOSCAdrr.sendMsg('volVClap', vel/127);
+			~volVClap.source=vel;
 		},srcID:~mdMixInID, chan:~mdMixLn2, ccNum:33);
 		~mdMixNob2B.free;
 		~mdMixNob2B=MIDIFunc.cc( {
 			arg vel;
-			~tOSCAdrr.sendMsg('volVTomL', vel/127);
 
 		},srcID:~mdMixInID, chan:~mdMixLn2, ccNum:32);
 		~mdMixNob2C.free;
@@ -426,7 +422,6 @@ IFMIDIMix{
 					2,{this.act3ButB(0);}
 				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut3);
-
 		~mdMixFad3.free;
 		~mdMixFad3=MIDIFunc.cc( {
 			arg vel;
@@ -434,20 +429,18 @@ IFMIDIMix{
 			~volHat.source = vel/127;*/
 			~tOSCAdrr.sendMsg('volVHat', vel/127);
 			~volVHat.source = vel;
-
 		},srcID:~mdMixInID, chan:~mdMixLn3, ccNum:30);
 		~mdMixNob3A.free;
 		~mdMixNob3A=MIDIFunc.cc( {
 			arg vel;
-			~tOSCAdrr.sendMsg('susMulHat', vel/127);
-			~susMulHat=(vel/127)+0.05;
-
+			~tOSCAdrr.sendMsg('volVTomH', vel/127);
+			~volVTomH.source=vel;
 		},srcID:~mdMixInID, chan:~mdMixLn3, ccNum:33);
 		~mdMixNob3B.free;
 		~mdMixNob3B=MIDIFunc.cc( {
 			arg vel;
-			~tOSCAdrr.sendMsg('decVHatC', vel/127);
-
+			~tOSCAdrr.sendMsg('susMulHat', vel/127);
+			~susMulHat=(vel/127)+0.05;
 		},srcID:~mdMixInID, chan:~mdMixLn3, ccNum:32);
 		~mdMixNob3C.free;
 		~mdMixNob3C=MIDIFunc.cc( {
@@ -455,8 +448,8 @@ IFMIDIMix{
 			~tOSCAdrr.sendMsg('hatCln', vel/127);
 			~mdOut.control(1, 16, vel);//Cln Hats Vol
 		},srcID:~mdMixInID, chan:~mdMixLn3, ccNum:31);
-
-		//--------------------------line4
+		//----------------MEL--------------//
+		//---------------line4
 		//Act4 ButA
 		~cntMixAct4ButA=0;
 		~mdMixAct4ButA.free;
@@ -466,14 +459,9 @@ IFMIDIMix{
 				~cntMixAct4ButA = ~cntMixAct4ButA + 1;
 				~cntMixAct4ButA.switch(
 					0,{},
-					1, {
-						this.act4ButA(1);
-					},
-					2,{
-						this.act4ButA(0);
-					}
-				)}
-			);
+					1,{this.act4ButA(1);},
+					2,{this.act4ButA(0);}
+				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~recBut4);
 		//Act4 ButB
 		~cntMixAct4ButB=0;
@@ -484,20 +472,15 @@ IFMIDIMix{
 				~cntMixAct4ButB = ~cntMixAct4ButB + 1;
 				~cntMixAct4ButB.switch(
 					0,{},
-					1, {
-						this.act4ButB(1);
-					},
-					2,{
-						this.act4ButB(0);
-					}
-				)}
-			);
+					1,{this.act4ButB(1);},
+					2,{this.act4ButB(0);}
+				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut4);
 		~mdMixFad4.free;
 		~mdMixFad4=MIDIFunc.cc( {
 			arg vel;
-			~tOSCAdrr.sendMsg('volVClap', vel/127);
-			~volVClap.source=vel;
+			/*~tOSCAdrr.sendMsg('volVClap', vel/127);
+			~volVClap.source=vel;*/
 
 		},srcID:~mdMixInID, chan:~mdMixLn4, ccNum:30);
 		~mdMixNob4A.free;
@@ -510,7 +493,7 @@ IFMIDIMix{
 		~mdMixNob4B.free;
 		~mdMixNob4B=MIDIFunc.cc( {
 			arg vel;
-			~tOSCAdrr.sendMsg('speedPcm', vel/127);
+			//~tOSCAdrr.sendMsg('speedPcm', vel/127);
 
 		},srcID:~mdMixInID, chan:~mdMixLn4, ccNum:32);
 		~mdMixNob4C.free;
@@ -528,9 +511,9 @@ IFMIDIMix{
 			if ( vel==127, {
 				~cntMixAct5ButA = ~cntMixAct5ButA + 1;
 				~cntMixAct5ButA.switch(
-					1, {this.act5ButA(1);},
+					1,{this.act5ButA(1);},
 					2,{this.act5ButA(0);}
-				)} );
+				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~recBut5);
 		//Act5 ButB Keys
 		~cntMixAct5ButB=0;
@@ -541,14 +524,9 @@ IFMIDIMix{
 				~cntMixAct5ButB = ~cntMixAct5ButB + 1;
 				~cntMixAct5ButB.switch(
 					0,{},
-					1, {
-						this.act5ButB(1);
-					},
-					2,{
-						this.act5ButB(0);
-					}
-				)}
-			);
+					1,{this.act5ButB(1);},
+					2,{this.act5ButB(0);}
+				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut5);
 		~mdMixFad5.free;
 		~mdMixFad5=MIDIFunc.cc( {
@@ -556,9 +534,6 @@ IFMIDIMix{
 			/*~tOSCAdrr.sendMsg('volKeys', vel/127);
 			~volKeys.source = vel/127;
 			~mdOut.control(6, 1, vel);*/
-			~tOSCAdrr.sendMsg('volVTomL', vel/127);
-			~volVTomL.source=vel;
-
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:30);
 		~mdMixNob5A.free;
 		~mdMixNob5A=MIDIFunc.cc( {
@@ -570,18 +545,18 @@ IFMIDIMix{
 		~mdMixNob5B.free;
 		~mdMixNob5B=MIDIFunc.cc( {
 			arg vel;
-			~tOSCAdrr.sendMsg('speedPcm', vel/127);
+			//~tOSCAdrr.sendMsg('speedPcm', vel/127);
 
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:32);
 		~mdMixNob5C.free;
 		~mdMixNob5C=MIDIFunc.cc( {
 			arg vel;
-			//~tOSCAdrr.sendMsg('volClnKeys', vel/127);
+			~tOSCAdrr.sendMsg('volClnKeys', vel/127);
 			//~mdOut.control(1, 16, 2); //Cln Keys Vol
 			~mdOut.control(1, 19, vel); //Cln Keys Vol
 
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:31);
-		//////-//--------------------------line6
+		////////-------------------line6
 		//Act6 ButA
 		~cntMixAct6ButA=0;
 		~mdMixAct6ButA.free;
@@ -591,8 +566,8 @@ IFMIDIMix{
 				~cntMixAct6ButA = ~cntMixAct6ButA + 1;
 				~cntMixAct6ButA.switch(
 					0,{},
-					1, {this.act6ButA(1);},
-					2, {this.act6ButA(0);}
+					1,{this.act6ButA(1);},
+					2,{this.act6ButA(0);}
 				)} );
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~recBut6);
 		//Act6 ButB
@@ -604,7 +579,7 @@ IFMIDIMix{
 				~cntMixAct6ButB = ~cntMixAct6ButB + 1;
 				~cntMixAct6ButB.switch(
 					0,{},
-					1, {this.act6ButB(1);},
+					1,{this.act6ButB(1);},
 					2,{this.act6ButB(0);}
 				)}
 			);
@@ -636,8 +611,30 @@ IFMIDIMix{
 			~tOSCAdrr.sendMsg('volClnMopho', vel/127);
 			~mdOut.control(1, 18, vel); //Cln Mopho Vol
 		},srcID:~mdMixInID, chan:~mdMixLn6, ccNum:31);
-
-		//Act7
+		//Act7 ButA
+		~cntMixAct7ButA=0;
+		~mdMixAct7ButA.free;
+		~mdMixAct7ButA=MIDIFunc.noteOn({
+			arg vel;
+			if ( vel==127, {
+				~cntMixAct7ButA = ~cntMixAct7ButA + 1;
+				~cntMixAct7ButA.switch(
+					1,{this.act7ButA(1);},
+					2,{this.act7ButA(0);}
+				)});
+		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~recBut7);
+		//Act7 ButB Keys
+		~cntMixAct7ButB=0;
+		~mdMixAct7ButB.free;
+		~mdMixAct7ButB=MIDIFunc.noteOn({
+			arg vel;
+			if ( vel==127, {
+				~cntMixAct7ButB = ~cntMixAct7ButB + 1;
+				~cntMixAct7ButB.switch(
+					1,{this.act7ButB(1);},
+					2,{this.act7ButB(0);}
+				)});
+		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~mtBut7);
 		~mdMixFad7.free;
 		~mdMixFad7=MIDIFunc.cc( {
 			arg vel;
@@ -691,8 +688,6 @@ IFMIDIMix{
 		},srcID:~mdMixInID, chan:~mdMixLn7, ccNum:31);
 		/////
 		/////
-
-
 		//--------------------line--MASTER
 		~mdMixFadFXMaster.free;
 		~mdMixFadFXMaster=MIDIFunc.cc( {

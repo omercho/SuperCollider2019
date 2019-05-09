@@ -27,7 +27,7 @@ IFBass {
 		this.globals;
 		this.proxy;
 		this.osc;
-		this.apc40;
+		this.makeOSCResponders;
 	}
 	*globals{
 		~chVBass=0;
@@ -108,10 +108,7 @@ IFBass {
 		~transLngBassP = Pseq([~transLngBass], inf).asStream;
 		~transShufLngBass = PatternProxy( Pseq([0], inf));
 		~transShufLngBassP = Pseq([~transShufLngBass], inf).asStream;
-
-
 	}
-
 	*new{|i=1|
 		var val;
 		val=i;
@@ -125,9 +122,7 @@ IFBass {
 				((~dur1BassP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
 		}
-
 	}
-
 	*p1 {|i=1|
 		var val;
 		val=i;
@@ -143,7 +138,6 @@ IFBass {
 			\octave, Pseq([~octBassP.next], inf)+~octMulBass,
 			\harmonic, Pseq([~hrmBassP.next], inf)+~harmBass
 		).play(~clkBass, quant: 0);
-
 
 		Pbind(//LFO CUT BASS INT
 			\midicmd, \control, \type, \midi,
@@ -173,11 +167,7 @@ IFBass {
 			\octave, Pseq([~octBassP.next],inf)+~octMulBass,
 			\harmonic, Pseq([~hrmBassP.next],inf)+~harmBass
 		).play(~clkBass, quant: 0);
-	}
-
-	*apc40{
-
-	}//*apc40
+	}//lng
 
 	*osc{
 
@@ -191,9 +181,7 @@ IFBass {
 				~actBass.source=0;
 				~apcMn.noteOff(~apcMnCh, ~actButA4, 127); //Trk4_But 1
 			});
-		},
-		'/activBass'
-		);
+		},'/activBass');
 
 		~time2BassBut.free;
 		~countTime2Bass=0;
@@ -212,59 +200,7 @@ IFBass {
 					~countTime2Bass=0;
 				}
 			);
-		},
-		'/time2Bass'
-		);
-		~volBassFader.free;
-		~volBassFader= OSCFunc({
-			arg msg,vel,val;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('volBass', msg[1]);
-			//~vBass.control(5, 1, vel);
-			~mdOut.control(5, 1, vel);
-			~volBass.source = val;
-		},
-		'/volBass'
-		);
-
-		~attBassFader.free;
-		~attBassFader= OSCFunc({
-			arg msg,vel,val;
-			vel=msg[1]*127;
-			val=msg[1];
-			VBass.cc(\envAttVB,vel+0.01);
-			~tOSCAdrr.sendMsg('attBass', val);
-			//~mdOut.control(5, 5, vel);
-
-		},
-		'/attBass'
-		);
-
-		~susBassFader.free;
-		~susBassFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('susBass', msg[1]);
-			VBass.cc(\slideTmVB,vel);
-			//~mdOut.control(5, 6, vel);
-		},
-		'/susBass'
-		);
-
-		~decBassFader.free;
-		~decBassFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('decBass', val);
-			VBass.cc(\envDecVB,vel);
-			//~mdOut.control(5, 127, vel);
-		},
-		'/decBass'
-		);
-
+		},'/time2Bass');
 		~xy1Bass.free;
 		~xy1Bass= OSCFunc({
 			arg msg,val1,val2,vel,vel1,vel2;
@@ -278,9 +214,7 @@ IFBass {
 			//~mdOut.control(5, 11, vel2);
 			//~mdOut.control(5, 12, vel1);
 			~tOSCAdrr.sendMsg('xy1Bass', msg[1], msg[2]);
-		},
-		'/xy1Bass'
-		);
+		},'/xy1Bass');
 		~susMulBassFader.free;
 		~susMulBassFader= OSCFunc({
 			arg msg, val,vel;
@@ -288,10 +222,7 @@ IFBass {
 			vel=msg[1]*127;
 			~tOSCAdrr.sendMsg('susMulBass', val);
 			~susMulBass=val;
-		},
-		'/susMulBass'
-		);
-
+		},'/susMulBass');
 		~sendBassFader.free;
 		~sendBassFader= OSCFunc({
 			arg msg,vel1,vel2;
@@ -302,30 +233,81 @@ IFBass {
 			VBass.cc(\lfoIntVB,vel1);
 			//~mdOut.control(5, 4, vel1); // IFBass
 			//~mdOut.control(5, 3, vel2); // IFBass
-
-		},
-		'/sendBass'
-		);
+		},'/sendBass');
 		~lfoMulBassFad1.free;
 		~lfoMulBassFad1= OSCFunc({
 			arg msg;
 			~tOSCAdrr.sendMsg('lfoMulBass1', msg[1]);
-			~lfoMulBass1=msg[1]*1.1;
-		},
-		'/lfoMulBass1'
-		);
-
+			~lfoMulBass1=msg[1];
+		},'/lfoMulBass1');
 		~lfoMulBassFad2.free;
 		~lfoMulBassFad2= OSCFunc({
 			arg msg;
 			~tOSCAdrr.sendMsg('lfoMulBass2', msg[1]);
-			~lfoMulBass2=msg[1]*1.1;
+			~lfoMulBass2=msg[1];
+		},'/lfoMulBass2');
+
+		/*~volBassFader.free;
+		~volBassFader= OSCFunc({
+		arg msg,vel,val;
+		val=msg[1];
+		vel=msg[1]*127;
+		~tOSCAdrr.sendMsg('volBass', val);
+		VBass.cc(\expresVB,vel);
+		~mdOut.control(5, 1, vel);
+		~volBass.source = val;
 		},
-		'/lfoMulBass2'
+		'/volBass'
 		);
 
-		//TIME
+		~attBassFader.free;
+		~attBassFader= OSCFunc({
+		arg msg,vel,val;
+		vel=msg[1]*127;
+		val=msg[1];
+		VBass.cc(\envAttVB,vel+0.01);
+		~tOSCAdrr.sendMsg('attBass', val);
+		//~mdOut.control(5, 5, vel);
+		},
+		'/attBass'
+		);
 
+		~susBassFader.free;
+		~susBassFader= OSCFunc({
+		arg msg,val,vel;
+		val=msg[1];
+		vel=msg[1]*127;
+		~tOSCAdrr.sendMsg('susBass', msg[1]);
+		VBass.cc(\slideTmVB,vel);
+		//~mdOut.control(5, 6, vel);
+		},
+		'/susBass'
+		);
+
+		~decBassFader.free;
+		~decBassFader= OSCFunc({
+		arg msg,val,vel;
+		val=msg[1];
+		vel=msg[1]*127;
+		~tOSCAdrr.sendMsg('decBass', val);
+		VBass.cc(\envDecVB,vel);
+		//~mdOut.control(5, 127, vel);
+		},
+		'/decBass'
+		);
+		~rlsBassFader.free;
+		~rlsBassFader= OSCFunc({
+		arg msg,val,vel;
+		val=msg[1];
+		vel=msg[1]*127;
+		~tOSCAdrr.sendMsg('decBass', val);
+		VBass.cc(\gateTmVB,vel);
+		//~mdOut.control(5, 127, vel);
+		},
+		'/rlsBass'
+		);*/
+
+		//TIME
 		~tmMulBassBut1.free;
 		~tmMulBassBut1= OSCFunc({
 			arg msg;
@@ -404,7 +386,78 @@ IFBass {
 		'/octBassDiv'
 		);
 	}
+	//      NEW OSC
+	*lbl{|key,val|
+		var chan;
+		~tOSCAdrr.sendMsg(key, val);
+	}
+	/*
+	IFBass.set(\volBass,0.2);
+	IFBass.set(\attBass,0.5);
+	IFBass.lbl(\attBass,0.5);
+	VBass.cc(\envAttVB,0.5);
+	~vBass.control(0, ~envAttVB, 0.1);
+	~local.sendMsg('IFattBass',0.1);
+	IFBass.set(\decBass,0.2);
+	~local.sendMsg('decBass',0.1);
+	IFBass.set(\susBass,0.2);
+	IFBass.set(\rlsBass,0.2);
+	*/
+	*set{|key,val|
+		var vel;
+		vel=val*127;
+		key.switch(
+			\vol, {
+				this.lbl(\volBass,val);
+				VBass.cc(\expresVB,vel);
+				~mdOut.control(5, 1, vel);
+				~volBass.source = val;
+			},
+			\att, {
+				this.lbl(\IFattBass,val);
+				VBass.cc(\envAttVB,vel);
+				~mdOut.control(5, 5, vel);
+			},
+			\dec, {
+				this.lbl(\decBass,val);
+				VBass.cc(\envDecVB,vel);
+				~mdOut.control(5, 127, vel);
+			},
+			\sus, {
+				this.lbl(\susBass,val);
+				VBass.cc(\slideTmVB,vel);
+				~mdOut.control(5, 6, vel);
+			},
+			\rls, {
+				this.lbl(\rlsBass,val);
+				VBass.cc(\gateTmVB,vel);
+				//~mdOut.control(5, 127, vel);
+			},
 
+		);
+	}
+	*oscResp{|respName,oscName,playTag|
+		var currentBpm=1;
+		OSCdef(respName, {|msg|
+			var val,vel;
+			val=msg[1];
+			vel=val*127;
+			playTag.switch(
+				'volBass_T',{ this.set(\vol,val);},
+				'attBass_T',{ this.set(\att,val);},
+				'decBass_T',{ this.set(\dec,val);},
+				'susBass_T',{ this.set(\sus,val);},
+				'rlsBass_T',{ this.set(\rls,val);}
+			)
+		},path:oscName);
+	}
+	*makeOSCResponders{
+		this.oscResp(respName:\volBassResp, oscName:\volBass, playTag:'volBass_T');
+		this.oscResp(respName:\attBassResp, oscName:\IFattBass, playTag:'attBass_T');
+		this.oscResp(respName:\decBassResp, oscName:\decBass, playTag:'decBass_T');
+		this.oscResp(respName:\susBassResp, oscName:\susBass, playTag:'susBass_T');
+		this.oscResp(respName:\rlsBassResp, oscName:\rlsBass, playTag:'rlsBass_T');
 
+	}
 
 }
