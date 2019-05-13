@@ -482,9 +482,6 @@ IFAPCMn{
 			arg vel;
 			~tOSCAdrr.sendMsg('volKick', vel/127);
 			~volKick.source = vel/127;
-			//~volKick2.source = vel/127;
-			/*~tOSCAdrr.sendMsg('volVKick', vel/127);
-			~volVKick.source = vel;*/
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd1);
 		//Act ButA1
 		~cntActLine1ButA1=0;
@@ -495,7 +492,7 @@ IFAPCMn{
 				~cntActLine1ButA1 = ~cntActLine1ButA1 + 1;
 				~cntActLine1ButA1.switch(
 					0,{},
-					1, {IFAPCMn.actLine1ButA1(1);},
+					1,{IFAPCMn.actLine1ButA1(1);},
 					2,{IFAPCMn.actLine1ButA1(0);}
 			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA1);

@@ -182,20 +182,20 @@ IFGlobal{
 	}
 	*envBass{|vol=0.95,att=0,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
 		octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,xy2X=0,xy2Y=0.1,lfo1=0,lfo2=0|
-		~local.sendMsg('volBass', vol);
-		IFBass.set(\att,att);
-		~local.sendMsg('decBass', dec);
-		~local.sendMsg('susBass', sus);
-		~local.sendMsg('rlsBass', rls);
-		~local.sendMsg('panBass', pan);
-		~local.sendMsg('sendBass', sndX, sndY);
+		IFBass.set1(\vol,vol);
+		IFBass.set1(\att,att);
+		IFBass.set1(\dec,dec);
+		IFBass.set1(\sus,sus);
+		IFBass.set1(\rls,rls);
+		IFBass.set1(\pan,pan);
+		IFBass.set2(\send,sndY,sndX);
 		//----
 		IFBass.octMul(octMul);
-		~local.sendMsg('susMulBass', susMul);
-		~local.sendMsg('xy1Bass', xy1X, xy1Y);
-		~local.sendMsg('xy2Bass', xy2X, xy2Y);
-		~local.sendMsg('lfoMulBass1',lfo1);
-		~local.sendMsg('lfoMulBass2',lfo2);
+		IFBass.set1(\susM,susMul);
+		IFBass.set2(\xy1,xy1Y,xy1X);
+		IFBass.set2(\xy2,xy2Y,xy2X);
+		IFBass.set1(\lfoM1,lfo1);
+		IFBass.set1(\lfoM2,lfo2);
 	}
 	*envKeys{|vol=0.95,att=0.01,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
 		octMul=1,susMul=0.1,xy1X=0,xy1Y=0.1,xy2X=0,xy2Y=0.1,lfo1=0,lfo2=0|

@@ -134,8 +134,8 @@ NoteOnResponder.removeAll
 ~mdOut.control(5, 4, ~midiVel); //Bass / SendB
 ~mdOut.control(5, 5, ~midiVel); //Bass / Att
 ~mdOut.control(5, 6, ~midiVel); //Bass / Sus
-~mdOut.control(5, 127, ~midiVel); //Bass / Dec/Rel
-~mdOut.control(5, 8, ~midiVel); //Bass / Chain
+~mdOut.control(5, 127, ~midiVel);//Bass/ Dec
+~mdOut.control(5, 8, ~midiVel); //Bass / Rls
 ~mdOut.control(5, 9, ~midiVel); //Bass / TimeMul (MIDIIN)
 ~mdOut.control(5, 10, ~midiVel); //Bass / SendC
 
