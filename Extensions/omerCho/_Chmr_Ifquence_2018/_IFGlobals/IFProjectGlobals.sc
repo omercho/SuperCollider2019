@@ -49,7 +49,7 @@ IFProjectGlobals.setTempo(20);
 		IFLpMnSteps.load;
 	}
 	*setAddr{
-		~tOSCAdrr = NetAddr.new("192.168.1.2", 5001); // router OTE
+		~tOSCAdrr = NetAddr.new("192.168.1.3", 5001); // router OTE
 		~local = NetAddr("localhost", 57120);
 
 		~mdOut = MIDIOut.newByName("IAC Driver", "SC-Abl");
@@ -90,97 +90,72 @@ IFProjectGlobals.setTempo(20);
 		~shiftTracksBut.free;
 		~shiftTracksBut = OSCFunc({
 			arg msg;
-			if ( msg[1]==1, {IFSixteen.tracks;},{IFSixteen.defaults;});
-			},
-			'/shiftTracks'
-		);
+			if( msg[1]==1,{IFSixteen.tracks;},{IFSixteen.defaults;});
+		},'/shiftTracks');
 		~shiftPartsBut.free;
 		~shiftPartsBut = OSCFunc({
 			arg msg;
-			if ( msg[1]==1, {
-				IFSixteen.partsTrack01;
-				},{
-					IFSixteen.defaults;
-			});
-			},
-			'/shiftParts'
-		);
+			if( msg[1]==1,{IFSixteen.partsTrack01;},{IFSixteen.defaults;});
+		},'/shiftParts');
 		~shiftPresetsBut.free;
 		~shiftPresetsBut = OSCFunc({
 			arg msg;
-			if ( msg[1]==1, {
-				IFSixteen.presets;
-				},{
-					IFSixteen.defaults;
-			});
-			},
-			'/shiftPresets'
-		);
+			if( msg[1]==1,{IFSixteen.presets;},{IFSixteen.defaults;});
+		},'/shiftPresets');
 		~shiftDurationsBut.free;
 		~shiftDurationsBut = OSCFunc({
 			arg msg;
-			if ( msg[1]==1, {
-				IFSixteen.durations;
-				},{
-					IFSixteen.defaults;
-			});
-			},
-			'/shiftDurations'
-		);
+			if( msg[1]==1,{IFSixteen.durations;},{IFSixteen.defaults;});
+		},'/shiftDurations');
 		~shiftScalesBut.free;
 		~shiftScalesBut = OSCFunc({
 			arg msg;
-			if ( msg[1]==1, {
-				IFSixteen.scales;
-				},{
-					IFSixteen.defaults;
-			});
-			},
-			'/shiftScales'
-		);
+			if( msg[1]==1,{IFSixteen.scales;},{IFSixteen.defaults;});
+		},'/shiftScales');
 		~shiftDirectionsBut.free;
 		~shiftDirectionsBut = OSCFunc({
 			arg msg;
-			if ( msg[1]==1, {
-				IFSixteen.directions;
-				},{
-					IFSixteen.defaults;
-			});
-			},
-			'/shiftDirect'
-		);
+			if( msg[1]==1,{IFSixteen.directions;},{IFSixteen.defaults;});
+		},'/shiftDirect');
 	}
 }
 
 IFGlobal{
+	*set{|nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8,
+		tmp,scl1,scl2,root,step|
+		IFProjectGlobals.setTempo(tmp);
+		IFPitch.setScl(scl1:scl1,scl2:scl2, root:root);
+		IFPitch.pat(nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8);
+		IFSeqSteps(direct:step);
+	}
 	*setKick{|vol=0.95,octMul=1,susMul=0.05,dec=0.4,dly=0.2,pan=0.1,sndX=0,sndY=0|
-		~local.sendMsg('volKick', vol);
-		IFKick.octMul(octMul);
-		~local.sendMsg('susMulKick', susMul);
-		~local.sendMsg('decKick', dec);
-		~local.sendMsg('dlyKick', dly);
-		~local.sendMsg('panKick', pan);
-		~local.sendMsg('sendKick', sndX, sndY);
+		IFKick.set1(\vol,vol);
+		IFKick.set1(\octM,octMul);
+		IFKick.set1(\susM,susMul);
+		IFKick.set1(\dec,dec);
+		IFKick.set1(\dly,dly);
+		IFKick.set1(\pan,pan);
+		IFKick.set2(\send,sndY,sndX);
 	}
 	*setSnr{|vol=0.95,octMul=1,susMul=0.05,dec=0.4,dly=0.2,pan=0.1,sndX=0,sndY=0|
-		~local.sendMsg('volSnr', vol);
-		IFSnr.octMul(octMul);
-		~local.sendMsg('susMulSnr', susMul);
-		~local.sendMsg('decSnr', dec);
-		~local.sendMsg('dlySnr', dly);
-		~local.sendMsg('panSnr', pan);
-		~local.sendMsg('sendSnr', sndX, sndY);
+		IFSnr.set1(\vol,vol);
+		IFSnr.set1(\octM,octMul);
+		IFSnr.set1(\susM,susMul);
+		IFSnr.set1(\dec,dec);
+		IFSnr.set1(\dly,dly);
+		IFSnr.set1(\pan,pan);
+		IFSnr.set2(\send,sndY,sndX);
 	}
 	*setHat{|vol=0.95,octMul=1,susMul=0.05,dec=0.4,dly=0.2,pan=0.1,sndX=0,sndY=0|
-		~local.sendMsg('volHat', vol);
-		IFHat.octMul(octMul);
-		~local.sendMsg('susMulHat', susMul);
-		~local.sendMsg('decHat', dec);
-		~local.sendMsg('dlyHat', dly);
-		~local.sendMsg('panHat', pan);
-		~local.sendMsg('sendHat', sndX, sndY);
+		IFKick.set1(\vol,vol);
+		IFKick.set1(\octM,octMul);
+		IFKick.set1(\susM,susMul);
+		IFKick.set1(\dec,dec);
+		IFKick.set1(\dly,dly);
+		IFKick.set1(\pan,pan);
+		IFKick.set2(\send,sndY,sndX);
 	}
-	*envBass{|vol=0.95,att=0,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
+	*setBass{|vol=0.95,att=0,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
 		octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,xy2X=0,xy2Y=0.1,lfo1=0,lfo2=0|
 		IFBass.set1(\vol,vol);
 		IFBass.set1(\att,att);
@@ -190,48 +165,48 @@ IFGlobal{
 		IFBass.set1(\pan,pan);
 		IFBass.set2(\send,sndY,sndX);
 		//----
-		IFBass.octMul(octMul);
+		IFBass.set1(\octM,octMul);
 		IFBass.set1(\susM,susMul);
 		IFBass.set2(\xy1,xy1Y,xy1X);
 		IFBass.set2(\xy2,xy2Y,xy2X);
 		IFBass.set1(\lfoM1,lfo1);
 		IFBass.set1(\lfoM2,lfo2);
 	}
-	*envKeys{|vol=0.95,att=0.01,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
+	*setKeys{|vol=0.95,att=0.01,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
 		octMul=1,susMul=0.1,xy1X=0,xy1Y=0.1,xy2X=0,xy2Y=0.1,lfo1=0,lfo2=0|
-		~local.sendMsg('volKeys', vol);
-		VKeys.cc(\envAttVK,att*127);
-		VKeys.cc(\envDecVK,dec*127);
-		VKeys.cc(\envSusVK,sus*127);
-		~local.sendMsg('rlsKeys', rls);
-		~local.sendMsg('panKeys', pan);
-		~local.sendMsg('sendKeys', sndX*127, sndY*127);
-		//--
-		IFKeys.octMul(octMul);
-		~local.sendMsg('susMulKeys', susMul);
-		~local.sendMsg('xy1Keys', xy1X, xy1Y);
-		~local.sendMsg('xy2Keys', xy2X, xy2Y);
-		~local.sendMsg('lfoMulKeys1',lfo1);
-		~local.sendMsg('lfoMulKeys2',lfo2);
+		IFKeys.set1(\vol,vol);
+		IFKeys.set1(\att,att);
+		IFKeys.set1(\dec,dec);
+		IFKeys.set1(\sus,sus);
+		IFKeys.set1(\rls,rls);
+		IFKeys.set1(\pan,pan);
+		IFKeys.set2(\send,sndY,sndX);
+		//----
+		IFKeys.set1(\octM,octMul);
+		IFKeys.set1(\susM,susMul);
+		IFKeys.set2(\xy1,xy1Y,xy1X);
+		IFKeys.set2(\xy2,xy2Y,xy2X);
+		IFKeys.set1(\lfoM1,lfo1);
+		IFKeys.set1(\lfoM2,lfo2);
 	}
-	*envMopho{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
+	*setMopho{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
 		octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,xy2X=0,xy2Y=0.1,lfo1=0,lfo2=0|
-		Mopho.cc(\voiVol, vol*127);
-		Mopho.cc(\vcaEnvAtt, att*127);
-		Mopho.cc(\vcaEnvDec, dec*127);
-		Mopho.cc(\vcaEnvSus, sus*127);
-		Mopho.cc(\vcaEnvRls, rls*127);
-		~local.sendMsg('panMopho', pan);
-		~local.sendMsg('sendMopho', sndX*127, sndY*127);
-		//--
-		IFMopho.octMul(octMul);
-		~local.sendMsg('susMulMopho', susMul);
-		~local.sendMsg('xy1Mopho', xy1X, xy1Y);
-		~local.sendMsg('xy2Mopho', xy2X, xy2Y);
-		Mopho.cc('lfo1Amnt', lfo1*127);
-		Mopho.cc('lfo2Amnt', lfo2*127);
+		IFMopho.set1(\vol,vol);
+		IFMopho.set1(\att,att);
+		IFMopho.set1(\dec,dec);
+		IFMopho.set1(\sus,sus);
+		IFMopho.set1(\rls,rls);
+		IFMopho.set1(\pan,pan);
+		IFMopho.set2(\send,sndY,sndX);
+		//----
+		IFMopho.set1(\octM,octMul);
+		IFMopho.set1(\susM,susMul);
+		IFMopho.set2(\xy1,xy1Y,xy1X);
+		IFMopho.set2(\xy2,xy2Y,xy2X);
+		IFMopho.set1(\lfoM1,lfo1);
+		IFMopho.set1(\lfoM2,lfo2);
 	}
-	*envSamp{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
+	*setSamp{|vol=0.95,att=0.001,dec=0.4,sus=0.2,rls=0.1,pan=0.1,sndX=0,sndY=0,
 		octMul=1,susMul=0.05,xy1X=0,xy1Y=0.1,xy2X=0,xy2Y=0.1,lfo1=0,lfo2=0|
 		~local.sendMsg('volSamp', vol);
 		~local.sendMsg('attSamp', att);

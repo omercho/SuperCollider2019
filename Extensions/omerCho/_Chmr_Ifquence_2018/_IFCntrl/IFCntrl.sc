@@ -278,7 +278,7 @@ IFCntrl {
 			~tOSCAdrr.sendMsg('/fxComp', msg[1]);
 			~mdOut.control(1, 6, msg[1]*127); //FX Rev Comp
 		},'/fxComp');
-		~cutMel1XY.free;
+		/*~cutMel1XY.free;
 		~cutMel1XY= OSCFunc({
 			arg msg,vel1, vel2,val1,val2;
 			vel1=msg[1]*127;
@@ -349,7 +349,7 @@ IFCntrl {
 			VKeys.cc(\vcfEgVK,msg[1]*127);
 			VBass.cc(\gateTmVB,msg[1]*127);
 			Mopho.cc(\oscMix, msg[1]*127);
-		},'mel3Fader');
+		},'mel3Fader');*/
 		~susMelLedVal;
 		~susMelMulFader.free;
 		~susMelMulFader= OSCFunc({

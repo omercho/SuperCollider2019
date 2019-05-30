@@ -1,20 +1,13 @@
-
 /*
-
 PostAllMIDI.on;
 PostAllMIDI.off;
 
-IFKeys.times(2);
+IFKeys.makeOSCResponders;
 IFKeys(3);
-
 */
-
-
 IFKeys {
 	var <>keyTime = 1;
 	classvar <>counter3 = 0;
-
-
 	/**initClass{
 	StartUp add: {
 	/*Server.default.doWhenBooted({ this.globals; this.preSet; this.default;this.osc; });*/
@@ -24,6 +17,7 @@ IFKeys {
 		this.globals;
 		this.proxy;
 		this.osc;
+		this.makeOSCResponders;
 	}
 	*globals{
 		~chVKeys=0;
@@ -37,14 +31,6 @@ IFKeys {
 		~trKeys=0;
 		~lfoMulKeys1=0.2;
 		~lfoMulKeys2=0.2;
-
-	}
-	*octave{|val|
-		~octKeys.source = Pseq([val], inf);
-	}
-	*octMul{|val|
-		~octMulKeys = val;
-		~tOSCAdrr.sendMsg('octKeysLabel', val);
 	}
 	*proxy{
 		~rootKeys = PatternProxy( Pseq([0], inf));
@@ -119,7 +105,7 @@ IFKeys {
 		~cntKeys=0;
 	}
 
-	*new{|i=1|
+	/**new{|i=1|
 		var val;
 		val=i;
 		case
@@ -131,7 +117,7 @@ IFKeys {
 				~cntKeys.switch(
 					0,{},
 					1,{this.p1(val);},
-					8,{~cntKeys=0;}
+					4,{~cntKeys=0;}
 				);
 				((~dur1KeysP.next)*(~durMulP.next)/val).wait;
 			}}.fork;
@@ -174,8 +160,57 @@ IFKeys {
 			\delta, Pseq([~delta2KeysP.next], ~actKeysP.next),
 			\control, ~lfoMulKeys2*Pexprand(0.8*~lfo2KeysP.next,0.5*~lfo2KeysP.next, inf).round,
 		).play(~clkKeys, quant: 0);
-	}//pLfo
+	}//pLfo*/
 
+	*new{|i=1|
+		var val;
+		val=i;
+		case
+		{ i == val }  {
+			{val.do{
+				this.p1(val);
+				((~dur1KeysP.next)*(~durMul3P.next)/val).wait;
+			}}.fork;
+		}
+	}
+	*p1 {|i=1|
+		var val;
+		val=i;
+		Pbind(
+			\chan, ~chVKeys,
+			\type, \midi, \midiout,~vKeys, \scale, Pfunc({~scl2}, inf),
+			\dur, Pseq([~dur1KeysP.next],~actKeysP.next),
+			\degree, Pseq([~nt1KeysP.next], inf),
+			\amp, Pseq([~volKeysP.next*~amp1KeysP.next], inf),
+			\sustain, Pseq([3.0*~sus1KeysP.next],inf)*~susMulKeys,
+			\mtranspose, Pseq([~transKeysP.next], inf)+~transCntKeysP.next+~trKeys+~transShufKeysP.next,
+			\ctranspose, Pseq([~rootKeysP.next],inf),
+			\octave, Pseq([~octKeysP.next], inf)+~octMulKeys,
+			\harmonic, Pseq([~hrmKeysP.next], inf)+~harmKeys
+		).play(~clkKeys, quant: 0);
+
+		~cntKeysLfo=~cntKeysLfo+1;
+		~cntKeysLfo.switch(
+			0,{},
+			1,{this.pLfo;},
+			2,{~cntKeysLfo=0;}
+		);
+	}//p1
+	*pLfo{
+		Pbind(//LFO CUT KEYS INT
+			\midicmd, \control, \type, \midi,
+			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~vcoDtn],inf),
+			\delta, Pseq([~delta1KeysP.next], ~actKeysP.next),
+			\control, ~lfoMulKeys1*Pexprand(0.5*~lfo1KeysP.next,1*~lfo1KeysP.next, inf).round,
+		).play(~clkKeys, quant: 0);
+
+		Pbind(//LFO RATE KEYS
+			\midicmd, \control, \type, \midi,
+			\midiout,~vKeys, \chan, ~chVKeys, \ctlNum, Pseq([~vcoPort],inf),
+			\delta, Pseq([~delta2KeysP.next], ~actKeysP.next),
+			\control, ~lfoMulKeys2*Pexprand(0.8*~lfo2KeysP.next,0.5*~lfo2KeysP.next, inf).round,
+		).play(~clkKeys, quant: 0);
+	}//pLfo
 	*lng{|deg=0,amp=1,sus=4|
 		Pbind(
 			\chan, ~chVKeys,
@@ -228,7 +263,7 @@ IFKeys {
 		'/time2Keys'
 		);
 
-		~volKeysFader.free;
+		/*~volKeysFader.free;
 		~volKeysFader= OSCFunc({
 			arg msg,vel,val;
 			val=msg[1];
@@ -397,8 +432,182 @@ IFKeys {
 			});
 		},
 		'/octKeysDiv'
-		);
+		);*/
 
+	}
+	//      NEW OSC
+	*set{|key,val|
+		var vel, valNew;
+		vel=val*127;
+		key.switch(
+			/*\timeM,{
+				if ( val==1, {
+					~apcMn.noteOn(~apcMnCh, ~actButA4, 1);
+					~tmMulKeys.source = Pseq([2], inf);
+				});
+			},*/
+			\octMDcr,{
+				if ( val==1, {
+					~crntKeys_octM=~crntKeys_octM-1;
+					IFKeys.set1(\octM,~crntKeys_octM);
+				});
+			},
+			\octMIcr,{
+				if ( val==1, {
+					~crntKeys_octM=~crntKeys_octM+1;
+					IFKeys.set1(\octM,~crntKeys_octM);
+				});
+			},
+			\octMZero,{
+				if ( val==1, {
+					IFKeys.set1(\octM,0);
+				});
+			},
+		);
+	}
+	*lbl1{|key,val1=0|
+		~tOSCAdrr.sendMsg(key,val1);
+	}
+	*set1{|key,val1=0|
+		var vel1;
+		vel1=val1*127;
+		key.switch(
+			\vol, {
+				~crntKeys_vol=val1;
+				this.lbl1(\IFvolKeys,val1);
+				~volKeys.source = val1;
+				VKeys.cc(\expresVK,vel1);
+				~mdOut.control(6, 1, vel1);
+			},
+			\att, {
+				~crntKeys_att=val1;
+				this.lbl1(\IFattKeys,val1);
+				VKeys.cc(\envAttVK,vel1);
+				~mdOut.control(6, 5, vel1);
+			},
+			\dec, {
+				~crntKeys_dec=val1;
+				this.lbl1(\IFdecKeys,val1);
+				VKeys.cc(\envDecVK,vel1);
+				~mdOut.control(6, 127, vel1);
+			},
+			\sus, {
+				~crntKeys_sus=val1;
+				this.lbl1(\IFsusKeys,val1);
+				VKeys.cc(\envSusVK,vel1);
+				~mdOut.control(6, 6, vel1);
+			},
+			\rls, {
+				~crntKeys_rls=val1;
+				this.lbl1(\IFrlsKeys,val1);
+				~mdOut.control(6, 8, vel1);
+			},
+			\pan, {
+				~crntKeys_pan=val1;
+				this.lbl1(\IFpanKeys,val1);
+				VKeys.cc(\vcfEgVK,vel1);
+				~mdOut.control(6, 16, vel1);
+			},
+			\octM, {
+				~crntKeys_octM=val1;
+				this.lbl1(\IFoctMKeysLbl,val1);
+				~octMulKeys = val1;
+			},
+			\susM, {
+				~crntKeys_susM=val1;
+				this.lbl1(\IFsusMKeys,val1);
+				~susMulKeys=val1;
+			},
+			\lfoM1, {
+				~crntKeys_lfoM1=val1;
+				this.lbl1(\IFlfoM1Keys,val1);
+				~lfoMulKeys1=val1;
+			},
+			\lfoM2, {
+				~crntKeys_lfoM2=val1;
+				this.lbl1(\IFlfoM2Keys,val1);
+				~lfoMulKeys2=val1;
+			},
+		);
+	}
+	*lbl2{|key, val1=0, val2=0|
+		var chan;
+		~tOSCAdrr.sendMsg(key,val1,val2);
+	}
+	*set2{|key, val1=0, val2=0|
+		var vel1,vel2;
+		vel1=val1*127;
+		vel2=val2*127;
+		key.switch(
+			\send, {
+				this.lbl2(\sendKeys,val1,val2);
+				~mdOut.control(6, 4, vel1); // IFKeys
+				~mdOut.control(6, 3, vel2); // IFKeys
+				~crntKeys_sndY=val1;
+				~crntKeys_sndX=val2;
+			},
+			\xy1, {
+				this.lbl2(\xy1Keys,val1,val2);
+				VKeys.cc(\lfoRateVK,val2);
+				VKeys.cc(\lfoPitchVK,val1);
+				~crntKeys_xy1X=val2;
+				~crntKeys_xy1Y=val1;
+			},
+			\xy2, {
+				this.lbl2(\xy2Keys,val1,val2);
+				VKeys.cc(\dlyTimeVK,vel2);
+				VKeys.cc(\dlyFeedVK,vel1);
+				~crntKeys_xy2X=val2;
+				~crntKeys_xy2Y=val1;
+			},
+
+		);
+	}
+	*oscResp{|respName,oscName,playTag|
+		OSCdef(respName, {|msg|
+			var val, val1,val2;
+			val= msg[1];
+			val1= msg[1];
+			val2= msg[2];
+			playTag.switch(
+				'octMDcrKeys_T', { this.set(\octMDcr,val);},
+				'octMIcrKeys_T', { this.set(\octMIcr,val);},
+				'octMZeroKeys_T', { this.set(\octMZero,val);},
+				//-GlobalSettings
+				'volKeys_T' , { this.set1(\vol,val1);},
+				'attKeys_T' , { this.set1(\att,val1);},
+				'decKeys_T' , { this.set1(\dec,val1);},
+				'susKeys_T' , { this.set1(\sus,val1);},
+				'rlsKeys_T' , { this.set1(\rls,val1);},
+				'panKeys_T' , { this.set1(\pan,val1);},
+				'sendKeys_T', { this.set2(\send,val1,val2);},
+				'susMKeys_T', { this.set1(\susM,val1);},
+				'octMKeys_T', { this.set1(\octM,val1);},
+				'xy1Keys_T' , { this.set2(\xy1,val1,val2);},
+				'xy2Keys_T' , { this.set2(\xy2,val1,val2);},
+				'lfoM1Keys_T',{ this.set1(\lfoM1,val1);},
+				'lfoM2Keys_T',{ this.set1(\lfoM2,val1);},
+			);
+		},path:oscName);
+	}
+	*makeOSCResponders{
+		this.oscResp(respName:\octMDcrKeysResp, oscName:\IFoctMDcrKeys, playTag:'octMDcrKeys_T');
+		this.oscResp(respName:\octMIcrKeysResp, oscName:\IFoctMIcrKeys, playTag:'octMIcrKeys_T');
+		this.oscResp(respName:\octMZeroKeysResp, oscName:\IFoctMZeroKeys, playTag:'octMZeroKeys_T');
+		//-GlobalSettings
+		this.oscResp(respName:\volKeysResp, oscName:\IFvolKeys, playTag:'volKeys_T');
+		this.oscResp(respName:\attKeysResp, oscName:\IFattKeys, playTag:'attKeys_T');
+		this.oscResp(respName:\decKeysResp, oscName:\IFdecKeys, playTag:'decKeys_T');
+		this.oscResp(respName:\susKeysResp, oscName:\IFsusKeys, playTag:'susKeys_T');
+		this.oscResp(respName:\rlsKeysResp, oscName:\IFrlsKeys, playTag:'rlsKeys_T');
+		this.oscResp(respName:\panKeysResp, oscName:\IFpanKeys, playTag:'panKeys_T');
+		this.oscResp(respName:\sendKeysResp, oscName:\IFsendKeys, playTag:'sendKeys_T');
+		this.oscResp(respName:\susMKeysResp, oscName:\IFsusMKeys, playTag:'susMKeys_T');
+		this.oscResp(respName:\octMKeysResp, oscName:\IFoctMKeys, playTag:'octMKeys_T');
+		this.oscResp(respName:\xy1KeysResp,  oscName:\IFxy1Keys, playTag:'xy1Keys_T');
+		this.oscResp(respName:\xy2KeysResp, oscName:\IFxy2Keys, playTag:'xy2Keys_T');
+		this.oscResp(respName:\lfoM1KeysResp, oscName:\IFlfoM1Keys, playTag:'lfoM1Keys_T');
+		this.oscResp(respName:\lfoM2KeysResp, oscName:\IFlfoM2Keys, playTag:'lfoM2Keys_T');
 	}
 
 }

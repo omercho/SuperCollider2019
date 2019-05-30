@@ -18,8 +18,14 @@ IFRoot {
 		this.responders;
 		this.loadClocks;
 		this.makeOSCResponders;
+		//~crntStepDir=01;
 	}
 	*loadProxy {
+		~durCnt1 = PatternProxy( Pseq([2],inf) );
+		~durCnt1P= Pseq([~durCnt1], inf).asStream;
+		~durCntMul1 = PatternProxy( Pseq([1/2], inf));
+		~durCntMul1P= Pseq([~durCntMul1], inf).asStream;
+
 		~dur = PatternProxy( Pseq([2],inf) );
 		~durP= Pseq([~dur], inf).asStream;
 		~durMul = PatternProxy( Pseq([1/2], inf));
@@ -32,18 +38,13 @@ IFRoot {
 
 		~dur3 = PatternProxy( Pseq([2],inf) );
 		~dur3P= Pseq([~dur3], inf).asStream;
-		~durMul3 = PatternProxy( Pseq([1/4], inf));
+		~durMul3 = PatternProxy( Pseq([1/8], inf));
 		~durMul3P= Pseq([~durMul3], inf).asStream;
 
 		~dur4 = PatternProxy( Pseq([2],inf) );
 		~dur4P= Pseq([~dur4], inf).asStream;
 		~durMul4 = PatternProxy( Pseq([1/8], inf));
 		~durMul4P= Pseq([~durMul4], inf).asStream;
-
-		~durCnt1 = PatternProxy( Pseq([2],inf) );
-		~durCnt1P= Pseq([~durCnt1], inf).asStream;
-		~durCntMul1 = PatternProxy( Pseq([1/2], inf));
-		~durCntMul1P= Pseq([~durCntMul1], inf).asStream;
 	}
 	*loadClocks{
 		~clkMaster=TempoClock(1, 0, Main.elapsedTime.ceil);
@@ -64,6 +65,7 @@ IFRoot {
 	*play{
 		IFCounter.getClockNow;
 		IFCounter.getClockStart;
+		IFSeqSteps(~crntStepDir);
 		~ifPlayerSeq01.play(~clkSq01, quant: 0);
 		~ifPlayerSeq02.play(~clkSq02, quant: 0);
 		~ifPlayerSeq03.play(~clkSq03, quant: 0);
@@ -82,8 +84,6 @@ IFRoot {
 		~ifPlayerSeq04.stop;
 		~ifCountPlayer1.stop;
 	}
-
-
 	*set00{
 		"IFRoot set00".postln;
 		IFRoot.butLeds(0);

@@ -19,6 +19,7 @@ IFKick {
 		this.globals;
 		this.proxy;
 		this.osc;
+		this.makeOSCResponders;
 	}
 
 	*globals{
@@ -72,7 +73,6 @@ IFKick {
 		~delta1Kick2 = PatternProxy( Pseq([1], inf));
 		~delta1Kick2P = Pseq([~delta1Kick2], inf).asStream;
 
-
 		~transKick = PatternProxy( Pseq([0], inf));
 		~transKickP = Pseq([~transKick], inf).asStream;
 		~transShufKick = PatternProxy( Pseq([0], inf));
@@ -86,8 +86,6 @@ IFKick {
 		~hrmKick = PatternProxy( Pseq([1.0], inf));
 		~hrmKickP = Pseq([~hrmKick], inf).asStream;
 
-
-
 		~actKickLfo1 = PatternProxy( Pseq([0], inf));
 		~actKickLfo1P= Pseq([~actKickLfo1], inf).asStream;
 
@@ -99,8 +97,6 @@ IFKick {
 
 		~delta2VSamp05 = PatternProxy( Pseq([1/1], inf));
 		~delta2VSamp05P = Pseq([~delta2VSamp05], inf).asStream;
-
-
 	}//*proxy
 
 	*new{|i=1|
@@ -111,14 +107,9 @@ IFKick {
 			{val.do{
 				~kickLate.wait;
 				this.p1(val);
-				((~dur1KickP.next)*(~durMulP.next)/val).wait;
+				((~dur1KickP.next)*(~durMul2P.next)/val).wait;
 			}}.fork;
 		}
-	}
-
-	*octMul{|val|
-		~octMulKick = val;
-		~tOSCAdrr.sendMsg('octKickLabel', val);
 	}
 
 	*p1 {|i=1|
@@ -195,163 +186,131 @@ IFKick {
 		'/time2Kick'
 		);
 
-		~volKickFader.free;
-		~volKickFader= OSCFunc({
-			arg msg,vel;
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('volKick', msg[1]);
-			~mdOut.control(2, 1, vel);
-		},
-		'/volKick'
-		);
-
-		~attKickFader.free;
-		~attKickFader= OSCFunc({
-			arg msg,vel;
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('attKick', msg[1]);
-			~mdOut.control(2, 5, vel);
-			//~nobD1_m2Val= msg[1]*127;
-		},
-		'attKick'
-		);
-
-		~susLevKickFader.free;
-		~susLevKickFader= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('susKick', msg[1]);
-			~susLevKick=msg[1];
-			~mdOut.control(2, 6, msg[1]*127);
-
-
-		},
-		'/susKick'
-		);
-
-		~decKickFader.free;
-		~decKickFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('decKick', val);
-			~mdOut.control(2, 127, vel);
-			//~nobD1_m1Val= vel;
-		},
-		'/decKick'
-		);
-
-		//TIME
-
-		~tmMulKickBut1.free;
-		~tmMulKickBut1= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulKick.source = Pseq([1], inf);
-				~tOSCAdrr.sendMsg('tmKickLabel', 1);
-
-			});
-
-		},
-		'/tmMulKick1'
-		);
-		~tmMulKickBut2.free;
-		~tmMulKickBut2= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulKick.source = Pseq([2], inf);
-				~tOSCAdrr.sendMsg('tmKickLabel', 2);
-
-			});
-
-		},
-		'/tmMulKick2'
-		);
-		~tmMulKickBut3.free;
-		~tmMulKickBut3= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulKick.source = Pseq([3], inf);
-				~tOSCAdrr.sendMsg('tmKickLabel', 3);
-
-			});
-
-		},
-		'/tmMulKick3'
-		);
-		~tmKickFader.free;
-		~tmKickFader= OSCFunc({
-			arg msg;
-			~tmKick.source = msg[1];
-
-		},
-		'/timesKick'
-		);
-
-		~padKick.free;
-		~padKick = OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				IFKick(~tmMulKickP.next*~tmKickP.next);
-
-			});
-		},
-		'/padKick'
-		);
-
-		//----Kick-------
-		~octKickMulBut.free;
-		~octKickMulBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulKick = ~octMulKick+1;
-				~tOSCAdrr.sendMsg('octKickLabel', ~octMulKick);
-
-			});
-
-		},
-		'/octKickMul'
-		);
-
-		~octKickZeroBut.free;
-		~octKickZeroBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulKick = 0;
-				~tOSCAdrr.sendMsg('octKickLabel', ~octMulKick);
-
-			});
-
-		},
-		'/octKickZero'
-		);
-
-		~octKickDivBut.free;
-		~octKickDivBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulKick = ~octMulKick-1;
-				~tOSCAdrr.sendMsg('octKickLabel', ~octMulKick);
-
-			});
-
-		},
-		'/octKickDiv'
+	}
+	//      NEW OSC
+	*set{|key,val|
+		var vel, valNew;
+		vel=val*127;
+		key.switch(
+			/*\timeM,{
+				if ( val==1, {
+					~apcMn.noteOn(~apcMnCh, ~actButA4, 1);
+					~tmMulKick.source = Pseq([2], inf);
+				});
+			},*/
+			\octMDcr,{
+				if ( val==1, {
+					~crntKick_octM=~crntKick_octM-1;
+					IFKick.set1(\octM,~crntKick_octM);
+				});
+			},
+			\octMIcr,{
+				if ( val==1, {
+					~crntKick_octM=~crntKick_octM+1;
+					IFKick.set1(\octM,~crntKick_octM);
+				});
+			},
+			\octMZero,{
+				if ( val==1, {
+					IFKick.set1(\octM,0);
+				});
+			},
 		);
 	}
+	*lbl1{|key,val1=0|
+		~tOSCAdrr.sendMsg(key,val1);
+	}
+	*set1{|key,val1=0|
+		var vel1;
+		vel1=val1*127;
+		key.switch(
+			\vol, {
+				~crntKick_vol=val1;
+				this.lbl1(\volKick,val1);
+				~volKick.source = val1;
+				~mdOut.control(2, 1, vel1);
+			},
+			\octM, {
+				~crntKick_octM=val1;
+				this.lbl1(\IFoctMKickLbl,val1);
+				~octMulKick = val1;
+			},
+			\susM, {
+				~crntKick_susM=val1;
+				this.lbl1(\IFsusMKick,val1);
+				~susMulKick=val1;
+			},
+			\dec, {
+				~crntKick_dec=val1;
+				this.lbl1(\IFdecKick,val1);
+				~mdOut.control(2, 127, vel1);
+			},
+			\dly, {
+				~crntKick_sus=val1;
+				this.lbl1(\IFdlyKick,val1);
+				//~mdOut.control(5, 6, vel1);
+			},
+			\pan, {
+				~crntKick_pan=val1;
+				this.lbl1(\IFpanKick,val1);
+				//~mdOut.control(5, 8, vel1);
+			},
 
+		);
+	}
+	*lbl2{|key, val1=0, val2=0|
+		var chan;
+		~tOSCAdrr.sendMsg(key,val1,val2);
+	}
+	*set2{|key, val1=0, val2=0|
+		var vel1,vel2;
+		vel1=val1*127;
+		vel2=val2*127;
+		key.switch(
+			\send, {
+				this.lbl2(\sendKick,val1,val2);
+				~mdOut.control(2, 4, vel1); // IFKick
+				~mdOut.control(2, 3, vel2); // IFKick
+				~crntKick_sndY=val1;
+				~crntKick_sndX=val2;
+			},
+		);
+	}
+	*oscResp{|respName,oscName,playTag|
+		OSCdef(respName, {|msg|
+			var val, val1,val2;
+			val= msg[1];
+			val1= msg[1];
+			val2= msg[2];
+			playTag.switch(
+				'octMDcrKick_T', { this.set(\octMDcr,val);},
+				'octMIcrKick_T', { this.set(\octMIcr,val);},
+				'octMZeroKick_T', { this.set(\octMZero,val);},
+				//-GlobalSettings
+				'volKick_T' , { this.set1(\vol,val1);},
+				'octMKick_T', { this.set1(\octM,val1);},
+				'susMKick_T', { this.set1(\susM,val1);},
+				'decKick_T' , { this.set1(\dec,val1);},
+				'susKick_T' , { this.set1(\dly,val1);},
+				'panKick_T' , { this.set1(\pan,val1);},
+				'sendKick_T', { this.set2(\send,val1,val2);},
+
+			);
+		},path:oscName);
+	}
+	*makeOSCResponders{
+		this.oscResp(respName:\octMDcrKickResp, oscName:\IFoctMDcrKick, playTag:'octMDcrKick_T');
+		this.oscResp(respName:\octMIcrKickResp, oscName:\IFoctMIcrKick, playTag:'octMIcrKick_T');
+		this.oscResp(respName:\octMZeroKickResp, oscName:\IFoctMZeroKick, playTag:'octMZeroKick_T');
+		//-GlobalSettings
+		this.oscResp(respName:\volKickResp, oscName:\IFvolKick, playTag:'volKick_T');
+		this.oscResp(respName:\octMKickResp, oscName:\IFoctMKick, playTag:'octMKick_T');
+		this.oscResp(respName:\susMKickResp, oscName:\IFsusMKick, playTag:'susMKick_T');
+		this.oscResp(respName:\decKickResp, oscName:\IFdecKick, playTag:'decKick_T');
+		this.oscResp(respName:\dlyKickResp, oscName:\IFdlyKick, playTag:'dlyKick_T');
+		this.oscResp(respName:\panKickResp, oscName:\IFpanKick, playTag:'panKick_T');
+		this.oscResp(respName:\sendKickResp, oscName:\IFsendKick, playTag:'sendKick_T');
+	}
 
 }
 

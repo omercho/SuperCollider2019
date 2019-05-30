@@ -166,6 +166,7 @@ NoteOnResponder.removeAll
 ~mdOut.control(6, 13, ~midiVel); //IFKeys / Cut X
 ~mdOut.control(6, 14, ~midiVel); //IFKeys / Cut Y
 ~mdOut.control(6, 15, ~midiVel); //Keys / Act Delay-Filter LFO
+~mdOut.control(6, 16, ~midiVel); //Keys / pan
 ~mdOut.control(6, 40, ~midiVel); //IFKeys / lfo 1
 ~mdOut.control(6, 41, ~midiVel); //IFKeys / lfo 2
 

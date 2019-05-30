@@ -137,7 +137,7 @@ IFSamp {
 					1,{this.p1(val);},
 					4,{~cntSamp=0;}
 				);
-				((~dur1SampP.next)*(~durMulP.next)/val).wait;
+				((~dur1SampP.next)*(~durMul4P.next)/val).wait;
 			}}.fork;
 		}
 	}

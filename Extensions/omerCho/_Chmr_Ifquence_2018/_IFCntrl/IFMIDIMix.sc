@@ -556,8 +556,7 @@ IFMIDIMix{
 		~mdMixFad5=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			~tOSCAdrr.sendMsg('susMulKeys', val);
-			~susMulKeys=(val)+0.05;
+			IFKeys.set1(\susM,val);
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:30);
 		~mdMixNob5A.free;
 		~mdMixNob5A=MIDIFunc.cc( {
@@ -615,14 +614,12 @@ IFMIDIMix{
 		~mdMixFad6=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			~tOSCAdrr.sendMsg('susMulMopho', val);
-			~susMulMopho=(val)+0.05;
+			IFMopho.set1(\susM,val);
 		},srcID:~mdMixInID, chan:~mdMixLn6, ccNum:30);
 		~mdMixNob6A.free;
 		~mdMixNob6A=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-
 
 		},srcID:~mdMixInID, chan:~mdMixLn6, ccNum:33);
 		~mdMixNob6B.free;

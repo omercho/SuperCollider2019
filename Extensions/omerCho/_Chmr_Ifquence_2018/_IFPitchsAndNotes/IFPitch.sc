@@ -20,7 +20,6 @@ IFPitch {
 		}
 	}
 	*loadAll {
-		~nt=(0);
 		this.buttons;
 		//this.shufTrans;
 		//this.note;

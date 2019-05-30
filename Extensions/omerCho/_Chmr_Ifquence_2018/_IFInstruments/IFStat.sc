@@ -26,6 +26,7 @@ IFStat {
 	*globals{
 		~chJmx=0;
 		~chStatDrum=8;
+		~chStatHats=9;
 		~chStat=9;
 		~chVKick=9;
 		~chVBeats=9;
@@ -38,6 +39,10 @@ IFStat {
 		~octVTomH=0;
 		~octVCrsh=0;
 		~octVPcm=0;
+
+		~susMulVKick=1;
+		~susMulVSnr=1;
+		~susMulVHat=0.9;
 	}
 
 	*proxy {
@@ -175,7 +180,7 @@ IFStat {
 			\dur, Pseq([~durVKickP.next],~actVKickP.next),
 			\degree, Pseq([~ntVKickP.next], inf),
 			\amp, Pseq([~volVKickP.next*~ampVKickP.next], inf),
-			\sustain, Pseq([~susVKickP.next],inf)*~susMulKick
+			\sustain, Pseq([~susVKickP.next],inf)*~susMulVKick
 		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln02 {|i=1|
@@ -188,20 +193,20 @@ IFStat {
 			\dur, Pseq([~durVSnrP.next],~actVSnrP.next),
 			\degree, Pseq([~ntVSnrP.next], inf),
 			\amp, Pseq([~volVSnrP.next*~ampVSnrP.next], inf),
-			\sustain, Pseq([~susVSnrP.next],inf)*~susMulSnr
+			\sustain, Pseq([~susVSnrP.next],inf)*~susMulVSnr
 		).play(~clkDrum, quant: 0);
 	}
 	*ln03 {|i=1|
 		var val;
 		val=i;
 		~stVHatPat=Pbind(
-			\chan, ~chStatDrum,
+			\chan, ~chStatHats,
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
 			\octave,~octVHat,
 			\dur, Pseq([~durVHatP.next],~actVHatP.next),
 			\degree, Pseq([~ntVHatP.next], inf),
 			\amp, Pseq([~volVHatP.next*~ampVHatP.next], inf),
-			\sustain, Pseq([~susVHatP.next],inf)*~susMulHat
+			\sustain, Pseq([~susVHatP.next],inf)*~susMulVHat
 		).play(~clkDrum, quant: 0);
 	}
 	*ln04 {|i=1|
@@ -214,7 +219,7 @@ IFStat {
 			\dur, Pseq([~durVClapP.next],~actVClapP.next),
 			\degree, Pseq([~ntVClapP.next], inf),
 			\amp, Pseq([~volVClapP.next*~ampVClapP.next], inf),
-			\sustain, Pseq([~susVClapP.next],inf)
+			\sustain, Pseq([~susVClapP.next],inf)*~susMulVSnr
 		).play(~clkDrum, quant: 0);
 
 	}
@@ -228,20 +233,20 @@ IFStat {
 			\dur, Pseq([~durVTomLP.next],~actVTomLP.next),
 			\degree, Pseq([~ntVTomLP.next], inf),
 			\amp, Pseq([~volVTomLP.next*~ampVTomLP.next], inf),
-			\sustain, Pseq([~susVTomLP.next],inf)
+			\sustain, Pseq([~susVTomLP.next],inf)*~susMulVKick
 		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln06 {|i=1|
 		var val;
 		val=i;
 		~stVTomHPat=Pbind(
-			\chan, ~chStatDrum,
+			\chan, ~chStatHats,
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl1}, inf),
 			\octave,~octVTomH,
 			\dur, Pseq([~durVTomHP.next],~actVTomHP.next),
 			\degree, Pseq([~ntVTomHP.next], inf),
 			\amp, Pseq([~volVTomHP.next*~ampVTomHP.next], inf),
-			\sustain, Pseq([~susVTomHP.next],inf)
+			\sustain, Pseq([~susVTomHP.next],inf)*~susMulVHat
 		).play(~clkDrum, quant: 0);
 	}//stat01
 	*ln07 {|i=1|

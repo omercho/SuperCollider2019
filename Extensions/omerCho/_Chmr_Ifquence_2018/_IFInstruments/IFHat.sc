@@ -18,6 +18,7 @@ IFHat {
 		this.globals;
 		this.proxy;
 		this.osc;
+		this.makeOSCResponders;
 	}
 
 	*globals{
@@ -95,11 +96,6 @@ IFHat {
 
 	}//proxy
 
-	*octMul{|val|
-		~octMulHat = val;
-		~tOSCAdrr.sendMsg('octHatLabel', val);
-	}
-
 	*new{|i=1|
 		var val;
 		val=i;
@@ -108,7 +104,7 @@ IFHat {
 			{val.do{
 				~lateHat.wait;
 				this.p1(val);
-				((~dur1HatP.next)*(~durMulP.next)/val).wait;
+				((~dur1HatP.next)*(~durMul2P.next)/val).wait;
 			}}.fork;
 		}
 	}
@@ -200,257 +196,131 @@ IFHat {
 		'/time2Hat'
 		);
 
-		~volHatFader.free;
-		~volHatFader= OSCFunc({
-			arg msg,vel;
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('volHat', msg[1]);
-			//~mdOut.control(4, 1, vel);
-		},
-		'/volHat'
-		);
-
-		~xy1Hat.free;
-		~xy1Hat= OSCFunc({
-			arg msg;
-
-		},
-		'/xy1Hat'
-		);
-
-		~attHatFader.free;
-		~attHatFader= OSCFunc({
-			arg msg,vel;
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('attHat', msg[1]);
-			~mdOut.control(4, 5, vel);
-		},
-		'attHat'
-		);
-
-		~susLevHatFader.free;
-		~susLevHatFader= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('susHat', msg[1]);
-			~mdOut.control(4, 6, msg[1]*127);
-
-		},
-		'/susHat'
-		);
-
-		~decHatFader.free;
-		~decHatFader= OSCFunc({
-			arg msg,val,vel;
-			val=msg[1];
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('decHat', val);
-			~mdOut.control(4, 127, vel);
-		},
-		'/decHat'
-		);
-
-		~chainHatFader.free;
-		~chainHatFader= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('chainHat', msg[1]);
-			~mdOut.control(4, 8, msg[1]*127);
-		},
-		'/chainHat'
-		);
-
-		~sendHatXY.free;
-		~sendHatXY= OSCFunc({
-			arg msg,vel1,vel2;
-
-			vel1=msg[1]*127;
-			vel2=msg[2]*127;
-			~mdOut.control(4, 4, vel1); // IFHat
-			~mdOut.control(4, 3, vel2); // IFHat
-			~tOSCAdrr.sendMsg('sendHat', msg[1], msg[2]);
-
-		},
-		'sendHat'
-		);
-
-		//TIME
-
-		~tmMulHatBut1.free;
-		~tmMulHatBut1= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulHat.source = Pseq([1], inf);
-				~tOSCAdrr.sendMsg('tmHatLabel', 1);
-
-			});
-
-		},
-		'/tmMulHat1'
-		);
-		~tmMulHatBut2.free;
-		~tmMulHatBut2= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulHat.source = Pseq([2], inf);
-				~tOSCAdrr.sendMsg('tmHatLabel', 2);
-
-			});
-
-		},
-		'/tmMulHat2'
-		);
-		~tmMulHatBut3.free;
-		~tmMulHatBut3= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulHat.source = Pseq([3], inf);
-				~tOSCAdrr.sendMsg('tmHatLabel', 3);
-
-			});
-
-		},
-		'/tmMulHat3'
-		);
-
-		~octHatMulBut.free;
-		~octHatMulBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulHat = ~octMulHat+1;
-				~tOSCAdrr.sendMsg('octHatLabel', ~octMulHat);
-
-			});
-
-		},
-		'/octHatMul'
-		);
-
-		~octHatZeroBut.free;
-		~octHatZeroBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulHat = 0;
-				~tOSCAdrr.sendMsg('octHatLabel', ~octMulHat);
-
-			});
-
-		},
-		'/octHatZero'
-		);
-
-		~octHatDivBut.free;
-		~octHatDivBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulHat = ~octMulHat-1;
-				~tOSCAdrr.sendMsg('octHatLabel', ~octMulHat);
-
-			});
-
-		},
-		'/octHatDiv'
-		);
-
 	}
 
-
-	//Hat Counter
-	*timesCount {
-		timeCnt = timeCnt + 1;
-		timeCnt.switch(
-
-			1, {  },
-			4, {  },
-			6, {  },
-			8, {  },
-			9, {  },
-			10, {  },
-			15, {  },
-			17, {  },
-			18, {
-				("        -----------HatTimesCnt"+timeCnt).postln;
-
-				timeCnt=0;
+	//      NEW OSC
+	*set{|key,val|
+		var vel, valNew;
+		vel=val*127;
+		key.switch(
+			/*\timeM,{
+				if ( val==1, {
+					~apcMn.noteOn(~apcMnCh, ~actButA4, 1);
+					~tmMulHat.source = Pseq([2], inf);
+				});
+			},*/
+			\octMDcr,{
+				if ( val==1, {
+					~crntHat_octM=~crntHat_octM-1;
+					IFHat.set1(\octM,~crntHat_octM);
+				});
+			},
+			\octMIcr,{
+				if ( val==1, {
+					~crntHat_octM=~crntHat_octM+1;
+					IFHat.set1(\octM,~crntHat_octM);
+				});
+			},
+			\octMZero,{
+				if ( val==1, {
+					IFHat.set1(\octM,0);
+				});
+			},
+		);
+	}
+	*lbl1{|key,val1=0|
+		~tOSCAdrr.sendMsg(key,val1);
+	}
+	*set1{|key,val1=0|
+		var vel1;
+		vel1=val1*127;
+		key.switch(
+			\vol, {
+				~crntHat_vol=val1;
+				this.lbl1(\volHat,val1);
+				~volHat.source = val1;
+				~mdOut.control(4, 1, vel1);
+			},
+			\octM, {
+				~crntHat_octM=val1;
+				this.lbl1(\IFoctMHatLbl,val1);
+				~octMulHat = val1;
+			},
+			\susM, {
+				~crntHat_susM=val1;
+				this.lbl1(\IFsusMHat,val1);
+				~susMulHat=val1;
+			},
+			\dec, {
+				~crntHat_dec=val1;
+				this.lbl1(\IFdecHat,val1);
+				~mdOut.control(4, 127, vel1);
+			},
+			\dly, {
+				~crntHat_sus=val1;
+				this.lbl1(\IFdlyHat,val1);
+				//~mdOut.control(5, 6, vel1);
+			},
+			\pan, {
+				~crntHat_pan=val1;
+				this.lbl1(\IFpanHat,val1);
+				//~mdOut.control(5, 8, vel1);
 			},
 
 		);
-
 	}
-
-	*count3 {
-		1.do{
-			counter3 = counter3 + 1;
-			counter3.switch(
-				3, {
-					("            hatCnt"+counter3).postln;
-					this.ctl_3;
-					counter3 = 0;
-
-				}
-
-			)
-		}
-
+	*lbl2{|key, val1=0, val2=0|
+		var chan;
+		~tOSCAdrr.sendMsg(key,val1,val2);
 	}
-	*synthDef{|index|
-		index.switch(
-			1,{
-				SynthDef(\IFHat_SC, { |out=0, amp=0.3, gate=1,
-					att =0.01, dec=0.03, susLev=0.08, rel=0.04,
-					lfo1Rate=1, lfo2Rate=1,
-					noose =1, freq = 90, pan = 0, freqpan=0.2 |
-					var env1, env2, ses, oscs1, noise, in, n2,lfo1, lfo2;
-					var hatosc, hatenv, hatnoise, hatoutput;
-					lfo1 = SinOsc.kr(lfo1Rate).range(1.0, 3.2);
-					lfo2 = SinOsc.kr(lfo2Rate).range(1.0, 1.9);
-
-					env1 = EnvGen.ar(Env.perc(att, dec));
-					env2 = EnvGen.ar(Env.adsr(att, dec, susLev, rel), gate, doneAction:2);
-
-					noise = SinOsc.ar(freq*lfo2);
-					in = Mix.ar(Blip.ar(4*freq*lfo2, 2*freq*lfo1).softclip(3.2),noise);
-					noise = HPF.ar(in*noise*lfo2, 0, 0.9, 0.5, Mix.ar(noise*in));
-					//noise = BHiShelf.ar(Mix.ar(noise,in), 1, lfo2, -6);
-					noise = BHiPass.ar(noise/in, freq*lfo1, 0.5, env2);
-					in= MoogFF.ar(noise, in, 0.2);
-
-					hatnoise = {LPF.ar(WhiteNoise.ar(1),8000*(noise/16)*env1)};
-
-					hatosc = {HPF.ar(hatnoise,2400*lfo2)};
-					hatenv = {Line.ar(1, 0, 0.1)};
-
-					hatoutput = (0.5 * hatosc *env2);
-
-					ses = hatoutput;
-					//ses = ses;
-					ses = ses.clip2(0.4);
-					ses = ses * amp;
-
-					Out.ar(out, Pan2.ar(ses, SinOsc.kr(freqpan).range(-0.8, 0.8), amp*0.6)*env2);
-				}).add;
-
+	*set2{|key, val1=0, val2=0|
+		var vel1,vel2;
+		vel1=val1*127;
+		vel2=val2*127;
+		key.switch(
+			\send, {
+				this.lbl2(\sendHat,val1,val2);
+				~mdOut.control(4, 4, vel1); // IFHat
+				~mdOut.control(4, 3, vel2); // IFHat
+				~crntHat_sndY=val1;
+				~crntHat_sndX=val2;
 			},
-			2,{
+		);
+	}
+	*oscResp{|respName,oscName,playTag|
+		OSCdef(respName, {|msg|
+			var val, val1,val2;
+			val= msg[1];
+			val1= msg[1];
+			val2= msg[2];
+			playTag.switch(
+				'octMDcrHat_T', { this.set(\octMDcr,val);},
+				'octMIcrHat_T', { this.set(\octMIcr,val);},
+				'octMZeroHat_T', { this.set(\octMZero,val);},
+				//-GlobalSettings
+				'volHat_T' , { this.set1(\vol,val1);},
+				'octMHat_T', { this.set1(\octM,val1);},
+				'susMHat_T', { this.set1(\susM,val1);},
+				'decHat_T' , { this.set1(\dec,val1);},
+				'susHat_T' , { this.set1(\dly,val1);},
+				'panHat_T' , { this.set1(\pan,val1);},
+				'sendHat_T', { this.set2(\send,val1,val2);},
 
-
-			},
-			3,{
-
-			},
-			4,{},
-			5,{}
-		)
+			);
+		},path:oscName);
+	}
+	*makeOSCResponders{
+		this.oscResp(respName:\octMDcrHatResp, oscName:\IFoctMDcrHat, playTag:'octMDcrHat_T');
+		this.oscResp(respName:\octMIcrHatResp, oscName:\IFoctMIcrHat, playTag:'octMIcrHat_T');
+		this.oscResp(respName:\octMZeroHatResp, oscName:\IFoctMZeroHat, playTag:'octMZeroHat_T');
+		//-GlobalSettings
+		this.oscResp(respName:\volHatResp, oscName:\IFvolHat, playTag:'volHat_T');
+		this.oscResp(respName:\octMHatResp, oscName:\IFoctMHat, playTag:'octMHat_T');
+		this.oscResp(respName:\susMHatResp, oscName:\IFsusMHat, playTag:'susMHat_T');
+		this.oscResp(respName:\decHatResp, oscName:\IFdecHat, playTag:'decHat_T');
+		this.oscResp(respName:\dlyHatResp, oscName:\IFdlyHat, playTag:'dlyHat_T');
+		this.oscResp(respName:\panHatResp, oscName:\IFpanHat, playTag:'panHat_T');
+		this.oscResp(respName:\sendHatResp, oscName:\IFsendHat, playTag:'sendHat_T');
 	}
 
 }

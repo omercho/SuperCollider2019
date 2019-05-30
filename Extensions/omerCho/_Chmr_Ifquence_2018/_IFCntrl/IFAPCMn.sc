@@ -316,7 +316,6 @@ IFAPCMn{
 		~apcMn.noteOn(~apcLn1, ~actButA7, val); //But B
 		~tOSCAdrr.sendMsg('time2Samp', val);
 		~tmMulSamp.source = Pseq([val+1], inf);
-
 		~cntActLine7ButA7=val;
 	}
 	*actLine8ButA8{|val|
@@ -491,7 +490,6 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine1ButA1 = ~cntActLine1ButA1 + 1;
 				~cntActLine1ButA1.switch(
-					0,{},
 					1,{IFAPCMn.actLine1ButA1(1);},
 					2,{IFAPCMn.actLine1ButA1(0);}
 			)});
@@ -504,7 +502,6 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine1ButB1 = ~cntActLine1ButB1 + 1;
 				~cntActLine1ButB1.switch(
-					0,{},
 					1, {IFAPCMn.actLine1ButB1(1);},
 					2,{IFAPCMn.actLine1ButB1(0);}
 			)});
@@ -517,7 +514,6 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine1ButC1 = ~cntActLine1ButC1 + 1;
 				~cntActLine1ButC1.switch(
-					0,{},
 					1, {IFAPCMn.actLine1ButC1(1);},
 					2,{IFAPCMn.actLine1ButC1(0);}
 			)});
@@ -623,25 +619,16 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine3ButC3 = ~cntActLine3ButC3 + 1;
 				~cntActLine3ButC3.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine3ButC3(1);
-					},
-					2,{
-						IFAPCMn.actLine3ButC3(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine3ButC3(1);},
+					2,{IFAPCMn.actLine3ButC3(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC3);
 		//--------------------line4
 		~apcMnFad4.free;
 		~apcMnFad4=MIDIFunc.cc( {
-			arg vel;
-			~tOSCAdrr.sendMsg('volBass', vel/127);
-			~volBass.source = vel/127;
-			~mdOut.control(5, 1, vel); //Bass / Vol
-			/*~tOSCAdrr.sendMsg('volVClap', vel/127);
-			~volVClap.source=vel;*/
+			arg vel,val;
+			val=vel/127;
+			IFBass.set1(\vol,val);
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd4);
 		~cntActLine4ButA4=0;
 		~mdActLine4ButA4.free;
@@ -650,19 +637,10 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine4ButA4 = ~cntActLine4ButA4 + 1;
 				~cntActLine4ButA4.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine4ButA4(1);
-					},
-					2,{
-						IFAPCMn.actLine4ButA4(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine4ButA4(1);},
+					2,{IFAPCMn.actLine4ButA4(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA4);
-
-		//Act ButB4
-		//Bass Time Div2
 		~cntActLine4ButB4=0;
 		~mdActLine4ButB4.free;
 		~mdActLine4ButB4=MIDIFunc.noteOn({
@@ -670,19 +648,10 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine4ButB4 = ~cntActLine4ButB4 + 1;
 				~cntActLine4ButB4.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine4ButB4(1);
-					},
-					2,{
-						IFAPCMn.actLine4ButB4(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine4ButB4(1);},
+					2,{IFAPCMn.actLine4ButB4(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB4);
-
-		//Act ButC
-		//Static Bass Activate
 		~cntActLine4ButC4=0;
 		~mdActLine4ButC4.free;
 		~mdActLine4ButC4=MIDIFunc.noteOn({
@@ -690,25 +659,18 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine4ButC4 = ~cntActLine4ButC4 + 1;
 				~cntActLine4ButC4.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine4ButC4(1);
-					},
-					2,{
-						IFAPCMn.actLine4ButC4(0);
-					}
+					1,{IFAPCMn.actLine4ButC4(1);},
+					2,{IFAPCMn.actLine4ButC4(0);}
 			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC4);
 		//--------------------line5
 		~apcMnFad5.free;
 		~apcMnFad5=MIDIFunc.cc( {
-			arg vel;
-			~tOSCAdrr.sendMsg('volKeys', vel/127);
-			~volKeys.source = vel/127;
-			~mdOut.control(6, 1, vel); //Keys / Vol
-			~tOSCAdrr.sendMsg('volVTomL', vel/127);
-			~volVTomL.source=vel;
+			arg vel,val;
+			val=vel/127;
+			IFKeys.set1(\vol,val);
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd5);
+		//Act ButA5
 		~cntActLine5ButA5=0;
 		~mdActLine5ButA5.free;
 		~mdActLine5ButA5=MIDIFunc.noteOn({
@@ -716,19 +678,11 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine5ButA5 = ~cntActLine5ButA5 + 1;
 				~cntActLine5ButA5.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine5ButA5(1);
-					},
-					2,{
-						IFAPCMn.actLine5ButA5(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine5ButA5(1);},
+					2,{IFAPCMn.actLine5ButA5(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA5);
-
 		//Act ButB5
-		//Keys Time Div2
 		~cntActLine5ButB5=0;
 		~mdActLine5ButB5.free;
 		~mdActLine5ButB5=MIDIFunc.noteOn({
@@ -736,19 +690,11 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine5ButB5 = ~cntActLine5ButB5 + 1;
 				~cntActLine5ButB5.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine5ButB5(1);
-					},
-					2,{
-						IFAPCMn.actLine5ButB5(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine5ButB5(1);},
+					2,{IFAPCMn.actLine5ButB5(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB5);
-
 		//Act ButC5
-		//Static Keys Activate
 		~cntActLine5ButC5=0;
 		~mdActLine5ButC5.free;
 		~mdActLine5ButC5=MIDIFunc.noteOn({
@@ -756,22 +702,17 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine5ButC5 = ~cntActLine5ButC5 + 1;
 				~cntActLine5ButC5.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine5ButC5(1);
-					},
-					2,{
-						IFAPCMn.actLine5ButC5(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine5ButC5(1);},
+					2,{IFAPCMn.actLine5ButC5(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC5);
 		//--------------------line6
+		//MOPHO
 		~apcMnFad6.free;
 		~apcMnFad6=MIDIFunc.cc( {
-			arg vel;
-
-			Mopho.cc(\voiVol, vel);
+			arg vel,val;
+			val=vel/127;
+			IFMopho.set1(\vol,val);
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd6);
 		~cntActLine6ButA6=0;
 		~mdActLine6ButA6.free;
@@ -780,15 +721,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine6ButA6 = ~cntActLine6ButA6 + 1;
 				~cntActLine6ButA6.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine6ButA6(1);
-					},
-					2,{
-						IFAPCMn.actLine6ButA6(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine6ButA6(1);},
+					2,{IFAPCMn.actLine6ButA6(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA6);
 
 		//Act ButB6
@@ -800,15 +735,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine6ButB6 = ~cntActLine6ButB6 + 1;
 				~cntActLine6ButB6.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine6ButB6(1);
-					},
-					2,{
-						IFAPCMn.actLine6ButB6(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine6ButB6(1);},
+					2,{IFAPCMn.actLine6ButB6(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB6);
 
 		//Act ButC6
@@ -820,15 +749,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine6ButC6 = ~cntActLine6ButC6 + 1;
 				~cntActLine6ButC6.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine6ButC6(1);
-					},
-					2,{
-						IFAPCMn.actLine6ButC6(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine6ButC6(1);},
+					2,{IFAPCMn.actLine6ButC6(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC6);
 		//--------------------line7
 		~apcMnFad7.free;

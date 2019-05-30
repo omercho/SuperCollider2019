@@ -56,15 +56,12 @@ IFTrack01 {
 		~tOSCAdrr.sendMsg('presetLabel','Prst Trk01');
 		"TRACK 1".postln;
 		~tOSCAdrr.sendMsg('trackLabel','TRACK 1');
-		//~scl1= Scale.chromatic;
-		//~scl2= Scale.humayun;
-		//~scl2= Scale.minor;
 		IFPitch.setScl(scl1:0,scl2:17, root:4);
 		//~tOSCAdrr.sendMsg('scaleLabel', 'humayun');
 		IFPitch.pat(4,0,2,3, 4,0,2,1);
 		//~ifPitchPat.source=Pseq([0,-1,14,-3], inf);
 
-		IFProjectGlobals.setTempo(122);
+		IFProjectGlobals.setTempo(108);
 		~tOSCAdrr.sendMsg('tempoLabel', ~tmp1);
 		~tOSCAdrr.sendMsg('tempoFader', ~tmp1);
 		~nt=(0);
@@ -171,7 +168,7 @@ IFTrack01 {
 		IFSeqDurBass.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
 		IFShuf.setBass        (0,-1,0,3, 0,-2,0,1,  -1,0,1,0, 0,-2,1,0);
 		IFLfo.setBass(10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		IFGlobal.envBass(
+		IFGlobal.setBass(
 			vol:0.89,att:0.01,dec:0.2,sus:0.1,rls:0.3,pan:0.1,sndX:0,sndY:0.1,
 			octMul:1,susMul:0.3,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.0,lfo2:0
 		);
@@ -185,7 +182,7 @@ IFTrack01 {
 		IFSeqDurKeys.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
 		IFShuf.setKeys        (0,-1,0,3, 0,-2,0,1,  -1,0,1,0, 0,-2,1,0);
 		IFLfo.setKeys(110,120,120,30,120,50,80,120,  110,90,80,100,120,127,100);
-		IFGlobal.envKeys(
+		IFGlobal.setKeys(
 			vol:0.99,att:0.1,dec:0.9,sus:0.9,rls:0.3,pan:0.1,sndX:0.2,sndY:0.6,
 			octMul:1,susMul:0.99,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.9,lfo2:0.4
 		);
@@ -200,7 +197,7 @@ IFTrack01 {
 		IFSeqDurMopho.stGrpSet (4,4,4,3, 4,4,4,4,  4,4,3,4, 4,4,4,4);
 		IFShuf.setMopho        (0,-1,0,3, 0,-2,0,1,  -1,0,1,0, 0,-2,1,0);
 		IFLfo.setMopho (10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		IFGlobal.envMopho(
+		IFGlobal.setMopho(
 			vol:0.89,att:0.01,dec:0.2,sus:0.5,rls:0.3,pan:0.1,sndX:0,sndY:0.1,
 			octMul:2,susMul:0.5,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.0,lfo2:0
 		);
@@ -215,7 +212,7 @@ IFTrack01 {
 		IFSeqDurSamp.stGrpSet (4,4,4,4, 4,4,4,4,  4,4,4,4, 4,4,4,4);
 		IFShuf.setSamp        (0,2,0,3, 0,2,0,1,  1,2,3,4, 6,7,8,9);
 		IFLfo.setSamp (10,10,20,30,40,50,80,120,  110,90,80,60,50,20,10);
-		IFGlobal.envSamp(
+		IFGlobal.setSamp(
 			vol:0.89,att:0.1,dec:0.2,sus:0.1,rls:0.3,pan:0.1,sndX:0,sndY:0.1,
 			octMul:1,susMul:0.2,xy1X:0.2,xy1Y:0.3,xy2X:0.2,xy2Y:0.3,lfo1:0.0,lfo2:0
 		);
@@ -228,33 +225,29 @@ IFTrack01 {
 	}//////                                             - 1 -
 
 	*part02{//////                                      - 2 -
-
-
+		IFPitch.pat(0,0,0,-1);
 	}//////                                             - 2 -
-
 	*part03{//////                                      - 3 -
 
 	}//////                                             - 3 -
-
-	*part04{//////                                      - 1 -
+	*part04{//////                                      - 5 -
 
 	}//////                                             - 4 -
-
-	*part05{//////                                      - 1 -
+	*part05{//////                                      - 5 -
 
 	}//////                                             - 5 -
-
 	*part06{//////                                      - 6 -
 
 	}//////                                             - 6 -
-
 	*part07{//////                                      - 7 -
-		//IFTrack01.setActs;
 		"Trck1_Prt7_RNDM".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'Trck1_Prt7_RNDM');
-		IFSeqSteps.long01;
-		~local.sendMsg('susMel',0.2);
 
+		IFGlobal.set(
+			nt1:~tGlbPPat[0],nt2:~tGlbPPat[1],nt3:~tGlbPPat[2],nt4:~tGlbPPat[3],
+			nt5:~tGlbPPat[4],nt6:~tGlbPPat[5],nt7:~tGlbPPat[6],nt8:~tGlbPPat[7],
+			tmp:~tGlb[0],scl1:~tGlb[1],scl2:~tGlb[2],root:~tGlb[3],step:~tGlb[4]
+		);
 		//Static Drum
 		IFSeqVKick.stGrpSet  (
 			~tStKc[0],~tStKc[1],~tStKc[2],~tStKc[3],
@@ -548,7 +541,7 @@ IFTrack01 {
 			~tBsLfo[8],~tBsLfo[9],~tBsLfo[10],~tBsLfo[11],
 			~tBsLfo[12],~tBsLfo[13],~tBsLfo[14],~tBsLfo[15],
 		);
-		IFGlobal.envBass  (
+		IFGlobal.setBass  (
 			~tBsEnv[0],~tBsEnv[1],~tBsEnv[2],~tBsEnv[3],
 			~tBsEnv[4],~tBsEnv[5],~tBsEnv[6],~tBsEnv[7],
 			~tBsEnv[8],~tBsEnv[9],~tBsEnv[10],~tBsEnv[11],
@@ -610,7 +603,7 @@ IFTrack01 {
 			~tKyLfo[8],~tKyLfo[9],~tKyLfo[10],~tKyLfo[11],
 			~tKyLfo[12],~tKyLfo[13],~tKyLfo[14],~tKyLfo[15],
 		);
-		IFGlobal.envKeys  (
+		IFGlobal.setKeys  (
 			~tKyEnv[0],~tKyEnv[1],~tKyEnv[2],~tKyEnv[3],
 			~tKyEnv[4],~tKyEnv[5],~tKyEnv[6],~tKyEnv[7],
 			~tKyEnv[8],~tKyEnv[9],~tKyEnv[10],~tKyEnv[11],
@@ -671,7 +664,7 @@ IFTrack01 {
 			~tMpLfo[8],~tMpLfo[9],~tMpLfo[10],~tMpLfo[11],
 			~tMpLfo[12],~tMpLfo[13],~tMpLfo[14],~tMpLfo[15],
 		);
-		IFGlobal.envMopho  (
+		IFGlobal.setMopho  (
 			~tMpEnv[0],~tMpEnv[1],~tMpEnv[2],~tMpEnv[3],
 			~tMpEnv[4],~tMpEnv[5],~tMpEnv[6],~tMpEnv[7],
 			~tMpEnv[8],~tMpEnv[9],~tMpEnv[10],~tMpEnv[11],
@@ -732,7 +725,7 @@ IFTrack01 {
 			~tSmLfo[8],~tSmLfo[9],~tSmLfo[10],~tSmLfo[11],
 			~tSmLfo[12],~tSmLfo[13],~tSmLfo[14],~tSmLfo[15],
 		);
-		IFGlobal.envSamp  (
+		IFGlobal.setSamp  (
 			~tSmEnv[0],~tSmEnv[1],~tSmEnv[2],~tSmEnv[3],
 			~tSmEnv[4],~tSmEnv[5],~tSmEnv[6],~tSmEnv[7],
 			~tSmEnv[8],~tSmEnv[9],~tSmEnv[10],~tSmEnv[11],
@@ -745,10 +738,9 @@ IFTrack01 {
 		~local.sendMsg('rlsExt',0.2);
 		~local.sendMsg('extSends',0.2,0.3);
 
-
 	}//////                                      - 7 -
 
-	*part08{//////                                      - 8 -
+	*part08{//////                               - 8 -
 		//IFTrack01.setActs;
 		"part8".postln;
 		~tOSCAdrr.sendMsg('partLabel', 'T1prt08');

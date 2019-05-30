@@ -28,6 +28,7 @@ IFSnr {
 		this.globals;
 		this.proxy;
 		this.osc;
+		this.makeOSCResponders;
 	}
 	*globals{
 		~chSnr=1;
@@ -107,11 +108,6 @@ IFSnr {
 
 	}//*proxy
 
-	*octMul{|val|
-		~octMulSnr = val;
-		~tOSCAdrr.sendMsg('octSnrLabel', val);
-	}
-
 	*new{|i=1|
 		var val;
 		val=i;
@@ -119,9 +115,8 @@ IFSnr {
 		{ i == val }  {
 			{val.do{
 				~snrLate.wait;
-				//this.p1_SC(val);
 				this.p1(val);
-				((~dur1SnrP.next)*(~durMulP.next)/val).wait;
+				((~dur1SnrP.next)*(~durMul2P.next)/val).wait;
 			}}.fork;
 		}
 	}
@@ -198,217 +193,133 @@ IFSnr {
 		'/time2Snr'
 		);*/
 
-		~volSnrFader.free;
-		~volSnrFader= OSCFunc({
-			arg msg,vel;
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('volSnr', msg[1]);
-			~mdOut.control(3, 1, vel);
-		},
-		'/volSnr'
-		);
 
-		~xy1Snr.free;
-		~xy1Snr= OSCFunc({
-			arg msg,val1,val2,vel;
-			val1=msg[1];
-			val2=msg[2];
-			vel=msg[1]*127;
-			if ( ~volcaBoolean==1, {
-				~mdOut.control(3, 11, msg[2]*127); //Snr / Act Delay1
-				~mdOut.control(3, 12, msg[1]*127); //Snr / Act Delay2
-				~tOSCAdrr.sendMsg('xy1Snr', msg[1], msg[2]);
-			},{
-				~tOSCAdrr.sendMsg('xy1Snr', msg[1], msg[2]);
-			});
-
-		},
-		'/xy1Snr'
-		);
-		~attSnrFader.free;
-		~attSnrFader= OSCFunc({
-			arg msg,vel;
-			vel=msg[1]*127;
-			~tOSCAdrr.sendMsg('attSnr', msg[1]);
-			~mdOut.control(3, 5, vel);
-			//~nobD2_m2Val= msg[1]*127;
-		},
-		'attSnr'
-		);
-
-		~susLevSnrFader.free;
-		~susLevSnrFader= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('susSnr', msg[1]);
-			~susLevSnr=msg[1];
-			~mdOut.control(3, 6, msg[1]*127);
-		},
-		'/susSnr'
-		);
-
-		~decSnrFader.free;
-		~decSnrFader= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('decSnr', msg[1]);
-			~decSnr=msg[1];
-			~mdOut.control(3, 127, msg[1]*127);
-			//~nobD2_m1Val= msg[1]*127;
-		},
-		'/decSnr'
-		);
-
-		~chainSnrFader.free;
-		~chainSnrFader= OSCFunc({
-			arg msg;
-			~tOSCAdrr.sendMsg('chainSnr', msg[1]);
-			~mdOut.control(3, 8, msg[1]*127);
-		},
-		'/chainSnr'
-		);
-
-		~sendSnrXY.free;
-		~sendSnrXY= OSCFunc({
-			arg msg,vel1,vel2;
-
-			vel1=msg[1]*127;
-			vel2=msg[2]*127;
-			~mdOut.control(3, 4, vel1); // IFSnr
-			~mdOut.control(3, 3, vel2); // IFSnr
-			~tOSCAdrr.sendMsg('sendSnr', msg[1], msg[2]);
-
-		},
-		'sendSnr'
-		);
-
-		//TIME
-
-		~tmMulSnrBut1.free;
-		~tmMulSnrBut1= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulSnr.source = Pseq([1], inf);
-				~tOSCAdrr.sendMsg('tmSnrLabel', 1);
-
-			});
-
-		},
-		'/tmMulSnr1'
-		);
-		~tmMulSnrBut2.free;
-		~tmMulSnrBut2= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulSnr.source = Pseq([2], inf);
-				~tOSCAdrr.sendMsg('tmSnrLabel', 2);
-
-			});
-
-		},
-		'/tmMulSnr2'
-		);
-		~tmMulSnrBut3.free;
-		~tmMulSnrBut3= OSCFunc({
-			arg msg;
-			if ( msg[1]==1, {
-
-				~tmMulSnr.source = Pseq([3], inf);
-				~tOSCAdrr.sendMsg('tmSnrLabel', 3);
-
-			});
-
-		},
-		'/tmMulSnr3'
-		);
-
-		~octSnrMulBut.free;
-		~octSnrMulBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulSnr = ~octMulSnr+1;
-				~tOSCAdrr.sendMsg('octSnrLabel', ~octMulSnr);
-
-			});
-
-		},
-		'/octSnrMul'
-		);
-
-		~octSnrZeroBut.free;
-		~octSnrZeroBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulSnr = 0;
-				~tOSCAdrr.sendMsg('octSnrLabel', ~octMulSnr);
-
-			});
-
-		},
-		'/octSnrZero'
-		);
-
-		~octSnrDivBut.free;
-		~octSnrDivBut= OSCFunc({
-			arg msg;
-
-
-			if ( msg[1]==1, {
-
-				~octMulSnr = ~octMulSnr-1;
-				~tOSCAdrr.sendMsg('octSnrLabel', ~octMulSnr);
-
-			});
-
-		},
-		'/octSnrDiv'
-		);
 
 	}
 
-	//Snr Beat Counter
-	*timesCount {
-		timeCnt = timeCnt + 1;
-		timeCnt.switch(
-
-			1, {  },
-			4, {  },
-			6, {  },
-			8, {  },
-			9, {  },
-			10, {  },
-			15, {  },
-			17, {  },
-			18, {
-				("        -----------SnareTimesCnt"+timeCnt).postln;
-
-				timeCnt=0;
+	//      NEW OSC
+	*set{|key,val|
+		var vel, valNew;
+		vel=val*127;
+		key.switch(
+			/*\timeM,{
+				if ( val==1, {
+					~apcMn.noteOn(~apcMnCh, ~actButA4, 1);
+					~tmMulSnr.source = Pseq([2], inf);
+				});
+			},*/
+			\octMDcr,{
+				if ( val==1, {
+					~crntSnr_octM=~crntSnr_octM-1;
+					IFSnr.set1(\octM,~crntSnr_octM);
+				});
+			},
+			\octMIcr,{
+				if ( val==1, {
+					~crntSnr_octM=~crntSnr_octM+1;
+					IFSnr.set1(\octM,~crntSnr_octM);
+				});
+			},
+			\octMZero,{
+				if ( val==1, {
+					IFSnr.set1(\octM,0);
+				});
+			},
+		);
+	}
+	*lbl1{|key,val1=0|
+		~tOSCAdrr.sendMsg(key,val1);
+	}
+	*set1{|key,val1=0|
+		var vel1;
+		vel1=val1*127;
+		key.switch(
+			\vol, {
+				~crntSnr_vol=val1;
+				this.lbl1(\volSnr,val1);
+				~volSnr.source = val1;
+				~mdOut.control(3, 1, vel1);
+			},
+			\octM, {
+				~crntSnr_octM=val1;
+				this.lbl1(\IFoctMSnrLbl,val1);
+				~octMulSnr = val1;
+			},
+			\susM, {
+				~crntSnr_susM=val1;
+				this.lbl1(\IFsusMSnr,val1);
+				~susMulSnr=val1;
+			},
+			\dec, {
+				~crntSnr_dec=val1;
+				this.lbl1(\IFdecSnr,val1);
+				~mdOut.control(3, 127, vel1);
+			},
+			\dly, {
+				~crntSnr_sus=val1;
+				this.lbl1(\IFdlySnr,val1);
+				//~mdOut.control(5, 6, vel1);
+			},
+			\pan, {
+				~crntSnr_pan=val1;
+				this.lbl1(\IFpanSnr,val1);
+				//~mdOut.control(5, 8, vel1);
 			},
 
 		);
-
 	}
+	*lbl2{|key, val1=0, val2=0|
+		var chan;
+		~tOSCAdrr.sendMsg(key,val1,val2);
+	}
+	*set2{|key, val1=0, val2=0|
+		var vel1,vel2;
+		vel1=val1*127;
+		vel2=val2*127;
+		key.switch(
+			\send, {
+				this.lbl2(\sendSnr,val1,val2);
+				~mdOut.control(3, 4, vel1); // IFSnr
+				~mdOut.control(3, 3, vel2); // IFSnr
+				~crntSnr_sndY=val1;
+				~crntSnr_sndX=val2;
+			},
+		);
+	}
+	*oscResp{|respName,oscName,playTag|
+		OSCdef(respName, {|msg|
+			var val, val1,val2;
+			val= msg[1];
+			val1= msg[1];
+			val2= msg[2];
+			playTag.switch(
+				'octMDcrSnr_T', { this.set(\octMDcr,val);},
+				'octMIcrSnr_T', { this.set(\octMIcr,val);},
+				'octMZeroSnr_T', { this.set(\octMZero,val);},
+				//-GlobalSettings
+				'volSnr_T' , { this.set1(\vol,val1);},
+				'octMSnr_T', { this.set1(\octM,val1);},
+				'susMSnr_T', { this.set1(\susM,val1);},
+				'decSnr_T' , { this.set1(\dec,val1);},
+				'susSnr_T' , { this.set1(\dly,val1);},
+				'panSnr_T' , { this.set1(\pan,val1);},
+				'sendSnr_T', { this.set2(\send,val1,val2);},
 
-	*count2 {
-		1.do{
-			counter2 = counter2 + 1;
-			counter2.switch(
-				3, {
-					("            SnareCnt"+counter2).postln;
-					this.ctl_2;
-					counter2 = 0;
-
-				}
-
-			)
-		}
-
+			);
+		},path:oscName);
+	}
+	*makeOSCResponders{
+		this.oscResp(respName:\octMDcrSnrResp, oscName:\IFoctMDcrSnr, playTag:'octMDcrSnr_T');
+		this.oscResp(respName:\octMIcrSnrResp, oscName:\IFoctMIcrSnr, playTag:'octMIcrSnr_T');
+		this.oscResp(respName:\octMZeroSnrResp, oscName:\IFoctMZeroSnr, playTag:'octMZeroSnr_T');
+		//-GlobalSettings
+		this.oscResp(respName:\volSnrResp, oscName:\IFvolSnr, playTag:'volSnr_T');
+		this.oscResp(respName:\octMSnrResp, oscName:\IFoctMSnr, playTag:'octMSnr_T');
+		this.oscResp(respName:\susMSnrResp, oscName:\IFsusMSnr, playTag:'susMSnr_T');
+		this.oscResp(respName:\decSnrResp, oscName:\IFdecSnr, playTag:'decSnr_T');
+		this.oscResp(respName:\dlySnrResp, oscName:\IFdlySnr, playTag:'dlySnr_T');
+		this.oscResp(respName:\panSnrResp, oscName:\IFpanSnr, playTag:'panSnr_T');
+		this.oscResp(respName:\sendSnrResp, oscName:\IFsendSnr, playTag:'sendSnr_T');
 	}
 
 

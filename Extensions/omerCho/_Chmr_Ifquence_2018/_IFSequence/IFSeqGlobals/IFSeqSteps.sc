@@ -1,16 +1,41 @@
 //IFSeqSteps.forward;
 
 IFSeqSteps {
+	classvar <>list;
 	*load {
-		~nt=(0);
-		//this.loadDefault;
-		this.preset01('seqA');
-		this.preset01('seqB');
-		this.preset01('seqC');
-		this.preset01('seqD');
 		this.makeResponders;
-		//this.backward;
+		this.new(1);
 
+	}
+	*new{|direct|
+		~crntStepDir=direct;
+		direct.switch(
+			00,{ this.first4;},
+			01,{ this.long01;},
+			02,{ this.long02;},
+			03,{ this.long03;},
+			04,{ this.long04;},
+			05,{ this.forward;},
+			06,{ this.forward2;},
+			07,{ this.first8;},
+			08,{ this.second8;},
+			09,{ this.first8back;},
+			10,{ this.second8back;},
+			11,{ this.mirror;},
+			12,{ this.slide1;},
+			13,{ this.slide2;},
+			14,{ this.random;},
+			15,{ this.shuf;},
+			16,{ this.backward;}
+		)
+	}
+
+	*first4{
+		~tOSCAdrr.sendMsg('stepsLabel', 'First4');
+		~stepNum1.source  =  Pseq([1,2,3,4], inf);
+		~stepNum2.source  =  Pseq([1,2,3,4], inf);
+		~stepNum3.source  =  Pseq([1,2,3,4], inf);
+		~stepNum4.source  =  Pseq([1,2,3,4], inf);
 	}
 	*long01{
 		~tOSCAdrr.sendMsg('stepsLabel', 'Long 01');
@@ -54,7 +79,7 @@ IFSeqSteps {
 	*long03{
 		~tOSCAdrr.sendMsg('stepsLabel', 'Long 01');
 		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
-		~stepNum2.source  =   Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+		~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8], inf);
 		~stepNum4.source  =  Pseq([
 			1,2,3,4,1,6,3,8,
@@ -115,7 +140,7 @@ IFSeqSteps {
 	}
 	*random {
 		~tOSCAdrr.sendMsg('stepsLabel', 'Random');
-		~stepNum1.source  =  Pxrand([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pxrand([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum3.source  =  Pxrand([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum4.source  =  Pxrand([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
@@ -123,7 +148,7 @@ IFSeqSteps {
 
 	*mirror {
 		~tOSCAdrr.sendMsg('stepsLabel', 'Mirror');
-		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].mirror, inf);
+		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].mirror, inf);
 		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].mirror, inf);
 		~stepNum4.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].mirror, inf);
@@ -131,21 +156,21 @@ IFSeqSteps {
 
 	*slide1 {
 		~tOSCAdrr.sendMsg('stepsLabel', 'Slide 4/2');
-		~stepNum1.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 4,4,0);
+		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 4,2,0);
 		~stepNum3.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 3,1,0);
 		~stepNum4.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 4,1,0);
 	}
 	*slide2 {
 		~tOSCAdrr.sendMsg('stepsLabel', 'Slide 8/2');
-		~stepNum1.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 8,2,0);
+		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 8,2,0);
 		~stepNum3.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 8,2,0);
 		~stepNum4.source  =  Pslide([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],  inf, 8,2,0);
 	}
 	*first8back {
 		~tOSCAdrr.sendMsg('stepsLabel', '8-->1');
-		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8].reverse, inf);
+		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8], inf);
 		~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8].reverse, inf);
 		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8].reverse, inf);
 		~stepNum4.source  =  Pseq([1,2,3,4,5,6,7,8].reverse, inf);
@@ -159,14 +184,14 @@ IFSeqSteps {
 	}
 	*second8back {
 		~tOSCAdrr.sendMsg('stepsLabel', '16-->9');
-		~stepNum1.source  =  Pseq([9,10,11,12,13,14,15,16].reverse, inf);
+		~stepNum1.source  =  Pseq([9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pseq([9,10,11,12,13,14,15,16].reverse, inf);
 		~stepNum3.source  =  Pseq([9,10,11,12,13,14,15,16].reverse, inf);
 		~stepNum4.source  =  Pseq([9,10,11,12,13,14,15,16].reverse, inf);
 	}
 	*backward {
 		~tOSCAdrr.sendMsg('stepsLabel', 'Backward');
-		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);
+		~stepNum1.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
 		~stepNum2.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);
 		~stepNum3.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);
 		~stepNum4.source  =  Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);
