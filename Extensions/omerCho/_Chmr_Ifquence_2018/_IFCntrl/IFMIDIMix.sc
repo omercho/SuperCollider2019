@@ -168,7 +168,7 @@ IFMIDIMix{
 		~actVPcm.source=val;*/
 		~cntMixAct4ButB=val;
 	}
-	//actLine5 -- VSamp01
+	//actLine5
 	*act5ButA{|val|
 		~mdMix.noteOn(~mdMixGlobChan, ~recBut5, val); //But A
 		/*~tOSCAdrr.sendMsg('activVTomL', val);
@@ -266,8 +266,7 @@ IFMIDIMix{
 			if ( vel==127, {
 				~cntMixActBankButA = ~cntMixActBankButA + 1;
 				~cntMixActBankButA.switch(
-					0,{},
-					1, {IFMIDIMix.actBankButA(1);},
+					1,{IFMIDIMix.actBankButA(1);},
 					2,{IFMIDIMix.actBankButA(0);}
 				)});
 		},srcID:~mdMixInID, chan:~mdMixGlobChan, noteNum:~bankRight);
@@ -547,7 +546,6 @@ IFMIDIMix{
 			if ( vel==127, {
 				~cntMixAct5ButB = ~cntMixAct5ButB + 1;
 				~cntMixAct5ButB.switch(
-					0,{},
 					1,{this.act5ButB(1);},
 					2,{this.act5ButB(0);}
 				)});
@@ -556,13 +554,12 @@ IFMIDIMix{
 		~mdMixFad5=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			IFKeys.set1(\susM,val);
+			IFMopho.set1(\susM,val);
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:30);
 		~mdMixNob5A.free;
 		~mdMixNob5A=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-
 
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:33);
 		~mdMixNob5B.free;
@@ -570,16 +567,13 @@ IFMIDIMix{
 			arg vel,val;
 			val=vel/127;
 
-
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:32);
 		~mdMixNob5C.free;
 		~mdMixNob5C=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			~tOSCAdrr.sendMsg('volClnKeys', val);
-			//~mdOut.control(1, 16, 2); //Cln Keys Vol
-			~mdOut.control(1, 19, vel); //Cln Keys Vol
-
+			~tOSCAdrr.sendMsg('volClnMopho', val);
+			~mdOut.control(1, 18, vel); //Cln Mopho Vol
 		},srcID:~mdMixInID, chan:~mdMixLn5, ccNum:31);
 		////////-------------------line6
 		//Act6 ButA
@@ -614,7 +608,8 @@ IFMIDIMix{
 		~mdMixFad6=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			IFMopho.set1(\susM,val);
+			IFKeys.set1(\susM,val);
+
 		},srcID:~mdMixInID, chan:~mdMixLn6, ccNum:30);
 		~mdMixNob6A.free;
 		~mdMixNob6A=MIDIFunc.cc( {
@@ -632,8 +627,8 @@ IFMIDIMix{
 		~mdMixNob6C=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			~tOSCAdrr.sendMsg('volClnMopho', val);
-			~mdOut.control(1, 18, vel); //Cln Mopho Vol
+			~tOSCAdrr.sendMsg('volClnKeys', val);
+			~mdOut.control(1, 19, vel); //Cln Keys Vol
 		},srcID:~mdMixInID, chan:~mdMixLn6, ccNum:31);
 		//Act7 ButA
 		~cntMixAct7ButA=0;

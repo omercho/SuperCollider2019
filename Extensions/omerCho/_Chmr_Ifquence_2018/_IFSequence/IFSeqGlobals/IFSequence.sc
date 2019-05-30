@@ -14,17 +14,16 @@ IFSequence {
 	*loadAll {
 		this.loadProxy;
 		this.cntrl;
+
+		IFSeqPat.loadAll;
+
 		IFSeqKick.loadAll;
-		//IFSeqKick2.loadAll;
 		IFSeqSnr.loadAll;
-		//IFSeqSnr2.loadAll;
 		IFSeqHat.loadAll;
-		//IFSeqHat2.loadAll;
 		IFSeqBass.loadAll;
 		IFSeqKeys.loadAll;
 		IFSeqSamp.loadAll;
 		IFSeqMopho.loadAll;
-		IFSeqPat.loadAll;
 
 		IFSeqVKick.loadAll;
 		IFSeqVSnr.loadAll;

@@ -253,14 +253,14 @@ IFAPCMn{
 	}
 	*actLine5ButTS5{|val|
 		~apcMn.noteOn(~apcLn1, ~actButTS5, val); //ButTS
-		~tOSCAdrr.sendMsg('activKeys', val);
-		~actKeys.source=val;
+		~tOSCAdrr.sendMsg('activMopho', val);
+		~actMopho.source=val;
 		~cntActLine5ButTS5=val;
 	}
 	*actLine6ButTS6{|val|
 		~apcMn.noteOn(~apcLn1, ~actButTS6, val); //ButTS
-		~tOSCAdrr.sendMsg('activMopho', val);
-		~actMopho.source=val;
+		~tOSCAdrr.sendMsg('activKeys', val);
+		~actKeys.source=val;
 		~cntActLine6ButTS6=val;
 	}
 	*actLine7ButTS7{|val|
@@ -353,14 +353,14 @@ IFAPCMn{
 	}
 	*actLine5ButB5{|val|
 		~apcMn.noteOn(~apcLn1, ~actButB5, val+5); //But C
-		~tOSCAdrr.sendMsg('shufKeys', val);
-		~local.sendMsg('shufKeys', val);
+		~tOSCAdrr.sendMsg('shufMopho', val);
+		~local.sendMsg('shufMopho', val);
 		~cntActLine5ButB5=val;
 	}
 	*actLine6ButB6{|val|
 		~apcMn.noteOn(~apcLn1, ~actButB6, val+5); //But C
-		~tOSCAdrr.sendMsg('shufMopho', val);
-		~local.sendMsg('shufMopho', val);
+		~tOSCAdrr.sendMsg('shufKeys', val);
+		~local.sendMsg('shufKeys', val);
 		~cntActLine6ButB6=val;
 	}
 	*actLine7ButB7{|val|
@@ -536,7 +536,6 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine2ButA2 = ~cntActLine2ButA2 + 1;
 				~cntActLine2ButA2.switch(
-					0,{},
 					1,{IFAPCMn.actLine2ButA2(1);},
 					2,{IFAPCMn.actLine2ButA2(0);}
 			)});
@@ -551,11 +550,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine2ButB2 = ~cntActLine2ButB2 + 1;
 				~cntActLine2ButB2.switch(
-					0,{},
 					1,{IFAPCMn.actLine2ButB2(1);},
 					2,{IFAPCMn.actLine2ButB2(0);}
-			)}
-			);
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB2);
 
 		//Act ButC2
@@ -567,11 +564,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine2ButC2 = ~cntActLine2ButC2 + 1;
 				~cntActLine2ButC2.switch(
-					0,{},
 					1,{IFAPCMn.actLine2ButC2(1);},
 					2,{IFAPCMn.actLine2ButC2(0);}
-			)}
-			);
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC2);
 		////--------------------line3
 		~apcMnFad3.free;
@@ -591,8 +586,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine3ButA3 = ~cntActLine3ButA3 + 1;
 				~cntActLine3ButA3.switch(
-					0,{},
-					1, {IFAPCMn.actLine3ButA3(1);},
+					1,{IFAPCMn.actLine3ButA3(1);},
 					2,{IFAPCMn.actLine3ButA3(0);}
 			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA3);
@@ -604,7 +598,6 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine3ButB3 = ~cntActLine3ButB3 + 1;
 				~cntActLine3ButB3.switch(
-					0,{},
 					1,{IFAPCMn.actLine3ButB3(1);},
 					2,{IFAPCMn.actLine3ButB3(0);}
 			)}
@@ -668,7 +661,7 @@ IFAPCMn{
 		~apcMnFad5=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			IFKeys.set1(\vol,val);
+			IFMopho.set1(\vol,val);
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd5);
 		//Act ButA5
 		~cntActLine5ButA5=0;
@@ -712,7 +705,7 @@ IFAPCMn{
 		~apcMnFad6=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			IFMopho.set1(\vol,val);
+			IFKeys.set1(\vol,val);
 		},srcID:~apcMnInID, chan:~apcMnCh, ccNum:~apcFd6);
 		~cntActLine6ButA6=0;
 		~mdActLine6ButA6.free;
@@ -770,15 +763,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine7ButA7 = ~cntActLine7ButA7 + 1;
 				~cntActLine7ButA7.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine7ButA7(1);
-					},
-					2,{
-						IFAPCMn.actLine7ButA7(0);
-					}
-			)}
-			);
+					1,{IFAPCMn.actLine7ButA7(1);},
+					2,{IFAPCMn.actLine7ButA7(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButA7);
 
 		//Act ButB4
@@ -790,15 +777,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine7ButB7 = ~cntActLine7ButB7 + 1;
 				~cntActLine7ButB7.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine7ButB7(1);
-					},
-					2,{
-						IFAPCMn.actLine7ButB7(0);
-					}
-			)}
-			);
+					1, {IFAPCMn.actLine7ButB7(1);},
+					2,{IFAPCMn.actLine7ButB7(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButB7);
 
 		//Act ButC
@@ -810,15 +791,9 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine7ButC7 = ~cntActLine7ButC7 + 1;
 				~cntActLine7ButC7.switch(
-					0,{},
-					1, {
-						IFAPCMn.actLine7ButC7(1);
-					},
-					2,{
-						IFAPCMn.actLine7ButC7(0);
-					}
-			)}
-			);
+					1, {IFAPCMn.actLine7ButC7(1);},
+					2,{IFAPCMn.actLine7ButC7(0);}
+			)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButC7);
 		//--------------------line8
 		~apcMnFad8.free;
@@ -837,8 +812,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine1ButTS1 = ~cntActLine1ButTS1 + 1;
 				~cntActLine1ButTS1.switch(
-					0,{},
-					1, {this.actLine1ButTS1(1);},
+					1,{this.actLine1ButTS1(1);},
 					2,{this.actLine1ButTS1(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS1);
@@ -850,8 +824,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine2ButTS2 = ~cntActLine2ButTS2 + 1;
 				~cntActLine2ButTS2.switch(
-					0,{},
-					1, {this.actLine2ButTS2(1);},
+					1,{this.actLine2ButTS2(1);},
 					2,{this.actLine2ButTS2(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS2);
@@ -863,8 +836,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine3ButTS3 = ~cntActLine3ButTS3 + 1;
 				~cntActLine3ButTS3.switch(
-					0,{},
-					1, {this.actLine3ButTS3(1);},
+					1,{this.actLine3ButTS3(1);},
 					2,{this.actLine3ButTS3(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS3);
@@ -876,8 +848,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine4ButTS4 = ~cntActLine4ButTS4 + 1;
 				~cntActLine4ButTS4.switch(
-					0,{},
-					1, {this.actLine4ButTS4(1);},
+					1,{this.actLine4ButTS4(1);},
 					2,{this.actLine4ButTS4(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS4);
@@ -889,8 +860,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine5ButTS5 = ~cntActLine5ButTS5 + 1;
 				~cntActLine5ButTS5.switch(
-					0,{},
-					1, {this.actLine5ButTS5(1);},
+					1,{this.actLine5ButTS5(1);},
 					2,{this.actLine5ButTS5(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS5);
@@ -902,8 +872,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine6ButTS6 = ~cntActLine6ButTS6 + 1;
 				~cntActLine6ButTS6.switch(
-					0,{},
-					1, {this.actLine6ButTS6(1);},
+					1,{this.actLine6ButTS6(1);},
 					2,{this.actLine6ButTS6(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS6);
@@ -915,8 +884,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine7ButTS7 = ~cntActLine7ButTS7 + 1;
 				~cntActLine7ButTS7.switch(
-					0,{},
-					1, {this.actLine7ButTS7(1);},
+					1,{this.actLine7ButTS7(1);},
 					2,{this.actLine7ButTS7(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS7);
@@ -928,8 +896,7 @@ IFAPCMn{
 			if ( vel==127, {
 				~cntActLine8ButTS8 = ~cntActLine8ButTS8 + 1;
 				~cntActLine8ButTS8.switch(
-					0,{},
-					1, {this.actLine8ButTS8(1);},
+					1,{this.actLine8ButTS8(1);},
 					2,{this.actLine8ButTS8(0);}
 				)});
 		},srcID:~apcMnInID, chan:~apcMnCh, noteNum:~actButTS8);

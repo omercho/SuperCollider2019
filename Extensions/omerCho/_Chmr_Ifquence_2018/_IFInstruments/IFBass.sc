@@ -120,13 +120,13 @@ IFBass {
 		var val;
 		val=i;
 		Pbind(
-			\chan, ~chVBass,
-			\type, \midi, \midiout,~vBass, \scale, Pfunc({~scl2}, inf),
+			\chan, ~chBass,
+			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
 			\dur, Pseq([~dur1BassP.next],~actBassP.next),
 			\degree, Pseq([~nt1BassP.next], inf),
 			\amp, Pseq([~volBassP.next*~amp1BassP.next], inf),
 			\sustain, Pseq([~sus1BassP.next],inf)*~susMulBass,
-			\mtranspose, Pseq([~transBassP.next], inf)+~transCntBassP.next+~trBass+~transShufBassP.next,
+			\mtranspose, Pseq([~transBassP.next], inf)+~transShufBassP.next+~transCntBassP.next+~trBass,
 			\ctranspose, Pseq([~rootBassP.next],inf),
 			\octave, Pseq([~octBassP.next], inf)+~octMulBass,
 			\harmonic, Pseq([~hrmBassP.next], inf)+~harmBass

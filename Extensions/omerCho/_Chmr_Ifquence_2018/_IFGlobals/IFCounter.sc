@@ -12,21 +12,21 @@ IFCounter{
 	classvar <>cnt=0, <>counter=0,<>secCount=0, <>mainCount=0, <>clockSecs=0,<>clockMins=0,<>clockStart, <>clockNow, <>oneSec=0,<>seconds=0;
 
 	*loadProxy {
-		~cntNt16=0;
+		~cntNt=0;
 		~stepNumCnt = PatternProxy( Pseq([0], inf));
 		~stepNumCntP= Pseq([~stepNumCnt], inf).asStream;
 	}
 	*cnt8{
-		~cntNt16=~cntNt16+1;
-		~cntNt16.postln;
-		~cntNt16.switch(
+		~cntNt=~cntNt+1;
+		~cntNt.postln;
+		~cntNt.switch(
 			0,{},
 			1,{
 				"TRASPOSE CHANGE".postln;
 				IFPitch.trnsCnt(~ifPitchPatP.next;);
 			},
 			8,{
-				~cntNt16=0;
+				~cntNt=0;
 			}
 		);
 	}
@@ -42,7 +42,7 @@ IFCounter{
 		^clockStart;
 	}
 	*reset{
-		~cntNt16=0;
+		~cntNt=0;
 		mainCount=0;
 		secCount=0;
 		clockMins=0;

@@ -539,9 +539,10 @@ IFSeqNtPat {
 					7, {IFSeqNtPat.st16(6);},
 					8, {IFSeqNtPat.st16(7);},
 					9, {IFSeqNtPat.st16(8);},
-					10, {IFSeqNtPat.st16(9);},
+					10,{IFSeqNtPat.st16(9);},
 					11,{IFSeqNtPat.st16(10);},
-					12,{IFSeqNtPat.st16(11);
+					12,{
+						IFSeqNtPat.st16(11);
 						~cntSeqNtPat16=0;
 					}
 				)}
