@@ -17,14 +17,12 @@ IFStat {
 	*load {
 		this.globals;
 		this.proxy;
-		this.mdMix;
 		this.preSet;
-
-
 	}
 
 	*globals{
 		~chJmx=0;
+		~chStatKick=8;
 		~chStatDrum=8;
 		~chStatHats=9;
 		~chStat=9;
@@ -221,7 +219,6 @@ IFStat {
 			\amp, Pseq([~volVClapP.next*~ampVClapP.next], inf),
 			\sustain, Pseq([~susVClapP.next],inf)*~susMulVSnr
 		).play(~clkDrum, quant: 0);
-
 	}
 	*ln05 {|i=1|
 		var val;
@@ -274,35 +271,6 @@ IFStat {
 		).play(~clkDrum, quant: 0);
 	}//stat01
 
-	*mdMix{
-		/*~decVHatC_Mix.free;
-		~decVHatC_Mix=MIDIFunc.cc( {
-			arg vel;
-			~tOSCAdrr.sendMsg('decVTom', vel/127);
-			~vBeats.control(9, ~tomDec, vel);
-
-		},srcID:~mdMixInID, chan:~mdMixLn2, ccNum:33);
-
-		~volVHat_Mix.free;
-		~volVHat_Mix=MIDIFunc.cc( {
-			arg vel;
-			~tOSCAdrr.sendMsg('volVHat', vel/127);
-			~vBeats.control(9, ~hatCLev, vel);
-			~vBeats.control(9, ~hatOLev, vel);
-
-		},srcID:~mdMixInID, chan:~mdMixLn3, ccNum:30);
-
-		~volVPCM_Mix.free;
-		~volVPCM_Mix=MIDIFunc.cc( {
-			arg vel;
-			//~tOSCAdrr.sendMsg('volVKick', vel/127);
-			~vBeats.control(9, ~calvLev, vel);
-			~vBeats.control(9, ~agogLev, vel);
-			~vBeats.control(9, ~clapLev, vel);
-			~vBeats.control(9, ~crshLev, vel);
-
-		},srcID:~mdMixInID, chan:~mdMixLn4, ccNum:30);*/
-	}//*mdMix
 
 	*preSet{
 

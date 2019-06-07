@@ -56,10 +56,10 @@ NoteOnResponder.removeAll
 
 
 
-~mdOut.control(1, 0, ~midiVel); //AllMaster / Track Vol
-~mdOut.control(1, 1, ~midiVel); //AllMaster / Speaker On
-//~mdOut.control(1, 2, ~midiVel); //AllMasterFX / Track Vol
-~mdOut.control(1, 3, ~midiVel); //AllMasterFX / Speaker On
+~mdOut.control(1, 0, ~midiVel); //AllMaster / Track Vol1
+~mdOut.control(1, 1, ~midiVel); //AllMaster / Track Vol2
+~mdOut.control(1, 2, ~midiVel); //AllMasterFX / DryWet
+~mdOut.control(1, 3, ~midiVel); //AllMasterFX / asejaeyjjyagj
 ~mdOut.control(1, 4, ~midiVel); //AllMaster / Send A
 ~mdOut.control(1, 5, ~midiVel); //AllMaster / Send B
 ~mdOut.control(1, 6, ~midiVel); //AllMasterFX / Comp
@@ -145,6 +145,7 @@ NoteOnResponder.removeAll
 ~mdOut.control(5, 13, ~midiVel); //IFBass / Cut X
 ~mdOut.control(5, 14, ~midiVel); //IFBass / Cut Y
 ~mdOut.control(5, 15, ~midiVel); //Bass / Act Delay-Filter LFO
+~mdOut.control(5, 16, ~midiVel); //Bass / pan
 ~mdOut.control(5, 40, ~midiVel); //IFBass / lfo 1
 ~mdOut.control(5, 41, ~midiVel); //IFBass / lfo 2
 

@@ -46,6 +46,8 @@ IFHat {
 		~amp1HatP = Pseq([~amp1Hat], inf).asStream;
 		~dur1Hat = PatternProxy( Pseq([1], inf));
 		~dur1HatP = Pseq([~dur1Hat], inf).asStream;
+		~durMulHat = PatternProxy( Pseq([1], inf));
+		~durMulHatP = Pseq([~durMulHat], inf).asStream;
 		~sus1Hat = PatternProxy( Pseq([1], inf));
 		~sus1HatP = Pseq([~sus1Hat], inf).asStream;
 		~volHat = PatternProxy( Pseq([1.0], inf));
@@ -104,7 +106,7 @@ IFHat {
 			{val.do{
 				~lateHat.wait;
 				this.p1(val);
-				((~dur1HatP.next)*(~durMul2P.next)/val).wait;
+				((~dur1HatP.next)*(~durMulHatP.next)/val).wait;
 			}}.fork;
 		}
 	}
@@ -117,7 +119,7 @@ IFHat {
 			{val.do{
 
 				this.p2(val);
-				((~dur2HatP.next)*(~durMulP.next)/val).wait;
+				((~dur2HatP.next)*(~durMul2P.next)/val).wait;
 			}}.fork;
 		}
 

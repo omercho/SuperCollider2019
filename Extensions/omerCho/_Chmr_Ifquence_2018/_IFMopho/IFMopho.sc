@@ -56,6 +56,8 @@ IFMopho {
 		~nt1MophoP = Pseq([~nt1Mopho], inf).asStream;
 		~dur1Mopho = PatternProxy( Pseq([1], inf));
 		~dur1MophoP = Pseq([~dur1Mopho], inf).asStream;
+		~durMulMopho = PatternProxy( Pseq([1], inf));
+		~durMulMophoP = Pseq([~durMulMopho], inf).asStream;
 		~amp1Mopho = PatternProxy( Pseq([0.9], inf));
 		~amp1MophoP = Pseq([~amp1Mopho], inf).asStream;
 		~sus1Mopho = PatternProxy( Pseq([1], inf));
@@ -118,7 +120,7 @@ IFMopho {
 			{val.do{
 				~lateMopho.wait;
 				this.p1(val);
-				((~dur1MophoP.next)*(~durMul4P.next)/val).wait;
+				((~dur1MophoP.next)*(~durMulMophoP.next)/val).wait;
 			}}.fork;
 		}
 	}

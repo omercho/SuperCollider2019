@@ -32,25 +32,48 @@ IFPitch {
 		this.trans;
 	}
 	*loadProxy {
+		~ifPitchMst = PatternProxy( Pseq([0], inf));
+		~ifPitchMstP= Pseq([~ifPitchMst], inf).asStream;
 		~ifPitchPat = PatternProxy( Pseq([0], inf));
 		~ifPitchPatP= Pseq([~ifPitchPat], inf).asStream;
+		~ifPitchLbl = PatternProxy( Pseq([0], inf));
+		~ifPitchLblP= Pseq([~ifPitchLbl], inf).asStream;
 	}
-	*pat{|nt1=0,nt2=0,nt3=0,nt4=0,nt5=0,nt6=0,nt7=0,nt8=0|
-		~ifPitchPat.source=Pseq([nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8], inf);
+	*new{
+		{IFPitch.trnsCnt(~ifPitchMstP.next);}.fork;
 	}
-	*new{|trns=0|
+	*pat{|nt1=0,nt2=0,nt3=0,nt4=0,nt5=0,nt6=0,nt7=0,nt8=0,
+		nt9=0,nt10=0,nt11=0,nt12=0,nt13=0,nt14=0,nt15=0,nt16=0|
+		~ifPitchPat.source=Pseq([
+			nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8,nt9,nt10,nt11,nt12,nt13,nt14,nt15,nt16
+		], inf);
+		~ifPitchLbl.source=Pseq([
+			nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8,nt9,nt10,nt11,nt12,nt13,nt14,nt15,nt16
+		], inf);
+	}
+	*trns{|trns=0|
 		~transBass.source=(trns);
+		~transMopho.source=(trns);
 		~transKeys.source=(trns);
 		~transSamp.source=(trns);
-		~transMopho.source=(trns);
 		~transExt.source=(trns);
 	}
 	*trnsCnt{|trns=0|
 		~transCntBass.source=(trns);
+		~transCntMopho.source=(trns);
 		~transCntKeys.source=(trns);
 		~transCntSamp.source=(trns);
-		~transCntMopho.source=(trns);
 		~transCntExt.source=(trns);
+		trns.switch(
+			(-3),{~local.sendMsg('ntRt-3', 1);},
+			(-2),{~local.sendMsg('ntRt-2', 1);},
+			(-1),{~local.sendMsg('ntRt-1', 1);},
+			(0),{~local.sendMsg('ntRt_0', 1);},
+			(1),{~local.sendMsg('ntRt_1', 1);},
+			(2),{~local.sendMsg('ntRt_2', 1);},
+			(3),{~local.sendMsg('ntRt_3', 1);},
+			(4),{~local.sendMsg('ntRt_4', 1);}
+		);
 	}
 	*loadScaleList{
 		~ifSclList = [
@@ -2159,7 +2182,6 @@ IFPitch {
 		},
 		'/ntMopho-13'
 		);
-
 		~noteMopho14.free;
 		~noteMopho14 = OSCFunc({
 			arg msg;
@@ -2172,8 +2194,6 @@ IFPitch {
 		},
 		'/ntMopho-14'
 		);
-
-
 
 	}
 	*freeAll {

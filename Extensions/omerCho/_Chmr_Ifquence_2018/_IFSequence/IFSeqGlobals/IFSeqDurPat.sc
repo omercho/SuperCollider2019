@@ -7,20 +7,20 @@ IFSeqDurPat {
 	}
 
 	*loadProxy {
-		~durResp.free;
+		/*~durResp.free;
 		~durResp = OSCFunc({
 			arg msg;
 			if ( msg[1]==1, {
 				"Duration Pattern 1".postln;
-				~tOSCAdrr.sendMsg('durLabel', 'Strght 02');
-				~dur.source = Pseq([
+				~tOSCAdrr.sendMsg('durMasterLabel', 'Strght 02');
+				~durMaster.source = Pseq([
 					~seqDurPat01,~seqDurPat02,~seqDurPat03,~seqDurPat04,
 					~seqDurPat05,~seqDurPat06,~seqDurPat07,~seqDurPat08,
 					~seqDurPat09,~seqDurPat10,~seqDurPat11,~seqDurPat12,
 					~seqDurPat13,~seqDurPat14,~seqDurPat15,~seqDurPat16
-				],inf)*~durMulP.next;
+				],inf)*~durMasterMulP.next;
 			});
-		},'/durResponder');
+		},'/durResponder');*/
 
 		~seqDurPat01 = PatternProxy( Pseq([1], 1));
 		~seqDurPat02 = PatternProxy( Pseq([1], 1));
@@ -424,386 +424,306 @@ IFSeqDurPat {
 	*st01 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat01.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat01', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat01.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat01', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat01.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat01', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat01.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat01', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat01.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat01', '4/1');
-			~cntSeqDurPat01=0;
 		}
 	}
 	*st02 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat02.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat02', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat02.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat02', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat02.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat02', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat02.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat02', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat02.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat02', '4/1');
-			~cntSeqDurPat02=0;
 		}
 	}
 	*st03 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat03.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat03', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat03.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat03', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat03.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat03', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat03.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat03', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat03.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat03', '4/1');
-			~cntSeqDurPat03=0;
 		}
 	}
 	*st04 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat04.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat04', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat04.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat04', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat04.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat04', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat04.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat04', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat04.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat04', '4/1');
-			~cntSeqDurPat04=0;
 		}
 	}
 	*st05 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat05.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat05', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat05.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat05', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat05.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat05', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat05.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat05', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat05.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat05', '4/1');
-			~cntSeqDurPat05=0;
 		}
 	}
 	*st06 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat06.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat06', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat06.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat06', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat06.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat06', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat06.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat06', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat06.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat06', '4/1');
-			~cntSeqDurPat06=0;
 		}
 	}
 	*st07 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat07.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat07', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat07.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat07', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat07.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat07', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat07.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat07', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat07.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat07', '4/1');
-			~cntSeqDurPat07=0;
 		}
 	}
 	*st08 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat08.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat08', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat08.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat08', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat08.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat08', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat08.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat08', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat08.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat08', '4/1');
-			~cntSeqDurPat08=0;
 		}
 	}
 
 	*st09 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat09.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat09', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat09.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat09', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat09.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat09', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat09.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat09', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat09.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat09', '4/1');
-			~cntSeqDurPat09=0;
 		}
 	}
 	*st10 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat10.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat10', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat10.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat10', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat10.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat10', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat10.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat10', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat10.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat10', '4/1');
-			~cntSeqDurPat10=0;
 		}
 	}
 	*st11 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat11.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat11', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat11.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat11', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat11.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat11', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat11.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat11', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat11.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat11', '4/1');
-			~cntSeqDurPat11=0;
 		}
 	}
 	*st12 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat12.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat12', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat12.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat12', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat12.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat12', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat12.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat12', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat12.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat12', '4/1');
-			~cntSeqDurPat12=0;
 		}
 	}
 	*st13 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat13.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat13', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat13.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat13', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat13.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat13', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat13.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat13', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat13.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat13', '4/1');
-			~cntSeqDurPat13=0;
 		}
 	}
 	*st14 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat14.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat14', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat14.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat14', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat14.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat14', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat14.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat14', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat14.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat14', '4/1');
-			~cntSeqDurPat14=0;
 		}
 	}
 	*st15 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat15.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat15', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat15.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat15', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat15.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat15', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat15.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat15', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat15.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat15', '4/1');
-			~cntSeqDurPat15=0;
 		}
 	}
 	*st16 {|i|
 		case
 		{ i == 1 }  {
-			~seqDurPat16.source = Pseq([1/2], 1);
-			~tOSCAdrr.sendMsg('shDurPat16', '1/2');
-		}
-		{ i == 2 }  {
 			~seqDurPat16.source = Pseq([1/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat16', '1/1');
 		}
-		{ i == 3 }  {
+		{ i == 2 }  {
 			~seqDurPat16.source = Pseq([2/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat16', '2/1');
 		}
-		{ i == 4 }  {
+		{ i == 3 }  {
 			~seqDurPat16.source = Pseq([3/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat16', '3/1');
 		}
-		{ i == 5 }  {
+		{ i == 4 }  {
 			~seqDurPat16.source = Pseq([4/1], 1);
 			~tOSCAdrr.sendMsg('shDurPat16', '4/1');
-			~cntSeqDurPat16=0;
 		}
 	}
 	*stGrp {|i|

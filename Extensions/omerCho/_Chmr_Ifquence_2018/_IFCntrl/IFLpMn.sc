@@ -232,6 +232,7 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=1;
+				IFRoot.resetChng;
 				IFTrack01.part01;
 				IFLpMn.tsLeds(1,0,0,0,0,0,0,0);
 			});
@@ -241,6 +242,7 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=2;
+				IFRoot.resetChng;
 				IFTrack01.part02;
 				IFLpMn.tsLeds(0,1,0,0,0,0,0,0);
 			});
@@ -250,6 +252,7 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=3;
+				IFRoot.resetChng;
 				IFTrack01.part03;
 				IFLpMn.tsLeds(0,0,1,0,0,0,0,0);
 			});
@@ -259,6 +262,7 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=4;
+				IFRoot.resetChng;
 				IFTrack01.part04;
 				IFLpMn.tsLeds(0,0,0,1,0,0,0,0);
 			});
@@ -268,6 +272,7 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=5;
+				IFRoot.resetChng;
 				IFTrack01.part05;
 				IFLpMn.tsLeds(0,0,0,0,1,0,0,0);
 			});
@@ -277,6 +282,8 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=6;
+				//IFTxt.readInst(\01,\01,1);
+				IFRoot.resetChng;
 				IFTrack01.part06;
 				IFLpMn.tsLeds(0,0,0,0,0,1,0,0);
 			});
@@ -286,15 +293,15 @@ IFLpMn{
 			arg vel;
 			if ( vel==127, {
 				~partCase=7;
-				IFTxt.readInst(\00,\00);
-			},{
+				IFRoot.resetChng;
 				IFTrack01.part07;
 				IFLpMn.tsLeds(0,0,0,0,0,0,1,0);
 			});
 		},srcID:~lpMnInID, chan:~lpMnCh, ccNum:~lpMnButH7);
 
 		//TRACK SHIFT BUTTON
-		/*~lpMn_TS08.free;
+		/*
+		~lpMn_TS08.free;
 		~lpMn_TS08=MIDIFunc.cc( {
 			arg vel;
 			if ( vel==127, {
@@ -387,70 +394,69 @@ IFLpMn{
 		~cntSeqDur4=0;
 		MIDIdef.noteOn(respName,{
 			arg chan,noteNum,vel;
-
 			ntNum.switch(
 				~lpMnButV1,{
 					~cntSeqDur1 = ~cntSeqDur1 + 1;
 					~cntSeqDur1.switch(
 						0,{},
-						1,{IFRoot.cc(\durPatSeq1,127);},
-						2,{IFRoot.cc(\durPatSeq1,0);~cntSeqDur1=0},
+						1,{IFRoot.set(\durPatSeq1,127);},
+						2,{IFRoot.set(\durPatSeq1,0);~cntSeqDur1=0},
 					);
 				},
 				~lpMnButV2,{
 					~cntSeqMul1 = ~cntSeqMul1 + 1;
 					~cntSeqMul1.switch(
 						0,{},
-						1,{IFRoot.cc(\durMulSeq1,127);},
-						2,{IFRoot.cc(\durMulSeq1,0);~cntSeqMul1=0},
+						1,{IFRoot.set(\durMulSeq1,127);},
+						2,{IFRoot.set(\durMulSeq1,0);~cntSeqMul1=0},
 					);
 				},
 				~lpMnButV3,{
 					~cntSeqDur2 = ~cntSeqDur2 + 1;
 					~cntSeqDur2.switch(
 						0,{},
-						1,{IFRoot.cc(\durPatSeq2,127);},
-						2,{IFRoot.cc(\durPatSeq2,0);~cntSeqDu2=0},
+						1,{IFRoot.set(\durPatSeq2,127);},
+						2,{IFRoot.set(\durPatSeq2,0);~cntSeqDu2=0},
 					);
 				},
 				~lpMnButV4,{
 					~cntSeqMul2 = ~cntSeqMul2 + 1;
 					~cntSeqMul2.switch(
 						0,{},
-						1,{IFRoot.cc(\durMulSeq2,127);},
-						2,{IFRoot.cc(\durMulSeq2,0);~cntSeqMul2=0},
+						1,{IFRoot.set(\durMulSeq2,127);},
+						2,{IFRoot.set(\durMulSeq2,0);~cntSeqMul2=0},
 					);
 				},
 				~lpMnButV5,{
 					~cntSeqDur3 = ~cntSeqDur3 + 1;
 					~cntSeqDur3.switch(
 						0,{},
-						1,{IFRoot.cc(\durPatSeq3,127);},
-						2,{IFRoot.cc(\durPatSeq3,0);~cntSeqDur3=0},
+						1,{IFRoot.set(\durPatSeq3,127);},
+						2,{IFRoot.set(\durPatSeq3,0);~cntSeqDur3=0},
 					);
 				},
 				~lpMnButV6,{
 					~cntSeqMul3 = ~cntSeqMul3 + 1;
 					~cntSeqMul3.switch(
 						0,{},
-						1,{IFRoot.cc(\durMulSeq3,127);},
-						2,{IFRoot.cc(\durMulSeq3,0);~cntSeqMul3=0},
+						1,{IFRoot.set(\durMulSeq3,127);},
+						2,{IFRoot.set(\durMulSeq3,0);~cntSeqMul3=0},
 					);
 				},
 				~lpMnButV7,{
 					~cntSeqDur4 = ~cntSeqDur4 + 1;
 					~cntSeqDur4.switch(
 						0,{},
-						1,{IFRoot.cc(\durPatSeq4,127);},
-						2,{IFRoot.cc(\durPatSeq4,0);~cntSeqDur4=0},
+						1,{IFRoot.set(\durPatSeq4,127);},
+						2,{IFRoot.set(\durPatSeq4,0);~cntSeqDur4=0},
 					);
 				},
 				~lpMnButV8,{
 					~cntSeqMul4 = ~cntSeqMul4 + 1;
 					~cntSeqMul4.switch(
 						0,{},
-						1,{IFRoot.cc(\durMulSeq4,127);},
-						2,{IFRoot.cc(\durMulSeq4,0);~cntSeqMul4=0},
+						1,{IFRoot.set(\durMulSeq4,127);},
+						2,{IFRoot.set(\durMulSeq4,0);~cntSeqMul4=0},
 					);
 				},
 			);

@@ -50,19 +50,28 @@ IFSnr {
 	*proxy {
 		~actSnr = PatternProxy( Pseq([1], inf));
 		~actSnrP= Pseq([~actSnr], inf).asStream;
+
 		~nt1Snr = PatternProxy( Pseq([0], inf));
 		~nt1SnrP = Pseq([~nt1Snr], inf).asStream;
+		~nt2Snr = PatternProxy( Pseq([0], inf));
+		~nt2SnrP = Pseq([~nt2Snr], inf).asStream;
+		~nt3Snr = PatternProxy( Pseq([0], inf));
+		~nt3SnrP = Pseq([~nt3Snr], inf).asStream;
+
 		~amp1Snr = PatternProxy( Pseq([1], inf));
 		~amp1SnrP = Pseq([~amp1Snr], inf).asStream;
+
 		~dur1Snr = PatternProxy( Pseq([1], inf));
 		~dur1SnrP = Pseq([~dur1Snr], inf).asStream;
+		~durMulSnr = PatternProxy( Pseq([1], inf));
+		~durMulSnrP = Pseq([~durMulSnr], inf).asStream;
+
 		~sus1Snr = PatternProxy( Pseq([1], inf));
 		~sus1SnrP = Pseq([~sus1Snr], inf).asStream;
 
 		~act2Snr = PatternProxy( Pseq([1], inf));
 		~act2SnrP= Pseq([~act2Snr], inf).asStream;
-		~nt2Snr = PatternProxy( Pseq([0], inf));
-		~nt2SnrP = Pseq([~nt2Snr], inf).asStream;
+
 		~amp2Snr = PatternProxy( Pseq([1], inf));
 		~amp2SnrP = Pseq([~amp2Snr], inf).asStream;
 		~dur2Snr = PatternProxy( Pseq([1], inf));
@@ -116,7 +125,7 @@ IFSnr {
 			{val.do{
 				~snrLate.wait;
 				this.p1(val);
-				((~dur1SnrP.next)*(~durMul2P.next)/val).wait;
+				((~dur1SnrP.next)*(~durMulSnrP.next)/val).wait;
 			}}.fork;
 		}
 	}
@@ -126,7 +135,7 @@ IFSnr {
 		Pbind(
 			\chan, ~chSnr,
 			\type, \midi, \midiout,~mdOut, \scale, Pfunc({~scl2}, inf),
-			\dur, Pseq([~dur1SnrP.next], ~actSnrP),
+			\dur, Pseq([~dur1SnrP.next], ~actSnrP.next),
 			\degree, Pseq([~nt1SnrP.next], inf),
 			\amp, Pseq([~volSnrP.next*~amp1SnrP.next], inf),
 			\sustain, Pseq([~sus1SnrP.next],inf)*~susMulSnr,

@@ -545,11 +545,8 @@ IFSeqNtPat {
 						IFSeqNtPat.st16(11);
 						~cntSeqNtPat16=0;
 					}
-				)}
-			);
-			},
-			'/ifSeq/8/16'
-		);
+			)});
+		},'/ifSeq/8/16');
 
 	}//
 

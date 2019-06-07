@@ -13,7 +13,7 @@ IFLpMnSteps.resetLeds;
 IFLpMnSteps{
 	*load{
 		this.globals;
-		this.resetLeds;
+		this.resetLeds1;
 		this.resetLeds2;
 		this.resetLeds3;
 		this.resetLeds4;
@@ -277,27 +277,27 @@ IFLpMnSteps{
 			);
 		},srcID:~lpMnInID, chan:0,noteNum:ntNum);
 	}
-	*led{|index|
+	*led1{|index|
 		index.switch(
-			1,{this.ledOnOff(~lpMnBut1);},
-			2,{this.ledOnOff(~lpMnBut2);},
-			3,{this.ledOnOff(~lpMnBut3);},
-			4,{this.ledOnOff(~lpMnBut4);},
-			5,{this.ledOnOff(~lpMnBut5);},
-			6,{this.ledOnOff(~lpMnBut6);},
-			7,{this.ledOnOff(~lpMnBut7);},
-			8,{this.ledOnOff(~lpMnBut8);},
-			9,{this.ledOnOff(~lpMnBut9);},
-			10,{this.ledOnOff(~lpMnBut10);},
-			11,{this.ledOnOff(~lpMnBut11);},
-			12,{this.ledOnOff(~lpMnBut12);},
-			13,{this.ledOnOff(~lpMnBut13);},
-			14,{this.ledOnOff(~lpMnBut14);},
-			15,{this.ledOnOff(~lpMnBut15);},
-			16,{this.ledOnOff(~lpMnBut16);}
+			1,{this.ledOnOff1(~lpMnBut1);},
+			2,{this.ledOnOff1(~lpMnBut2);},
+			3,{this.ledOnOff1(~lpMnBut3);},
+			4,{this.ledOnOff1(~lpMnBut4);},
+			5,{this.ledOnOff1(~lpMnBut5);},
+			6,{this.ledOnOff1(~lpMnBut6);},
+			7,{this.ledOnOff1(~lpMnBut7);},
+			8,{this.ledOnOff1(~lpMnBut8);},
+			9,{this.ledOnOff1(~lpMnBut9);},
+			10,{this.ledOnOff1(~lpMnBut10);},
+			11,{this.ledOnOff1(~lpMnBut11);},
+			12,{this.ledOnOff1(~lpMnBut12);},
+			13,{this.ledOnOff1(~lpMnBut13);},
+			14,{this.ledOnOff1(~lpMnBut14);},
+			15,{this.ledOnOff1(~lpMnBut15);},
+			16,{this.ledOnOff1(~lpMnBut16);}
 		);
 	}
-	*ledOnOff {|ntNum|
+	*ledOnOff1 {|ntNum|
 		ntNum.switch(
 			~lpMnBut1,{this.ledForkGreen(~lpMnBut1);},
 			~lpMnBut2,{this.ledForkGreen(~lpMnBut2);},
@@ -466,7 +466,7 @@ IFLpMnSteps{
 		};
 	}
 
-	*resetLeds{
+	*resetLeds1{
 
 		//Sequencer
 		//Lounch1

@@ -37,8 +37,14 @@ IFKeys {
 		~rootKeysP = Pseq([~rootKeys], inf).asStream;
 		~nt1Keys = PatternProxy( Pseq([0], inf));
 		~nt1KeysP = Pseq([~nt1Keys], inf).asStream;
+		~nt2Keys = PatternProxy( Pseq([0], inf));
+		~nt2KeysP = Pseq([~nt2Keys], inf).asStream;
+		~nt3Keys = PatternProxy( Pseq([0], inf));
+		~nt3KeysP = Pseq([~nt3Keys], inf).asStream;
 		~dur1Keys = PatternProxy( Pseq([1], inf));
 		~dur1KeysP = Pseq([~dur1Keys], inf).asStream;
+		~durMulKeys = PatternProxy( Pseq([1], inf));
+		~durMulKeysP = Pseq([~durMulKeys], inf).asStream;
 		~amp1Keys = PatternProxy( Pseq([0.9], inf));
 		~amp1KeysP = Pseq([~amp1Keys], inf).asStream;
 		~sus1Keys = PatternProxy( Pseq([0.2], inf));
@@ -169,7 +175,7 @@ IFKeys {
 		{ i == val }  {
 			{val.do{
 				this.p1(val);
-				((~dur1KeysP.next)*(~durMul3P.next)/val).wait;
+				((~dur1KeysP.next)*(~durMulKeysP.next)/val).wait;
 			}}.fork;
 		}
 	}
@@ -231,10 +237,10 @@ IFKeys {
 			arg msg;
 			if ( msg[1]==1, {
 				~actKeys.source=1;
-				~apcMn.noteOn(~apcMnCh, ~actButA5, 127); //Trk5_But 1
+				~apcMn.noteOn(~apcMnCh, ~actButA6, 127); //Trk5_But 1
 			},{
 				~actKeys.source=0;
-				~apcMn.noteOff(~apcMnCh, ~actButA5, 127); //Trk5_But
+				~apcMn.noteOff(~apcMnCh, ~actButA6, 127); //Trk5_But
 			});
 		},'/activKeys');
 		~time2KeysBut.free;

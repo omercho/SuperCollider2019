@@ -128,14 +128,14 @@ IFAPCMn{
 					0,{},
 					1, {
 						~local.sendMsg('/1/toggleMain', 1);
-						~local.sendMsg('nt_0', 1);
-						~apcMn.noteOn(~apcLn1, ~apcPlayBut, 127); //But A
+						//~local.sendMsg('nt_0', 1);
+						//~apcMn.noteOn(~apcLn1, ~apcPlayBut, 127); //But A
 						//IFLpMnNotes.resetLeds;
 						//~apcMn.noteOn(~apcLn4, 55, 4); //But 1
 					},
 					2,{
 						~local.sendMsg('/1/toggleMain', 0);
-						~apcMn.noteOn(~apcLn1, ~apcPlayBut, 0); //But A
+						//~apcMn.noteOn(~apcLn1, ~apcPlayBut, 0); //But A
 						~cntPlayBut=0;
 						//IFLpMnNotes.resetLeds;
 					}

@@ -47,8 +47,12 @@ IFBass {
 		~rootBassP = Pseq([~rootBass], inf).asStream;
 		~nt1Bass = PatternProxy( Pseq([0], inf));
 		~nt1BassP = Pseq([~nt1Bass], inf).asStream;
+
 		~dur1Bass = PatternProxy( Pseq([1], inf));
 		~dur1BassP = Pseq([~dur1Bass], inf).asStream;
+		~durMulBass = PatternProxy( Pseq([1], inf));
+		~durMulBassP = Pseq([~durMulBass], inf).asStream;
+
 		~amp1Bass = PatternProxy( Pseq([0.9], inf));
 		~amp1BassP = Pseq([~amp1Bass], inf).asStream;
 		~sus1Bass = PatternProxy( Pseq([1], inf));
@@ -109,10 +113,9 @@ IFBass {
 		{ i == val }  {
 			{val.do{
 				~bassLate.wait;
-				//this.p1_SC(val);
 				this.p1(val);
 				//this.p1(val);
-				((~dur1BassP.next)*(~durMul3P.next)/val).wait;
+				((~dur1BassP.next)*(~durMulBassP.next)/val).wait;
 			}}.fork;
 		}
 	}
@@ -289,7 +292,7 @@ IFBass {
 			\pan, {
 				~crntBass_pan=val1;
 				this.lbl1(\IFpanBass,val1);
-				//~mdOut.control(5, 8, vel1);
+				~mdOut.control(5, 16, vel1);
 			},
 			\octM, {
 				~crntBass_octM=val1;
@@ -331,8 +334,10 @@ IFBass {
 			},
 			\xy1, {
 				this.lbl2(\xy1Bass,val1,val2);
-				VBass.cc(\lfoRateVB,vel2);
+				VBass.cc(\lfoRateVB,vel2/2);
 				VBass.cc(\lfoIntVB,vel1);
+				~mdOut.control(5, 13, vel2); //FX Comp
+				~mdOut.control(5, 14, vel1); //FX Comp
 				~crntBass_xy1X=val2;
 				~crntBass_xy1Y=val1;
 			},

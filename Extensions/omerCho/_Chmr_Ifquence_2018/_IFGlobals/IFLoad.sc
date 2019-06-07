@@ -30,7 +30,7 @@ IFLoad{
 			0.1.wait;
 			IFiConnectMIDI4.load;
 			0.1.wait;
-			IFSequence.loadAll;
+			IFSequence.load;
 			0.1.wait;
 			IFCounter.zero;IFCounter.loadProxy;
 			0.1.wait;
@@ -79,6 +79,7 @@ IFLoad{
 			IFMopho.load;
 			//IFMophoResp.load;
 			0.1.wait;
+			IFSends.load;
 			//IFRes.load;
 			//IFMast.load;
 			0.1.wait;
@@ -86,7 +87,11 @@ IFLoad{
 			0.1.wait;
 			"Loading IFSeqSteps".postln;
 			IFSeqSteps.load;
+			0.1.wait;
+			"IFTxt Instrument Values".postln;
+			IFTxt.load;
 			0.5.wait;
+			IFRoot.set00;
 			"Track: Not loaded".postln;
 			~tOSCAdrr.sendMsg('trackLabel', 'Track: Not loaded');
 			/*

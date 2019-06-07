@@ -349,13 +349,8 @@ IFSeqPat {
 				~cntSeqPat16 = ~cntSeqPat16 + 1;
 				~cntSeqPat16.switch(
 					0,{}, 1,{IFSeqPat.st16(1);}, 2,{IFSeqPat.st16(0);}
-				)}
-			);
-			},
-			'/ifSeq/9/16'
-		);
-
-
+			)});
+			},'/ifSeq/9/16');
 	}
 
 	*st01 {|i|
@@ -463,83 +458,83 @@ IFSeqPat {
 
 	*step01{
 		~amp1Pat.source  =  Pseq([~seqPat01.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat01.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat01.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat01.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat01.next], inf);
 	}
 	*step02{
 		~amp1Pat.source  =  Pseq([~seqPat02.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat02.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat02.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat02.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat02.next], inf);
 	}
 	*step03{
 		~amp1Pat.source  =  Pseq([~seqPat03.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat03.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat03.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat03.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat03.next], inf);
 	}
 	*step04{
 		~amp1Pat.source  =  Pseq([~seqPat04.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat04.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat04.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat04.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat04.next], inf);
 	}
 	*step05{
 		~amp1Pat.source  =  Pseq([~seqPat05.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat05.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat05.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat05.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat05.next], inf);
 	}
 	*step06{
 		~amp1Pat.source  =  Pseq([~seqPat06.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat06.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat06.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat06.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat06.next], inf);
 	}
 	*step07{
 		~amp1Pat.source  =  Pseq([~seqPat07.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat07.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat07.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat07.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat07.next], inf);
 	}
 	*step08{
 		~amp1Pat.source  =  Pseq([~seqPat08.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat08.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat08.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat08.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat08.next], inf);
 	}
 	*step09{
 		~amp1Pat.source  =  Pseq([~seqPat09.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat09.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat09.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat09.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat09.next], inf);
 	}
 	*step10{
 		~amp1Pat.source  =  Pseq([~seqPat10.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat10.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat10.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat10.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat10.next], inf);
 	}
 	*step11{
 		~amp1Pat.source  =  Pseq([~seqPat11.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat11.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat11.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat11.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat11.next], inf);
 	}
 	*step12{
 		~amp1Pat.source  =  Pseq([~seqPat12.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat12.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat12.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat12.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat12.next], inf);
 	}
 	*step13{
 		~amp1Pat.source  =  Pseq([~seqPat13.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat13.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat13.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat13.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat13.next], inf);
 	}
 	*step14{
 		~amp1Pat.source  =  Pseq([~seqPat14.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat14.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat14.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat14.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat14.next], inf);
 	}
 	*step15{
 		~amp1Pat.source  =  Pseq([~seqPat15.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat15.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat15.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat15.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat15.next], inf);
 	}
 	*step16{
 		~amp1Pat.source  =  Pseq([~seqPat16.next], inf);
-		~ntPat.source   =  Pseq([~seqNtPat16.next], inf);
-		~durPat.source    =  Pseq([~seqDurPat16.next], inf);
+		~ifPitchMst.source   =  Pseq([~seqNtPat16.next], inf);
+		~durMaster.source    =  Pseq([~seqDurPat16.next], inf);
 	}
 
 	*stGrp {|i|

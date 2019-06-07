@@ -4,11 +4,32 @@ IFSeqSteps {
 	classvar <>list;
 	*load {
 		this.makeResponders;
-		this.new(1);
+		this.new(01,08);
 
 	}
-	*new{|direct|
+	*new{|directMst,direct|
+		//this.srcStpMstr;
 		~crntStepDir=direct;
+		~stepCnt.source  =  Pseq([1], inf);
+		directMst.switch(
+			00,{ ~stepMaster.source=Pseq([1], inf);},
+			01,{ ~stepMaster.source=Pseq([1,2], inf);},
+			02,{ ~stepMaster.source=Pseq([1,2,3,4], inf);},
+			03,{ ~stepMaster.source=Pseq([5,6,7,8], inf);},
+			04,{ ~stepMaster.source=Pseq([9,10,11,12], inf);},
+			05,{ ~stepMaster.source=Pseq([13,14,15,16], inf);},
+			06,{ ~stepMaster.source=Pseq([1,2,3,4,5,6,7,8], inf);},
+			07,{ ~stepMaster.source=Pseq([9,10,11,12,13,14,15,16], inf);},
+			08,{ ~stepMaster.source=Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);},
+			09,{ ~stepMaster.source=Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].reverse, inf);},
+			10,{ ~stepMaster.source=Pseq([1,2,3,4,5,6,7,8].reverse, inf);},
+			11,{ ~stepMaster.source=Pseq([9,10,11,12,13,14,15,16].reverse, inf);},
+			12,{ ~stepMaster.source=Pseq([13,14,15,16].reverse, inf);},
+			13,{ ~stepMaster.source=Pseq([9,10,11,12].reverse, inf);},
+			14,{ ~stepMaster.source=Pseq([5,6,7,8].reverse, inf);},
+			15,{ ~stepMaster.source=Pseq([1,2,3,4].reverse, inf);},
+			16,{ ~stepMaster.source=Pseq([1,2].reverse, inf);}
+		);
 		direct.switch(
 			00,{ this.first4;},
 			01,{ this.long01;},
@@ -27,9 +48,13 @@ IFSeqSteps {
 			14,{ this.random;},
 			15,{ this.shuf;},
 			16,{ this.backward;}
-		)
+		);
+		IFRoot.reset;
 	}
-
+	*srcStpMstr{
+		~stepMaster.source= Pseq([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);
+		~stepCnt.source  =  Pseq([1], inf);
+	}
 	*first4{
 		~tOSCAdrr.sendMsg('stepsLabel', 'First4');
 		~stepNum1.source  =  Pseq([1,2,3,4], inf);
@@ -278,10 +303,6 @@ IFSeqSteps {
 		);
 	}
 
-
-	*loadDefault {
-
-	}
 	*makeResponders{
 		//Seq1
 		IFSeqSteps.oscResp(respName:'seq1StepBut01', oscName:'seqStep01', playDir:'sqA1');

@@ -716,7 +716,7 @@ IFMIDIMix{
 		~mdMixFadFXMaster=MIDIFunc.cc( {
 			arg vel,val;
 			val=vel/127;
-			~mdOut.control(1, 127, vel); //AllMasterFX / Track Vol
+			IFSends.set1(\vol1,val);
 		},srcID:~mdMixInID, chan:~mdMixLnMaster, ccNum:30);
 
 		/*~cntMixActBankButA=0;

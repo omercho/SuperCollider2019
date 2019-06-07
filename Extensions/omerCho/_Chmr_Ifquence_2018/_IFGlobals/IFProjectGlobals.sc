@@ -40,9 +40,10 @@ IFProjectGlobals.setTempo(20);
 		IFSixteen.defaults;
 		IFMIDIMix.load;
 		IFAPCMn.load;
-		IFApcMnNotes.load;
+
 		//IFAPCMn_Launch.load;
-		//IFLaunchSteps.load;
+		IFLaunchSteps.load;
+		IFApcMnNotes.load;
 		IFLpMn.load;
 		//IFLpMnNotes.load;
 		//IFLpMnShufs.load;
@@ -119,14 +120,28 @@ IFProjectGlobals.setTempo(20);
 		},'/shiftDirect');
 	}
 }
-
+/*
+IFGlobal.setAtStart(128,0,3,3);
+IFGlobal.setRoot(1,8,1,1,0,1,1);
+IFGlobal.setFx(0.9,0.9,1,1,0,0.7,1,1,1,1);
+IFSends.set1(\vol2,0.3);
+*/
 IFGlobal{
-	*set{|nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8,
-		tmp,scl1,scl2,root,step|
+	*setAtStart{|tmp,scl1,scl2,root|
 		IFProjectGlobals.setTempo(tmp);
 		IFPitch.setScl(scl1:scl1,scl2:scl2, root:root);
-		IFPitch.pat(nt1,nt2,nt3,nt4,nt5,nt6,nt7,nt8);
-		IFSeqSteps(direct:step);
+	}
+	*setRoot{|rootStp,step,mulSeqM,mulSeq1,mulSeq2,mulSeq3,mulSeq4|
+		IFSeqSteps(directMst:rootStp,direct:step);
+		IFRoot.set(\masterSeqMul,mulSeqM);
+		IFRoot.set(\durMulSeq1,mulSeq1);IFRoot.set(\durMulSeq2,mulSeq2);
+		IFRoot.set(\durMulSeq3,mulSeq3);IFRoot.set(\durMulSeq4,mulSeq4);
+	}
+	*setFx{|vol1=9,vol2=9,fad1=0.2,fad2=0.4,comp=0.0,dec=0.2,fx1X=0.2,fx1Y=0.2,fx2X=0.2,fx2Y=0.2|
+		IFSends.set1(\vol1,vol1);IFSends.set1(\vol2,vol2);
+		IFSends.set1(\fad1,fad1);IFSends.set1(\fad2,fad2);
+		IFSends.set1(\comp,comp);IFSends.set1(\dec,dec);
+		IFSends.set2(\xyFx1,fx1X,fx1Y);IFSends.set2(\xyFx2,fx2X,fx2Y);
 	}
 	*setKick{|vol=0.95,octMul=1,susMul=0.05,dec=0.4,dly=0.2,pan=0.1,sndX=0,sndY=0|
 		IFKick.set1(\vol,vol);

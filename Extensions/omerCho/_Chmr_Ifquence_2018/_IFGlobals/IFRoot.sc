@@ -5,31 +5,45 @@ PostAllMIDI.off;
 
 IFLoad.load;
 IFLoad.loadVolca;
+~durMasterMul.source=Pseq([4], 1);
 
 */
 IFRoot {
-	*load{this.globals;this.loadProxy}
+	*load{this.globals;}
 	*globals{
-		~ifPlayerSeq01=TaskProxy.new;
-		~ifPlayerSeq02=TaskProxy.new;
-		~ifPlayerSeq03=TaskProxy.new;
-		~ifPlayerSeq04=TaskProxy.new;
-		~ifCountPlayer1=TaskProxy.new;
+
+		this.loadTaskProxy;
+		this.loadProxy;
 		this.responders;
 		this.loadClocks;
 		this.makeOSCResponders;
 		//~crntStepDir=01;
 	}
+	*loadTaskProxy{
+		~ifPlayerMaster=TaskProxy.new;
+		~ifPlayerSeq01=TaskProxy.new;
+		~ifPlayerSeq02=TaskProxy.new;
+		~ifPlayerSeq03=TaskProxy.new;
+		~ifPlayerSeq04=TaskProxy.new;
+		~ifPlayerCnt=TaskProxy.new;
+	}
 	*loadProxy {
-		~durCnt1 = PatternProxy( Pseq([2],inf) );
-		~durCnt1P= Pseq([~durCnt1], inf).asStream;
-		~durCntMul1 = PatternProxy( Pseq([1/2], inf));
-		~durCntMul1P= Pseq([~durCntMul1], inf).asStream;
+		~durMaster = PatternProxy( Pseq([2],inf) );
+		~durMasterP= Pseq([~durMaster], inf).asStream;
+		~durMasterPV2=~durMasterP;
 
-		~dur = PatternProxy( Pseq([2],inf) );
-		~durP= Pseq([~dur], inf).asStream;
-		~durMul = PatternProxy( Pseq([1/2], inf));
-		~durMulP= Pseq([~durMul], inf).asStream;
+		~durMasterMul = PatternProxy( Pseq([1/1], inf));
+		~durMasterMulP= Pseq([~durMasterMul], inf).asStream;
+
+		~durCnt = PatternProxy( Pseq([1],inf) );
+		~durCntP= Pseq([~durCnt], inf).asStream;
+		~durCntMul = PatternProxy( Pseq([1], inf));
+		~durCntMulP= Pseq([~durCntMul], inf).asStream;
+
+		~dur1 = PatternProxy( Pseq([2],inf) );
+		~dur1P= Pseq([~dur1], inf).asStream;
+		~durMul1 = PatternProxy( Pseq([1/4], inf));
+		~durMul1P= Pseq([~durMul1], inf).asStream;
 
 		~dur2 = PatternProxy( Pseq([2],inf) );
 		~dur2P= Pseq([~dur2], inf).asStream;
@@ -45,6 +59,22 @@ IFRoot {
 		~dur4P= Pseq([~dur4], inf).asStream;
 		~durMul4 = PatternProxy( Pseq([1/8], inf));
 		~durMul4P= Pseq([~durMul4], inf).asStream;
+
+		//Link With --> IFSeqStep.sc
+		~stepMaster = PatternProxy( Pseq([0], inf));
+		~stepMasterP= Pseq([~stepMaster], inf).asStream;
+		~stepNum1 = PatternProxy( Pseq([0], inf));
+		~stepNum1P= Pseq([~stepNum1], inf).asStream;
+		~stepNum2 = PatternProxy( Pseq([0], inf));
+		~stepNum2P= Pseq([~stepNum2], inf).asStream;
+		~stepNum3 = PatternProxy( Pseq([0], inf));
+		~stepNum3P= Pseq([~stepNum3], inf).asStream;
+		~stepNum4 = PatternProxy( Pseq([0], inf));
+		~stepNum4P= Pseq([~stepNum4], inf).asStream;
+		~stepCnt = PatternProxy( Pseq([0], inf));
+		~stepCntP= Pseq([~stepCnt], inf).asStream;
+
+
 	}
 	*loadClocks{
 		~clkMaster=TempoClock(1, 0, Main.elapsedTime.ceil);
@@ -52,6 +82,7 @@ IFRoot {
 		~clkSq02=TempoClock(1, 0, Main.elapsedTime.ceil);
 		~clkSq03=TempoClock(1, 0, Main.elapsedTime.ceil);
 		~clkSq04=TempoClock(1, 0, Main.elapsedTime.ceil);
+		~clkSqCnt=TempoClock(1, 0, Main.elapsedTime.ceil);
 		~clkDrum=TempoClock(1, 0, Main.elapsedTime.ceil);
 		~clkTom=TempoClock(1, 0, Main.elapsedTime.ceil);
 		~clkSnr=TempoClock(1, 0, Main.elapsedTime.ceil);
@@ -66,36 +97,74 @@ IFRoot {
 		IFCounter.getClockNow;
 		IFCounter.getClockStart;
 		IFSeqSteps(~crntStepDir);
+		~ifPlayerCnt.play(~clkSqCnt, quant: 0);
+		~ifPlayerMaster.play(~clkMaster, quant: 0);
 		~ifPlayerSeq01.play(~clkSq01, quant: 0);
 		~ifPlayerSeq02.play(~clkSq02, quant: 0);
 		~ifPlayerSeq03.play(~clkSq03, quant: 0);
 		~ifPlayerSeq04.play(~clkSq04, quant: 0);
-		~ifCountPlayer1.play(~clkMaster, quant: 0);
+
 
 	}
 	/*
 	*play{~ifPlayerSeq01.play(MIDISyncClock, quant: 0);}
 	*/
 	*stop{
-		IFCounter.reset;
+
+		~ifPlayerMaster.stop;
 		~ifPlayerSeq01.stop;
 		~ifPlayerSeq02.stop;
 		~ifPlayerSeq03.stop;
 		~ifPlayerSeq04.stop;
-		~ifCountPlayer1.stop;
+		~ifPlayerCnt.stop;
+		this.reset;
+		IFApcMnNotes.resetLeds;
+	}
+	*reset{
+		IFCounter.reset;
+		~ifPlayerMaster.reset;
+		~ifPlayerSeq01.reset;
+		~ifPlayerSeq02.reset;
+		~ifPlayerSeq03.reset;
+		~ifPlayerSeq04.reset;
+		~ifPlayerCnt.reset;
+		~stepMaster.reset;
+		~stepNum1.reset;
+		~stepNum2.reset;
+		~stepNum3.reset;
+		~stepNum4.reset;
+		~stepCnt.reset;
+	}
+	*resetChng{
+		~stepMaster.reset;
+		//~stepNum1.reset;
+		//~stepNum2.reset;
+		//~stepNum3.reset;
+		//~stepNum4.reset;
 	}
 	*set00{
 		"IFRoot set00".postln;
 		IFRoot.butLeds(0);
+		~ifPlayerMaster.source={
+			//~cntApcUpdate=0;
+			inf.do{
+				1.do {
+					IFSequence.stepMaster(~stepMasterP.next);
+					//IFPitch(~ifPitchMstP.next;);
+					IFPitch.new;
+					((~durMasterP.next)*(~durMasterMulP.next)).wait;
+				};
+			};
+		};
 		~ifPlayerSeq01.source={
 			//~cntApcUpdate=0;
 			inf.do{
 				1.do {
-					IFSequence.step(~stepNum1P.next);
+					IFSequence.step1(~stepNum1P.next);
 					IFStat.ln01;IFStat.ln02;IFStat.ln03;
 					IFStat.ln04;IFStat.ln05;IFStat.ln06;
 					//IFStat.ln07;IFStat.ln08;
-					((~durP.next)*(~durMulP.next)).wait;
+					((~dur1P.next)*(~durMul1P.next)).wait;
 				};
 			};
 		};
@@ -134,22 +203,21 @@ IFRoot {
 				};
 			};
 		};
-		~ifCountPlayer1.source={
+		~ifPlayerCnt.source={
 			//~cntPlayerMel4=0;
 			inf.do{
-				1.do {
-					IFCounter.cnt8;
-					IFCounter.count;
-					/*~cntPlayerMel4 = ~cntPlayerMel4 + 1;
-					~cntPlayerMel4.switch(
-					0,{},
-					16,{
-					IFAPCMn.update;
-					~cntPlayerMel4=0;
-					}
-					);*/
-					((~durCnt1P.next)*(~durCntMul1P.next)).wait;
-				};
+				IFSequence.stepCnt(~stepCntP.next);
+				IFCounter.cnt8;
+				IFCounter.count;
+				/*~cntPlayerMel4 = ~cntPlayerMel4 + 1;
+				~cntPlayerMel4.switch(
+				0,{},
+				16,{
+				IFAPCMn.update;
+				~cntPlayerMel4=0;
+				}
+				);*/
+				((~durCntP.next)*(~durCntMulP.next)).wait;
 			};
 		};
 	}
@@ -162,7 +230,7 @@ IFRoot {
 				1.do {
 					IFSequence.step(~stepNum1P.next);
 
-					((~durP.next)*(~durMulP.next)).wait;
+					((~dur1P.next)*(~durMul1P.next)).wait;
 				};
 			};
 		};
@@ -175,7 +243,7 @@ IFRoot {
 			inf.do{
 				1.do {
 					IFSequence.step(~stepNum1P.next);
-					((~durP.next)*(~durMulP.next)).wait;
+					((~dur1P.next)*(~durMul1P.next)).wait;
 				};
 			};
 		};
@@ -188,7 +256,7 @@ IFRoot {
 				1.do {
 					IFSequence.step(~stepNum1P.next);
 
-					((~durP.next)*(~durMulP.next)).wait;
+					((~dur1P.next)*(~durMul1P.next)).wait;
 				};
 			};
 		};
@@ -200,7 +268,7 @@ IFRoot {
 			inf.do{
 				1.do {
 					IFSequence.step(~stepNum1P.next);
-					((~durP.next)*(~durMulP.next)).wait;
+					((~dur1P.next)*(~durMul1P.next)).wait;
 				};
 			};
 		};
@@ -212,7 +280,7 @@ IFRoot {
 			inf.do{
 				1.do {
 					IFSequence.step(~stepNum1P.next);
-					((~durP.next)*(~durMulP.next)).wait;
+					((~dur1P.next)*(~durMul1P.next)).wait;
 				};
 			};
 		};
@@ -235,9 +303,16 @@ IFRoot {
 	IFRoot.makeOSCResponders;
 	IFRoot.cc(\durMulSeq1,0);
 	*/
-	*cc{|key,vel|
-		var val;val=vel/127;
+	*set{|key,val|
+		var vel;vel=val*127;
 		key.switch(
+			\masterSeqMul, {
+				case
+				{val>=1} {~durMasterMul.source=Pseq([8], inf);this.lbl(\TOmasterSeqMulLbl,8);}
+				{val==0} {~durMasterMul.source=Pseq([4], inf);this.lbl(\TOmasterSeqMulLbl,4);};
+				//this.mdNtOn(~lpMnButV2,val);
+
+			},
 			\durPatSeq1, {
 				case
 				{val>=1} {~stepNum1.source=Pshuf([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], inf);}
@@ -254,8 +329,8 @@ IFRoot {
 			},
 			\durMulSeq1, {
 				case
-				{val>=1} {~durMul.source=Pseq([1/4], inf);}
-				{val==0} {~durMul.source=Pseq([1/2], inf);};
+				{val>=1} {~durMul1.source=Pseq([1/4], inf);}
+				{val==0} {~durMul1.source=Pseq([1/2], inf);};
 				this.mdNtOn(~lpMnButV2,val);
 				this.lbl(\TOdurMulSeq1,val);
 			},
@@ -332,18 +407,20 @@ IFRoot {
 			val=msg[1];
 			vel=val*127;
 			playTag.switch(
-				'durPatSeq1_T',{ this.cc(\durPatSeq1,vel);},
-				'durPatSeq2_T',{ this.cc(\durPatSeq2,vel);},
-				'durPatSeq3_T',{ this.cc(\durPatSeq3,vel);},
-				'durPatSeq4_T',{ this.cc(\durPatSeq4,vel);},
-				'durMulSeq1_T',{ this.cc(\durMulSeq1,vel);},
-				'durMulSeq2_T',{ this.cc(\durMulSeq2,vel);},
-				'durMulSeq3_T',{ this.cc(\durMulSeq3,vel);},
-				'durMulSeq4_T',{ this.cc(\durMulSeq4,vel);},
+				'masterSeqMul_T',{ this.set(\masterSeqMul,vel);},
+				'durPatSeq1_T',{ this.set(\durPatSeq1,vel);},
+				'durPatSeq2_T',{ this.set(\durPatSeq2,vel);},
+				'durPatSeq3_T',{ this.set(\durPatSeq3,vel);},
+				'durPatSeq4_T',{ this.set(\durPatSeq4,vel);},
+				'durMulSeq1_T',{ this.set(\durMulSeq1,vel);},
+				'durMulSeq2_T',{ this.set(\durMulSeq2,vel);},
+				'durMulSeq3_T',{ this.set(\durMulSeq3,vel);},
+				'durMulSeq4_T',{ this.set(\durMulSeq4,vel);},
 			)
 		},path:oscName);
 	}
 	*makeOSCResponders{
+		this.oscResp(respName:\masterSeqMulResp, oscName:\TOmasterSeqMul, playTag:'masterSeqMul_T');
 		this.oscResp(respName:\durPatSeq1Resp, oscName:\TOdurPatSeq1, playTag:'durPatSeq1_T');
 		this.oscResp(respName:\durPatSeq2Resp, oscName:\TOdurPatSeq2, playTag:'durPatSeq2_T');
 		this.oscResp(respName:\durPatSeq3Resp, oscName:\TOdurPatSeq3, playTag:'durPatSeq3_T');
@@ -457,7 +534,7 @@ inf.do{
 
 
 IFSequence.step(~stepNum1P.next);
-//IFCounter.step(~stepNumCntP.next);
+//IFCounter.step(~stepCntP.next);
 //~local.sendMsg('seqRec', 1);
 //IFVKick(~tmMulVKickP.next*~tmVKickP.next);
 IFKick(~tmMulKickP.next*~tmKickP.next);
@@ -476,7 +553,7 @@ IFRes(~tmResP.next);
 //Ableton.tap4;
 
 
-((~durP.next)*(~durMulP.next)).wait;
+((~dur1P.next)*(~durMul1P.next)).wait;
 };
 };
 

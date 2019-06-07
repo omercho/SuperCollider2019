@@ -1,6 +1,8 @@
 documents: !QVariantList
   - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFLoad.sc
   - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFProjectGlobals.sc
+  - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFSequence/IFSeqBass/IFSeqBass.sc
+  - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFCntrl/IFLpMnSteps.sc
   - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFRoot.sc
   - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFTracks/IFTrack01.sc
   - /Users/OCiMac/Library/Application Support/SuperCollider/Extensions/omerCho/_Chmr_Ifquence_2018/_IFGlobals/IFPreset.sc
@@ -49,402 +51,426 @@ editors: !QVariantMap
   elements: !QVariantList
     - !QVariantList
       - !QVariantMap
-        documentIndex: 43
-        position: 16991
-      - !QVariantMap
-        documentIndex: 24
-        position: 0
-      - !QVariantMap
-        documentIndex: 25
-        position: 0
-      - !QVariantMap
-        documentIndex: 38
-        position: 4487
-      - !QVariantMap
-        documentIndex: 41
-        position: 14535
-      - !QVariantMap
         documentIndex: 45
-        position: 1676
-      - !QVariantMap
-        documentIndex: 44
-        position: 1903
-      - !QVariantMap
-        documentIndex: 0
-        position: 1260
-      - !QVariantMap
-        documentIndex: 4
-        position: 1928
-      - !QVariantMap
-        documentIndex: 5
-        position: 1208
-      - !QVariantMap
-        documentIndex: 6
-        position: 801
-      - !QVariantMap
-        documentIndex: 10
-        position: 1692
-      - !QVariantMap
-        documentIndex: 17
-        position: 0
-      - !QVariantMap
-        documentIndex: 18
-        position: 10108
-      - !QVariantMap
-        documentIndex: 20
-        position: 9520
-      - !QVariantMap
-        documentIndex: 22
-        position: 282
-      - !QVariantMap
-        documentIndex: 23
-        position: 0
+        position: 16991
       - !QVariantMap
         documentIndex: 26
         position: 0
       - !QVariantMap
         documentIndex: 27
-        position: 7570
-      - !QVariantMap
-        documentIndex: 28
-        position: 978
-      - !QVariantMap
-        documentIndex: 30
-        position: 542
-      - !QVariantMap
-        documentIndex: 32
-        position: 647
-      - !QVariantMap
-        documentIndex: 1
-        position: 4909
-      - !QVariantMap
-        documentIndex: 29
-        position: 11776
-      - !QVariantMap
-        documentIndex: 3
-        position: 2178
-      - !QVariantMap
-        documentIndex: 36
-        position: 9683
-      - !QVariantMap
-        documentIndex: 33
-        position: 8066
-      - !QVariantMap
-        documentIndex: 35
-        position: 2771
-      - !QVariantMap
-        documentIndex: 34
-        position: 2837
-      - !QVariantMap
-        documentIndex: 8
-        position: 5521
-      - !QVariantMap
-        documentIndex: 40
-        position: 3387
-      - !QVariantMap
-        documentIndex: 39
-        position: 9114
-      - !QVariantMap
-        documentIndex: 31
-        position: 462
-      - !QVariantMap
-        documentIndex: 11
-        position: 6992
-      - !QVariantMap
-        documentIndex: 37
-        position: 12654
-      - !QVariantMap
-        documentIndex: 21
-        position: 702
-      - !QVariantMap
-        documentIndex: 12
-        position: 1868
-      - !QVariantMap
-        documentIndex: 2
-        position: 3835
-      - !QVariantMap
-        documentIndex: 15
         position: 0
       - !QVariantMap
-        documentIndex: 14
-        position: 150
+        documentIndex: 40
+        position: 4487
+      - !QVariantMap
+        documentIndex: 43
+        position: 14535
+      - !QVariantMap
+        documentIndex: 47
+        position: 1676
+      - !QVariantMap
+        documentIndex: 46
+        position: 1903
+      - !QVariantMap
+        documentIndex: 12
+        position: 1692
+      - !QVariantMap
+        documentIndex: 22
+        position: 9520
+      - !QVariantMap
+        documentIndex: 24
+        position: 282
+      - !QVariantMap
+        documentIndex: 25
+        position: 0
+      - !QVariantMap
+        documentIndex: 30
+        position: 978
+      - !QVariantMap
+        documentIndex: 32
+        position: 542
+      - !QVariantMap
+        documentIndex: 34
+        position: 647
+      - !QVariantMap
+        documentIndex: 31
+        position: 11753
+      - !QVariantMap
+        documentIndex: 35
+        position: 8066
+      - !QVariantMap
+        documentIndex: 36
+        position: 2837
       - !QVariantMap
         documentIndex: 42
+        position: 3387
+      - !QVariantMap
+        documentIndex: 41
+        position: 9114
+      - !QVariantMap
+        documentIndex: 33
+        position: 479
+      - !QVariantMap
+        documentIndex: 39
+        position: 12654
+      - !QVariantMap
+        documentIndex: 23
+        position: 702
+      - !QVariantMap
+        documentIndex: 44
         position: 2295
       - !QVariantMap
-        documentIndex: 19
-        position: 2607
-      - !QVariantMap
-        documentIndex: 16
-        position: 188
-      - !QVariantMap
-        documentIndex: 13
-        position: 794
+        documentIndex: 6
+        position: 1928
       - !QVariantMap
         documentIndex: 9
-        position: 682
+        position: 0
+      - !QVariantMap
+        documentIndex: 10
+        position: 386
+      - !QVariantMap
+        documentIndex: 29
+        position: 6312
+      - !QVariantMap
+        documentIndex: 2
+        position: 11524
+      - !QVariantMap
+        documentIndex: 7
+        position: 1199
+      - !QVariantMap
+        documentIndex: 3
+        position: 0
+      - !QVariantMap
+        documentIndex: 13
+        position: 5946
+      - !QVariantMap
+        documentIndex: 8
+        position: 801
+      - !QVariantMap
+        documentIndex: 1
+        position: 3931
+      - !QVariantMap
+        documentIndex: 28
+        position: 0
+      - !QVariantMap
+        documentIndex: 21
+        position: 2339
+      - !QVariantMap
+        documentIndex: 38
+        position: 1373
+      - !QVariantMap
+        documentIndex: 14
+        position: 1541
+      - !QVariantMap
+        documentIndex: 5
+        position: 2769
+      - !QVariantMap
+        documentIndex: 0
+        position: 2191
+      - !QVariantMap
+        documentIndex: 11
+        position: 2520
+      - !QVariantMap
+        documentIndex: 37
+        position: 3330
+      - !QVariantMap
+        documentIndex: 20
+        position: 10108
+      - !QVariantMap
+        documentIndex: 16
+        position: 150
+      - !QVariantMap
+        documentIndex: 4
+        position: 1374
+      - !QVariantMap
+        documentIndex: 17
+        position: 8687
+      - !QVariantMap
+        documentIndex: 19
+        position: 0
+      - !QVariantMap
+        documentIndex: 18
+        position: 188
+      - !QVariantMap
+        documentIndex: 15
+        position: 950
     - !QVariantMap
       elements: !QVariantList
         - !QVariantList
           - !QVariantMap
-            documentIndex: 25
+            documentIndex: 27
             position: 0
           - !QVariantMap
-            documentIndex: 24
+            documentIndex: 26
             position: 1267
           - !QVariantMap
-            documentIndex: 26
+            documentIndex: 28
             position: 338
           - !QVariantMap
-            documentIndex: 10
-            position: 2286
-          - !QVariantMap
-            documentIndex: 23
+            documentIndex: 25
             position: 1213
           - !QVariantMap
-            documentIndex: 42
+            documentIndex: 44
             position: 3897
           - !QVariantMap
-            documentIndex: 40
+            documentIndex: 42
             position: 6777
           - !QVariantMap
-            documentIndex: 4
-            position: 357
-          - !QVariantMap
-            documentIndex: 14
-            position: 13735
-          - !QVariantMap
-            documentIndex: 15
-            position: 12420
-          - !QVariantMap
-            documentIndex: 16
-            position: 868
-          - !QVariantMap
-            documentIndex: 17
-            position: 573
-          - !QVariantMap
-            documentIndex: 21
-            position: 2422
-          - !QVariantMap
-            documentIndex: 32
+            documentIndex: 34
             position: 480
           - !QVariantMap
-            documentIndex: 22
-            position: 9810
-          - !QVariantMap
-            documentIndex: 5
-            position: 3636
-          - !QVariantMap
-            documentIndex: 18
-            position: 9624
-          - !QVariantMap
-            documentIndex: 20
-            position: 941
-          - !QVariantMap
-            documentIndex: 6
-            position: 296
-          - !QVariantMap
-            documentIndex: 12
-            position: 9636
-          - !QVariantMap
-            documentIndex: 44
-            position: 839
-          - !QVariantMap
-            documentIndex: 11
+            documentIndex: 13
             position: 5406
-          - !QVariantMap
-            documentIndex: 2
-            position: 7700
-          - !QVariantMap
-            documentIndex: 28
-            position: 2052
-          - !QVariantMap
-            documentIndex: 30
-            position: 18698
-          - !QVariantMap
-            documentIndex: 29
-            position: 17668
           - !QVariantMap
             documentIndex: 0
             position: 356
           - !QVariantMap
-            documentIndex: 9
-            position: 3004
-          - !QVariantMap
-            documentIndex: 43
+            documentIndex: 45
             position: 46547
           - !QVariantMap
-            documentIndex: 41
+            documentIndex: 43
             position: 1251
           - !QVariantMap
-            documentIndex: 8
-            position: 8888
-          - !QVariantMap
-            documentIndex: 27
-            position: 7363
-          - !QVariantMap
-            documentIndex: 45
+            documentIndex: 47
             position: 5086
           - !QVariantMap
-            documentIndex: 3
-            position: 1078
-          - !QVariantMap
-            documentIndex: 36
-            position: 3183
-          - !QVariantMap
-            documentIndex: 37
+            documentIndex: 39
             position: 5135
           - !QVariantMap
-            documentIndex: 39
+            documentIndex: 41
             position: 3335
           - !QVariantMap
-            documentIndex: 38
+            documentIndex: 40
             position: 3759
           - !QVariantMap
-            documentIndex: 33
+            documentIndex: 35
             position: 2791
           - !QVariantMap
-            documentIndex: 34
+            documentIndex: 36
             position: 3009
           - !QVariantMap
-            documentIndex: 35
+            documentIndex: 37
             position: 3332
           - !QVariantMap
-            documentIndex: 31
-            position: 8669
+            documentIndex: 33
+            position: 508
           - !QVariantMap
-            documentIndex: 13
-            position: 587
-          - !QVariantMap
-            documentIndex: 19
-            position: 289
-          - !QVariantMap
-            documentIndex: 1
-            position: 2905
-        - !QVariantList
-          - !QVariantMap
-            documentIndex: 25
-            position: 865
-          - !QVariantMap
-            documentIndex: 28
-            position: 156
-          - !QVariantMap
-            documentIndex: 40
-            position: 6525
-          - !QVariantMap
-            documentIndex: 4
-            position: 0
-          - !QVariantMap
-            documentIndex: 20
-            position: 2351
+            documentIndex: 46
+            position: 1992
           - !QVariantMap
             documentIndex: 31
-            position: 373
+            position: 4086
           - !QVariantMap
-            documentIndex: 12
-            position: 881
-          - !QVariantMap
-            documentIndex: 14
-            position: 0
-          - !QVariantMap
-            documentIndex: 13
-            position: 13322
-          - !QVariantMap
-            documentIndex: 6
-            position: 744
-          - !QVariantMap
-            documentIndex: 5
-            position: 583
-          - !QVariantMap
-            documentIndex: 38
-            position: 3436
-          - !QVariantMap
-            documentIndex: 41
-            position: 12517
-          - !QVariantMap
-            documentIndex: 35
-            position: 4790
-          - !QVariantMap
-            documentIndex: 42
-            position: 3785
-          - !QVariantMap
-            documentIndex: 10
-            position: 1948
-          - !QVariantMap
-            documentIndex: 43
-            position: 8570
+            documentIndex: 30
+            position: 2724
           - !QVariantMap
             documentIndex: 32
-            position: 1545
+            position: 24032
+          - !QVariantMap
+            documentIndex: 3
+            position: 12345
+          - !QVariantMap
+            documentIndex: 6
+            position: 357
+          - !QVariantMap
+            documentIndex: 8
+            position: 296
           - !QVariantMap
             documentIndex: 9
-            position: 1994
-          - !QVariantMap
-            documentIndex: 26
             position: 0
           - !QVariantMap
-            documentIndex: 27
-            position: 6909
+            documentIndex: 10
+            position: 601
+          - !QVariantMap
+            documentIndex: 12
+            position: 2286
+          - !QVariantMap
+            documentIndex: 16
+            position: 13735
+          - !QVariantMap
+            documentIndex: 22
+            position: 941
+          - !QVariantMap
+            documentIndex: 23
+            position: 2422
+          - !QVariantMap
+            documentIndex: 24
+            position: 9715
+          - !QVariantMap
+            documentIndex: 18
+            position: 857
+          - !QVariantMap
+            documentIndex: 19
+            position: 573
           - !QVariantMap
             documentIndex: 2
-            position: 308
+            position: 9862
+          - !QVariantMap
+            documentIndex: 7
+            position: 691
+          - !QVariantMap
+            documentIndex: 38
+            position: 3167
           - !QVariantMap
             documentIndex: 21
-            position: 1214
+            position: 1447
           - !QVariantMap
-            documentIndex: 44
-            position: 1225
+            documentIndex: 17
+            position: 12078
+          - !QVariantMap
+            documentIndex: 14
+            position: 1169
+          - !QVariantMap
+            documentIndex: 1
+            position: 3063
+          - !QVariantMap
+            documentIndex: 20
+            position: 9624
           - !QVariantMap
             documentIndex: 29
-            position: 13279
+            position: 5626
+          - !QVariantMap
+            documentIndex: 5
+            position: 3645
           - !QVariantMap
             documentIndex: 11
-            position: 2574
+            position: 3426
+          - !QVariantMap
+            documentIndex: 15
+            position: 602
+          - !QVariantMap
+            documentIndex: 4
+            position: 3815
+        - !QVariantList
+          - !QVariantMap
+            documentIndex: 27
+            position: 865
+          - !QVariantMap
+            documentIndex: 30
+            position: 156
+          - !QVariantMap
+            documentIndex: 42
+            position: 6525
+          - !QVariantMap
+            documentIndex: 6
+            position: 0
+          - !QVariantMap
+            documentIndex: 22
+            position: 2351
+          - !QVariantMap
+            documentIndex: 8
+            position: 744
+          - !QVariantMap
+            documentIndex: 40
+            position: 3436
+          - !QVariantMap
+            documentIndex: 43
+            position: 12517
+          - !QVariantMap
+            documentIndex: 37
+            position: 4790
+          - !QVariantMap
+            documentIndex: 44
+            position: 3785
+          - !QVariantMap
+            documentIndex: 45
+            position: 8570
+          - !QVariantMap
+            documentIndex: 34
+            position: 1545
+          - !QVariantMap
+            documentIndex: 11
+            position: 1994
+          - !QVariantMap
+            documentIndex: 28
+            position: 0
+          - !QVariantMap
+            documentIndex: 23
+            position: 1214
+          - !QVariantMap
+            documentIndex: 46
+            position: 1225
           - !QVariantMap
             documentIndex: 0
             position: 489
           - !QVariantMap
-            documentIndex: 8
+            documentIndex: 10
             position: 513
           - !QVariantMap
-            documentIndex: 7
+            documentIndex: 9
             position: 1065
           - !QVariantMap
-            documentIndex: 15
-            position: 0
+            documentIndex: 38
+            position: 7651
           - !QVariantMap
-            documentIndex: 30
-            position: 19974
-          - !QVariantMap
-            documentIndex: 36
-            position: 7676
-          - !QVariantMap
-            documentIndex: 45
+            documentIndex: 47
             position: 5021
           - !QVariantMap
-            documentIndex: 16
-            position: 11354
-          - !QVariantMap
-            documentIndex: 39
+            documentIndex: 41
             position: 8005
           - !QVariantMap
-            documentIndex: 34
+            documentIndex: 36
             position: 4943
           - !QVariantMap
-            documentIndex: 33
+            documentIndex: 35
             position: 411
           - !QVariantMap
-            documentIndex: 37
+            documentIndex: 39
             position: 7496
           - !QVariantMap
+            documentIndex: 33
+            position: 8037
+          - !QVariantMap
+            documentIndex: 31
+            position: 16605
+          - !QVariantMap
+            documentIndex: 32
+            position: 10695
+          - !QVariantMap
+            documentIndex: 12
+            position: 1948
+          - !QVariantMap
             documentIndex: 1
-            position: 3340
+            position: 2846
+          - !QVariantMap
+            documentIndex: 5
+            position: 460
           - !QVariantMap
             documentIndex: 19
-            position: 1568
+            position: 12668
+          - !QVariantMap
+            documentIndex: 21
+            position: 1266
+          - !QVariantMap
+            documentIndex: 13
+            position: 6578
+          - !QVariantMap
+            documentIndex: 17
+            position: 9209
+          - !QVariantMap
+            documentIndex: 15
+            position: 335
+          - !QVariantMap
+            documentIndex: 16
+            position: 0
           - !QVariantMap
             documentIndex: 3
-            position: 906
+            position: 219
+          - !QVariantMap
+            documentIndex: 7
+            position: 422
+          - !QVariantMap
+            documentIndex: 4
+            position: 4589
+          - !QVariantMap
+            documentIndex: 18
+            position: 9508
+          - !QVariantMap
+            documentIndex: 29
+            position: 6190
+          - !QVariantMap
+            documentIndex: 14
+            position: 944
       state: AAAA/wAAAAEAAAACAAACCQAAAkMB/////wEAAAACAA==
   state: AAAA/wAAAAEAAAACAAADnAAAA7MB/////wEAAAABAA==
 mainWindow:
@@ -453,4 +479,4 @@ mainWindow:
     help-dock: ""
     post-dock: ""
   geometry: AdnQywACAAAAAAAAAAAAFgAACf0AAAR6AAAAAAAAACwAAAn9AAAEegAAAAAAAAAACgA=
-  state: AAAA/wAAAAD9AAAAAgAAAAAAAACKAAAENPwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAENAAAAGcA////AAAAAQAAAiIAAAQ0/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAa8AAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAbAAAAKEAAAATAD///8AAAdQAAAENAAAAAEAAAACAAAAAQAAAAL8AAAAAA==
+  state: AAAA/wAAAAD9AAAAAgAAAAAAAACKAAAENPwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawEAAAAAAAAENAAAAGcA////AAAAAQAAApUAAAQ0/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAAAAAAa8AAABMAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAbAAAAKEAAAATAD///8AAAbdAAAENAAAAAEAAAACAAAAAQAAAAL8AAAAAA==

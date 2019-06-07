@@ -52,6 +52,8 @@ IFKick {
 		~nt1KickP = Pseq([~nt1Kick], inf).asStream;
 		~dur1Kick = PatternProxy( Pseq([1], inf));
 		~dur1KickP = Pseq([~dur1Kick], inf).asStream;
+		~durMulKick = PatternProxy( Pseq([1], inf));
+		~durMulKickP = Pseq([~durMulKick], inf).asStream;
 		~amp1Kick = PatternProxy( Pseq([1], inf));
 		~amp1KickP = Pseq([~amp1Kick], inf).asStream;
 		~sus1Kick = PatternProxy( Pseq([0.05], inf));
@@ -64,7 +66,7 @@ IFKick {
 		~ntKick2P = Pseq([~ntKick2], inf).asStream;
 		~ampKick2 = PatternProxy( Pseq([1], inf));
 		~ampKick2P = Pseq([~ampKick2], inf).asStream;
-		~durKick2 = PatternProxy( Pseq([1], inf));
+		~durKick2 = PatternProxy( Pseq([1/2], inf));
 		~durKick2P = Pseq([~durKick2], inf).asStream;
 		~susKick2 = PatternProxy( Pseq([1], inf));
 		~susKick2P = Pseq([~susKick2], inf).asStream;
@@ -107,7 +109,7 @@ IFKick {
 			{val.do{
 				~kickLate.wait;
 				this.p1(val);
-				((~dur1KickP.next)*(~durMul2P.next)/val).wait;
+				((~dur1KickP.next)*(~durMulKickP.next)/val).wait;
 			}}.fork;
 		}
 	}

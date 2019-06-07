@@ -13,8 +13,8 @@ IFCounter{
 
 	*loadProxy {
 		~cntNt=0;
-		~stepNumCnt = PatternProxy( Pseq([0], inf));
-		~stepNumCntP= Pseq([~stepNumCnt], inf).asStream;
+		//~stepNumCnt = PatternProxy( Pseq([0], inf));
+		//~stepNumCntP= Pseq([~stepNumCnt], inf).asStream;
 	}
 	*cnt8{
 		~cntNt=~cntNt+1;
@@ -22,8 +22,9 @@ IFCounter{
 		~cntNt.switch(
 			0,{},
 			1,{
-				"TRASPOSE CHANGE".postln;
-				IFPitch.trnsCnt(~ifPitchPatP.next;);
+				//IFPitch.trnsCnt(~ifPitchPatP.next;);
+				//("IFCounter Coun 8 Beats").postln;
+				//("IF Transpose Root"+~ifPitchLblP.value).postln;
 			},
 			8,{
 				~cntNt=0;
